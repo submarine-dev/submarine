@@ -1,0 +1,10 @@
+package entity
+
+type User struct {
+	ID    string
+	Name  string
+	Email string
+	Icon  string
+
+	RefreshToken string
+}
