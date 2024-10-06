@@ -9,7 +9,7 @@ import (
 
 	"github.com/murasame29/go-httpserver-template/cmd/config"
 	"github.com/murasame29/go-httpserver-template/internal/container"
-	"github.com/murasame29/go-httpserver-template/internal/server"
+	"github.com/murasame29/go-httpserver-template/internal/framework/server"
 )
 
 type envFlag []string

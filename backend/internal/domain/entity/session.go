@@ -1,17 +1,35 @@
 package entity
 
 import (
+	"context"
 	"fmt"
+	"time"
 
 	"github.com/murasame29/go-httpserver-template/internal/framework/svalidate"
+	"github.com/uptrace/bun"
 )
 
 type Session struct {
-	ID        string
-	UserID    string
-	UserAgent string
-	CreatedAt string
-	UpdatedAt string
+	bun.BaseModel `bun:"table:sessions,alias:s"`
+
+	ID        string `bun:"id"`
+	UserID    string `bun:"user_id"`
+	UserAgent string `bun:"user_agent"`
+
+	CreatedAt time.Time `bun:"created_at"`
+	UpdatedAt time.Time `bun:"updated_at"`
+}
+
+var _ bun.BeforeAppendModelHook = (*Session)(nil)
+
+func (m *Session) BeforeAppendModel(ctx context.Context, query bun.Query) error {
+	switch query.(type) {
+	case *bun.InsertQuery:
+		m.CreatedAt = time.Now()
+	case *bun.UpdateQuery:
+		m.UpdatedAt = time.Now()
+	}
+	return nil
 }
 
 func (s *Session) ValidateSession() error {

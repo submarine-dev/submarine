@@ -2,7 +2,7 @@ package middleware
 
 import (
 	"github.com/labstack/echo/v4"
-	"github.com/murasame29/go-httpserver-template/internal/utils/scontext"
+	"github.com/murasame29/go-httpserver-template/internal/framework/scontext"
 )
 
 func GetUserAgent() echo.MiddlewareFunc {

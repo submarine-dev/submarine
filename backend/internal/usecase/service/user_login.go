@@ -60,13 +60,9 @@ func (l *UserService) Login(ctx context.Context, code string) (*LoginResult, err
 		}
 	}
 
-	user, exist, err := l.repo.GetUserByID(ctx, user.ID)
+	user, err = l.repo.GetUserByID(ctx, user.ID)
 	if err != nil {
 		return nil, err
-	}
-
-	if !exist {
-		return nil, fmt.Errorf("user not found")
 	}
 
 	if user.RefreshToken == "" {

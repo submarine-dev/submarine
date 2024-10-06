@@ -1,8 +1,14 @@
 package container
 
 import (
+	"github.com/murasame29/go-httpserver-template/internal/adapter/gateway"
 	"github.com/murasame29/go-httpserver-template/internal/driver"
+	"github.com/murasame29/go-httpserver-template/internal/framework/cookie"
 	"github.com/murasame29/go-httpserver-template/internal/router"
+	"github.com/murasame29/go-httpserver-template/internal/usecase/dai"
+	"github.com/murasame29/go-httpserver-template/internal/usecase/interactor"
+	"github.com/murasame29/go-httpserver-template/internal/usecase/service"
+	"github.com/uptrace/bun"
 	"go.uber.org/dig"
 )
 
@@ -18,7 +24,22 @@ func NewContainer() error {
 	container = dig.New()
 
 	args := []provideArg{
+		// other
+		{constructor: cookie.DefaultCookieOptions, opts: []dig.ProvideOption{}},
+		{constructor: cookie.NewCookieSetter, opts: []dig.ProvideOption{}},
+		// driver
 		{constructor: driver.NewRelicApp, opts: []dig.ProvideOption{}},
+		{constructor: driver.NewDB, opts: []dig.ProvideOption{}},
+		{constructor: driver.NewBun, opts: []dig.ProvideOption{dig.As(new(bun.IDB))}},
+		// gateway
+		{constructor: gateway.NewRepositories, opts: []dig.ProvideOption{dig.As(new(dai.DataAccessInterfaces))}},
+		// service
+		{constructor: service.NewSession, opts: []dig.ProvideOption{}},
+		{constructor: service.NewUserService, opts: []dig.ProvideOption{}},
+		// interactor
+		{constructor: interactor.NewLogin, opts: []dig.ProvideOption{}},
+		// handler
+		{constructor: router.NewDI, opts: []dig.ProvideOption{}},
 		{constructor: router.NewEcho, opts: []dig.ProvideOption{}},
 	}
 

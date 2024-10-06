@@ -10,7 +10,7 @@ import (
 	"github.com/newrelic/go-agent/v3/newrelic"
 )
 
-func NewEcho(app *newrelic.Application) http.Handler {
+func NewEcho(app *newrelic.Application, i *di) http.Handler {
 	engine := echo.New()
 
 	engine.Use(
@@ -19,7 +19,7 @@ func NewEcho(app *newrelic.Application) http.Handler {
 	)
 
 	// Login Endpoint
-	engine.POST("/login/google", controller.LoginGoogle(nil, nil))
+	engine.POST("/login/google", controller.LoginGoogle(i.login, i.cookie))
 
 	// subscriptions route
 	subscriptionRoute := engine.Group("/subscriptions")
