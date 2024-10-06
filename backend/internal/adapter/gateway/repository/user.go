@@ -41,7 +41,6 @@ func (r *UserRepo) GetUserByEmail(ctx context.Context, email string) (*entity.Us
 	if err != nil {
 		return nil, false, err
 	}
-
 	if !exists {
 		return nil, false, nil
 	}
@@ -53,7 +52,7 @@ func (r *UserRepo) GetUserByEmail(ctx context.Context, email string) (*entity.Us
 	return &user, true, nil
 }
 
-func (r *UserRepo) CreateUser(ctx context.Context, user entity.User) error {
+func (r *UserRepo) CreateUser(ctx context.Context, user *entity.User) error {
 	if _, err := r.db.NewInsert().Model(user).Exec(ctx); err != nil {
 		return err
 	}
@@ -61,8 +60,8 @@ func (r *UserRepo) CreateUser(ctx context.Context, user entity.User) error {
 	return nil
 }
 
-func (r *UserRepo) UpdaterUser(ctx context.Context, id string, user entity.User) error {
-	if _, err := r.db.NewUpdate().Model(&user).WherePK().Exec(ctx); err != nil {
+func (r *UserRepo) UpdaterUser(ctx context.Context, id string, user *entity.User) error {
+	if _, err := r.db.NewUpdate().Model(user).WherePK().Exec(ctx); err != nil {
 		return err
 	}
 

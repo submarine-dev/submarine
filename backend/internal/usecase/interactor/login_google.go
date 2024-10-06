@@ -35,13 +35,11 @@ func (l *Login) Google(ctx context.Context, param GoogleLoginParam) (*GoogleLogi
 	if err != nil {
 		return nil, err
 	}
-
 	// update session
 	sessionID, err := l._session.CreateSession(ctx, user.UserID)
 	if err != nil {
 		return nil, err
 	}
-
 	return &GoogleLoginResult{
 		UserID:    user.UserID,
 		SessionID: sessionID,

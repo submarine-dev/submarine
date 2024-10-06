@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"log/slog"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -30,14 +31,13 @@ func LoginGoogle(
 		result, err := login.Google(ctx, interactor.GoogleLoginParam{
 			Code: reqBody.Code,
 		})
-
 		if err != nil {
 			switch err.(type) {
 			default:
+				slog.Error("failed to login google", "error", err)
 				return echo.ErrInternalServerError
 			}
 		}
-
 		// set cookie
 		cookieSetter.CreateCookieSetter(c).SetCookieValue(string(cookie.SessionID), result.SessionID)
 

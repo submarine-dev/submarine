@@ -20,8 +20,11 @@ func NewEcho(app *newrelic.Application, i *di) http.Handler {
 
 	engine.Use(
 		nrecho.Middleware(app),
+		middleware.SetupCORS(),
 		middleware.GetUserAgent(),
 	)
+
+	nrecho.WrapRouter(engine)
 
 	// Login Endpoint
 	engine.POST("/login/google", controller.LoginGoogle(i.login, i.cookie))

@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 	"github.com/murasame29/go-httpserver-template/internal/domain/entity"
@@ -37,20 +36,20 @@ func (l *UserService) Login(ctx context.Context, code string) (*LoginResult, err
 		if err != nil {
 			return nil, err
 		}
-		user.ID = userID.String()
-
-		if err := l.repo.CreateUser(ctx, entity.User{
-			ID:    user.ID,
-			Name:  user.Name,
-			Email: user.Email,
-			Icon:  user.Icon,
-
+		user = &entity.User{
+			ID:           userID.String(),
+			Name:         userInfo.Name,
+			Email:        userInfo.Email,
+			Icon:         userInfo.Picture,
 			RefreshToken: token.RefreshToken,
-		}); err != nil {
+		}
+
+		if err := l.repo.CreateUser(ctx, user); err != nil {
 			return nil, err
 		}
 	} else { // handle exist user
-		if err := l.repo.UpdaterUser(ctx, user.ID, entity.User{
+		if err := l.repo.UpdaterUser(ctx, user.ID, &entity.User{
+			ID:           user.ID,
 			Name:         user.Name,
 			Email:        user.Email,
 			Icon:         user.Icon,
@@ -59,14 +58,9 @@ func (l *UserService) Login(ctx context.Context, code string) (*LoginResult, err
 			return nil, err
 		}
 	}
-
 	user, err = l.repo.GetUserByID(ctx, user.ID)
 	if err != nil {
 		return nil, err
-	}
-
-	if user.RefreshToken == "" {
-		return nil, fmt.Errorf("token is disabled. please re login")
 	}
 
 	return &LoginResult{
