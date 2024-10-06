@@ -19,7 +19,7 @@ func NewEcho(app *newrelic.Application) http.Handler {
 	)
 
 	// Login Endpoint
-	engine.POST("/login/google", controller.LoginGoogle(nil))
+	engine.POST("/login/google", controller.LoginGoogle(nil, nil))
 
 	// subscriptions route
 	subscriptionRoute := engine.Group("/subscriptions")
