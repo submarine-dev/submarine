@@ -19,7 +19,10 @@ func NewGoogleService() *GoogleService {
 		oac: oauth2.Config{
 			ClientID:     config.Config.GoogleService.ClientID,
 			ClientSecret: config.Config.GoogleService.ClientSecret,
-			Scopes:       []string{},
+			Scopes: []string{
+				v2.UserinfoEmailScope,
+				v2.UserinfoProfileScope,
+			},
 			Endpoint: oauth2.Endpoint{
 				AuthURL:  "https://accounts.google.com/o/oauth2/auth",
 				TokenURL: "https://accounts.google.com/o/oauth2/token",
