@@ -5,6 +5,7 @@ import (
 	"flag"
 	"log/slog"
 	"net/http"
+	"os"
 	"strings"
 
 	"github.com/murasame29/go-httpserver-template/cmd/config"
@@ -32,6 +33,10 @@ func init() {
 	if err := config.LoadEnv(envFile...); err != nil {
 		slog.Error("Error loading .env file", "error", err)
 	}
+
+	slog.SetDefault(slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{
+		Level: slog.LevelDebug,
+	})))
 }
 func main() {
 	if err := run(); err != nil {

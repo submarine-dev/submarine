@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log/slog"
 	"net/http"
-	"os"
 	"os/signal"
 	"syscall"
 	"time"
@@ -21,7 +20,6 @@ type Server struct {
 	port            int
 	host            string
 	shutdownTimeout time.Duration
-	log             *slog.Logger
 
 	srv *http.Server
 }
@@ -33,9 +31,6 @@ func New(handler http.Handler, opts ...Option) *Server {
 		host:            "",
 		shutdownTimeout: DefaultShutdownTimeout,
 		srv:             new(http.Server),
-		log: slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{
-			Level: slog.LevelDebug,
-		})).With(slog.String("service", "server")),
 	}
 
 	for _, opt := range opts {
@@ -52,13 +47,13 @@ func New(handler http.Handler, opts ...Option) *Server {
 
 // Run はサーバーを起動します。
 func (s *Server) Run(ctx context.Context) error {
-	s.log.Info("server starting", "addr", s.srv.Addr)
+	slog.Info("server starting", "addr", s.srv.Addr)
 	return s.srv.ListenAndServe()
 }
 
 // Shutdown はサーバーを停止します。
 func (s *Server) Shutdown(ctx context.Context) error {
-	s.log.Info("server shutdown ...")
+	slog.Info("server shutdown ...")
 	return s.srv.Shutdown(ctx)
 }
 
@@ -89,8 +84,8 @@ func (s *Server) RunWithGracefulShutdown(ctx context.Context) {
 
 	if err != context.Canceled &&
 		err != nil {
-		s.log.Error("context canceled", "error", err)
+		slog.Error("context canceled", "error", err)
 	}
 
-	s.log.Info("server shutdown completed")
+	slog.Info("server shutdown completed")
 }

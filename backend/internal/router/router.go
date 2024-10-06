@@ -13,6 +13,11 @@ import (
 func NewEcho(app *newrelic.Application, i *di) http.Handler {
 	engine := echo.New()
 
+	engine.GET("/healthz", func(c echo.Context) error {
+		c.JSON(http.StatusOK, map[string]string{"result": "ok"})
+		return nil
+	})
+
 	engine.Use(
 		nrecho.Middleware(app),
 		middleware.GetUserAgent(),
