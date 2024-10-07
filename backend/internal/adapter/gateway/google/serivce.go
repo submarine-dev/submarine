@@ -3,8 +3,8 @@ package google
 import (
 	"context"
 
-	"github.com/murasame29/go-httpserver-template/cmd/config"
-	"github.com/murasame29/go-httpserver-template/internal/usecase/dai"
+	"github.com/submarine/submarine/backend/cmd/config"
+	"github.com/submarine/submarine/backend/internal/usecase/dai"
 	"golang.org/x/oauth2"
 	v2 "google.golang.org/api/oauth2/v2"
 	"google.golang.org/api/option"

@@ -1,6 +1,6 @@
 package service
 
-import "github.com/murasame29/go-httpserver-template/internal/usecase/dai"
+import "github.com/submarine/submarine/backend/internal/usecase/dai"
 
 type UserService struct {
 	repo dai.DataAccessInterfaces

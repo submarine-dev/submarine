@@ -8,8 +8,8 @@ import (
 
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/stdlib"
-	"github.com/murasame29/go-httpserver-template/cmd/config"
 	"github.com/pandoratoolbox/bun/extra/bunslog"
+	"github.com/submarine/submarine/backend/cmd/config"
 	"github.com/uptrace/bun"
 	"github.com/uptrace/bun/dialect/pgdialect"
 )

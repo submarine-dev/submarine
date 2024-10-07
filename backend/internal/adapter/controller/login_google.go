@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
-	"github.com/murasame29/go-httpserver-template/internal/framework/cookie"
-	"github.com/murasame29/go-httpserver-template/internal/usecase/interactor"
+	"github.com/submarine/submarine/backend/internal/framework/cookie"
+	"github.com/submarine/submarine/backend/internal/usecase/interactor"
 )
 
 type GoogleLoginRequest struct {

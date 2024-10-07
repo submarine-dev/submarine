@@ -1,9 +1,9 @@
 package gateway
 
 import (
-	"github.com/murasame29/go-httpserver-template/internal/adapter/gateway/google"
-	"github.com/murasame29/go-httpserver-template/internal/adapter/gateway/repository"
-	"github.com/murasame29/go-httpserver-template/internal/usecase/dai"
+	"github.com/submarine/submarine/backend/internal/adapter/gateway/google"
+	"github.com/submarine/submarine/backend/internal/adapter/gateway/repository"
+	"github.com/submarine/submarine/backend/internal/usecase/dai"
 	"github.com/uptrace/bun"
 )
 

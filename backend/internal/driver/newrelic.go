@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"log/slog"
 
-	"github.com/murasame29/go-httpserver-template/cmd/config"
 	"github.com/newrelic/go-agent/v3/integrations/nrsecurityagent"
 	"github.com/newrelic/go-agent/v3/newrelic"
+	"github.com/submarine/submarine/backend/cmd/config"
 )
 
 func NewRelicApp() *newrelic.Application {

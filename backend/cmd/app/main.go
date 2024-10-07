@@ -8,9 +8,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/murasame29/go-httpserver-template/cmd/config"
-	"github.com/murasame29/go-httpserver-template/internal/container"
-	"github.com/murasame29/go-httpserver-template/internal/framework/server"
+	"github.com/submarine/submarine/backend/cmd/config"
+	"github.com/submarine/submarine/backend/internal/container"
+	"github.com/submarine/submarine/backend/internal/framework/server"
 )
 
 type envFlag []string

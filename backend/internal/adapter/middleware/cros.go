@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"github.com/labstack/echo/v4"
-	"github.com/murasame29/go-httpserver-template/cmd/config"
+	"github.com/submarine/submarine/backend/cmd/config"
 )
 
 func SetupCORS() echo.MiddlewareFunc {

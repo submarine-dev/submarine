@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/murasame29/go-httpserver-template/internal/framework/svalidate"
+	"github.com/submarine/submarine/backend/internal/framework/svalidate"
 	"github.com/uptrace/bun"
 )
 

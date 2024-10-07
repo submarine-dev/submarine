@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/google/uuid"
-	"github.com/murasame29/go-httpserver-template/internal/domain/entity"
+	"github.com/submarine/submarine/backend/internal/domain/entity"
 )
 
 type LoginResult struct {

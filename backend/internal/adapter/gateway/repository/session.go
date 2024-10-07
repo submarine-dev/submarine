@@ -3,8 +3,8 @@ package repository
 import (
 	"context"
 
-	"github.com/murasame29/go-httpserver-template/internal/domain/entity"
-	"github.com/murasame29/go-httpserver-template/internal/usecase/dai"
+	"github.com/submarine/submarine/backend/internal/domain/entity"
+	"github.com/submarine/submarine/backend/internal/usecase/dai"
 	"github.com/uptrace/bun"
 )
 

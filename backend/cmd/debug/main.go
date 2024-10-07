@@ -9,7 +9,7 @@ import (
 	"strings"
 
 	"github.com/labstack/echo/v4"
-	"github.com/murasame29/go-httpserver-template/cmd/config"
+	"github.com/submarine/submarine/backend/cmd/config"
 )
 
 const GoogleAuthURL = "https://accounts.google.com/o/oauth2/v2/auth?scope=%s&redirect_uri=%s&response_type=code&client_id=%s&access_type=offline&prompt=consent"

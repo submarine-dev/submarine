@@ -3,7 +3,7 @@ package interactor
 import (
 	"context"
 
-	"github.com/murasame29/go-httpserver-template/internal/usecase/service"
+	"github.com/submarine/submarine/backend/internal/usecase/service"
 )
 
 type Login struct {

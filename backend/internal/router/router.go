@@ -4,10 +4,10 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
-	"github.com/murasame29/go-httpserver-template/internal/adapter/controller"
-	"github.com/murasame29/go-httpserver-template/internal/adapter/middleware"
 	"github.com/newrelic/go-agent/v3/integrations/nrecho-v4"
 	"github.com/newrelic/go-agent/v3/newrelic"
+	"github.com/submarine/submarine/backend/internal/adapter/controller"
+	"github.com/submarine/submarine/backend/internal/adapter/middleware"
 )
 
 func NewEcho(app *newrelic.Application, i *di) http.Handler {

@@ -1,13 +1,13 @@
 package container
 
 import (
-	"github.com/murasame29/go-httpserver-template/internal/adapter/gateway"
-	"github.com/murasame29/go-httpserver-template/internal/driver"
-	"github.com/murasame29/go-httpserver-template/internal/framework/cookie"
-	"github.com/murasame29/go-httpserver-template/internal/router"
-	"github.com/murasame29/go-httpserver-template/internal/usecase/dai"
-	"github.com/murasame29/go-httpserver-template/internal/usecase/interactor"
-	"github.com/murasame29/go-httpserver-template/internal/usecase/service"
+	"github.com/submarine/submarine/backend/internal/adapter/gateway"
+	"github.com/submarine/submarine/backend/internal/driver"
+	"github.com/submarine/submarine/backend/internal/framework/cookie"
+	"github.com/submarine/submarine/backend/internal/router"
+	"github.com/submarine/submarine/backend/internal/usecase/dai"
+	"github.com/submarine/submarine/backend/internal/usecase/interactor"
+	"github.com/submarine/submarine/backend/internal/usecase/service"
 	"github.com/uptrace/bun"
 	"go.uber.org/dig"
 )

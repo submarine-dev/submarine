@@ -4,9 +4,9 @@ import (
 	"context"
 
 	"github.com/google/uuid"
-	"github.com/murasame29/go-httpserver-template/internal/domain/entity"
-	"github.com/murasame29/go-httpserver-template/internal/framework/scontext"
-	"github.com/murasame29/go-httpserver-template/internal/usecase/dai"
+	"github.com/submarine/submarine/backend/internal/domain/entity"
+	"github.com/submarine/submarine/backend/internal/framework/scontext"
+	"github.com/submarine/submarine/backend/internal/usecase/dai"
 )
 
 type SessionService struct {
