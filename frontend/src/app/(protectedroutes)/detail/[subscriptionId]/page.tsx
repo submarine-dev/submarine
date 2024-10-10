@@ -1,5 +1,5 @@
-import { NextPage } from 'next';
-import SubscriptionDetailContainer from './components/SubscriptionDetailContainer';
+import { FC } from "react";
+import SubscriptionDetailContainer from "./components/SubscriptionDetailContainer";
 
 type Props = {
   params: {
@@ -10,14 +10,8 @@ type Props = {
 /**
  * サブスクリプション詳細
  */
-const SubscriptionDetailPage: NextPage<Props> = ({
-  params: { subscriptionId },
-}) => {
-  return (
-    <SubscriptionDetailContainer
-      subscriptionId={subscriptionId}
-    />
-  );
+const SubscriptionDetailPage: FC<Props> = ({ params: { subscriptionId } }) => {
+  return <SubscriptionDetailContainer subscriptionId={subscriptionId} />;
 };
 
 export default SubscriptionDetailPage;

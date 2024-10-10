@@ -1,10 +1,10 @@
-import { FC } from 'react';
-import HomeContent from './HomeContent';
+import { FC } from "react";
+import HomeContent from "./HomeContent";
 
 /**
  * ホーム/container
  */
-const HomeContainer: FC = async () => {
+const HomeContainer: FC = () => {
   return <HomeContent />;
 };
 

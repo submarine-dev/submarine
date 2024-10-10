@@ -1,10 +1,10 @@
-import { NextPage } from 'next';
-import IndexContainer from './components/IndexContainer';
+import IndexContainer from "./components/IndexContainer";
+import { FC } from "react";
 
 /**
  * ログイントップ
  */
-const IndexPage: NextPage = () => {
+const IndexPage: FC = () => {
   return <IndexContainer />;
 };
 

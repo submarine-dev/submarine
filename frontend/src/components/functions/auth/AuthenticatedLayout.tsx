@@ -1,22 +1,17 @@
-'use client';
-
-import { useRouter } from 'next/navigation';
-import React, { ReactNode, useEffect } from 'react';
-import { useAuth } from '../context/auth';
+import React, { ReactNode, useEffect } from "react";
+import { useAuth } from "../context/auth";
 
 interface Props {
   children: ReactNode;
 }
 
-const AuthenticatedLayout: React.FC<Props> = ({
-  children,
-}) => {
+const AuthenticatedLayout: React.FC<Props> = ({ children }) => {
   const { fbUser, isLoading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
     if (!isLoading && !fbUser) {
-      router.push('/');
+      router.push("/");
     }
   }, [fbUser, isLoading, router]);
 

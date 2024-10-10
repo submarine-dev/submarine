@@ -1,10 +1,10 @@
-import { NextPage } from 'next';
-import HomeContainer from './components/HomeContainer';
+import { FC } from "react";
+import HomeContainer from "./components/HomeContainer";
 
 /**
  * ホーム
  */
-const HomePage: NextPage = () => {
+const HomePage: FC = () => {
   return <HomeContainer />;
 };
 

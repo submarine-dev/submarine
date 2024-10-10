@@ -1,10 +1,10 @@
-import { NextPage } from 'next';
-import SearchSubscriptionContainer from './components/SearchSubscriptionContainer';
+import { FC } from "react";
+import SearchSubscriptionContainer from "./components/SearchSubscriptionContainer";
 
 /**
  * サブスクリプション検索
  */
-const SearchSubscriptionPage: NextPage = () => {
+const SearchSubscriptionPage: FC = () => {
   return <SearchSubscriptionContainer />;
 };
 

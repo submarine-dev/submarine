@@ -1,8 +1,6 @@
-import { NextPage } from 'next';
+import { FC } from "react";
 
-const ErrorPage: NextPage<{ statusCode: number }> = ({
-  statusCode,
-}) => {
+const ErrorPage: FC<{ statusCode: number }> = ({ statusCode }) => {
   return (
     <div>
       <h1>Error {statusCode}</h1>
