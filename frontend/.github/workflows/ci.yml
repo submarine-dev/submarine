@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - feature/*
+      - feat/*
+      - fix/*
+      - hotfix/*
+
+jobs:
+  setup:
+    name: Setup & Install dependencies
+    runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_ENV: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+      NEXT_PUBLIC_MOCK_API_MODE: ${{ secrets.NEXT_PUBLIC_MOCK_API_MODE }}
+      NEXT_PUBLIC_MOCK_API_URL: ${{ secrets.NEXT_PUBLIC_MOCK_API_URL }}
+      NEXT_PUBLIC_LOCAL_API_URL: ${{ secrets.NEXT_PUBLIC_LOCAL_API_URL }}
+      NEXT_PUBLIC_BACKEND_URL: ${{ secrets.NEXT_PUBLIC_BACKEND_URL }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: npm install
+
+    outputs:
+      cache-key: ${{ steps.cache-dependencies.outputs.cache-key }}
+
+  build-and-lint:
+    needs: setup
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        task: ['build', 'lint']
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Task
+        run: npm run ${{ matrix.task }}
+        continue-on-error: ${{ matrix.task == 'lint' }}
