@@ -1,4 +1,4 @@
-CREATE TYPE IF NOT EXISTS "payment_type" AS ENUM (
+CREATE TYPE "payment_type" AS ENUM (
   'daily',
   'monthly',
   'yearly'

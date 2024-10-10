@@ -29,29 +29,8 @@ func NewEcho(app *newrelic.Application, i *di) http.Handler {
 	// Login Endpoint
 	engine.POST("/login/google", controller.LoginGoogle(i.login, i.cookie))
 
-	// subscriptions route
-	subscriptionRoute := engine.Group("/subscriptions")
 	{
-		subscriptionRoute.GET("", nil)
-		subscriptionRoute.POST("", nil)
-
-		subscriptionRoute.GET("/:subscriptionId", nil)
-		subscriptionRoute.PUT("/:subscriptionId", nil)
-		subscriptionRoute.DELETE("/:subscriptionId", nil)
-	}
-	// user route
-	userRoute := engine.Group("/users")
-	{
-		// user subscriptions route
-		userSubscriptionRoute := userRoute.Group("/:userId/subscriptions")
-		{
-			userSubscriptionRoute.GET("", nil)
-			userSubscriptionRoute.POST("", nil)
-
-			userSubscriptionRoute.GET("/:userSubscriptionId", nil)
-			userSubscriptionRoute.PUT("/:userSubscriptionId", nil)
-			userSubscriptionRoute.DELETE("/:userSubscriptionId", nil)
-		}
+		v1Route(engine, i)
 	}
 
 	return engine

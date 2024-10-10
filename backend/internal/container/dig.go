@@ -36,8 +36,12 @@ func NewContainer() error {
 		// service
 		{constructor: service.NewSession, opts: []dig.ProvideOption{}},
 		{constructor: service.NewUserService, opts: []dig.ProvideOption{}},
+		{constructor: service.NewTemplSubscription, opts: []dig.ProvideOption{}},
+		{constructor: service.NewUserSubscription, opts: []dig.ProvideOption{}},
 		// interactor
 		{constructor: interactor.NewLogin, opts: []dig.ProvideOption{}},
+		{constructor: interactor.NewTemplSubscription, opts: []dig.ProvideOption{}},
+		{constructor: interactor.NewUserSubscription, opts: []dig.ProvideOption{}},
 		// handler
 		{constructor: router.NewDI, opts: []dig.ProvideOption{}},
 		{constructor: router.NewEcho, opts: []dig.ProvideOption{}},

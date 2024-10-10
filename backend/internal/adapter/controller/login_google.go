@@ -17,6 +17,15 @@ type GoogleLoginResponse struct {
 	ID string `json:"userId"`
 }
 
+// googleLogin godoc
+// @Summary  Google Login
+// @ID       GoogleLogin
+// @Tags     LoginRequest
+// @Accept   json
+// @Produce  json
+// @Param 	 q			 body 		 GoogleLoginRequest  true "GoogleLoginRequest"
+// @Success  200  	 {object}  GoogleLoginResponse
+// @Router   /login/google [post]
 func LoginGoogle(
 	login *interactor.Login,
 	cookieSetter *cookie.CookieSetter,

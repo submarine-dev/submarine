@@ -44,6 +44,9 @@ func main() {
 	}
 }
 
+// @title         submarine-api
+// @version       0.0.1
+// @BasePath      /v1
 func run() error {
 	// サーバーの起動
 	if err := container.NewContainer(); err != nil {

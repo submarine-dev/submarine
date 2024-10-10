@@ -10,13 +10,19 @@ import (
 type Repositories struct {
 	*repository.UserRepo
 	*repository.SessionRepo
+	*repository.TemplSubscriptionRepo
+	*repository.UserSubscriptionRepo
+
 	*google.GoogleService
 }
 
 func NewRepositories(db bun.IDB) *Repositories {
 	return &Repositories{
-		UserRepo:      repository.NewUserRepo(db),
-		SessionRepo:   repository.NewSessionRepo(db),
+		UserRepo:              repository.NewUserRepo(db),
+		SessionRepo:           repository.NewSessionRepo(db),
+		TemplSubscriptionRepo: repository.NewTemplSubscriptionRepo(db),
+		UserSubscriptionRepo:  repository.NewUserSubscriptionRepo(db),
+
 		GoogleService: google.NewGoogleService(),
 	}
 }

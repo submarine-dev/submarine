@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/submarine/submarine/backend/internal/domain/entity"
 	"github.com/submarine/submarine/backend/internal/framework/scontext"
+	"github.com/submarine/submarine/backend/internal/framework/serror"
 	"github.com/submarine/submarine/backend/internal/usecase/dai"
 )
 
@@ -42,4 +43,25 @@ func (s *SessionService) CreateSession(ctx context.Context, userID string) (stri
 	}
 
 	return session.ID, nil
+}
+
+func (s *SessionService) GetSession(ctx context.Context, sessionID string) (*entity.Session, error) {
+	session := &entity.Session{
+		UserAgent: scontext.GetUserAgent(ctx),
+	}
+
+	if err := session.ValidateSession(); err != nil {
+		return nil, err
+	}
+
+	session, found, err := s.repo.GetSessionByID(ctx, sessionID, session.UserAgent)
+	if err != nil {
+		return nil, err
+	}
+
+	if !found {
+		return nil, serror.ErrResourceNotFound
+	}
+
+	return session, nil
 }

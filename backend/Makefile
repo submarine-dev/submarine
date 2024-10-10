@@ -18,3 +18,7 @@ migrate-up: # todo remove
 
 migrate-down: # todo remove
 	migrate --path cmd/migrate/source --database 'postgresql://postgres:postgres@localhost:5432/submarine?sslmode=disable' -verbose down
+
+
+swag:
+	swag init --dir cmd/app/ --parseDependencyLevel 10 

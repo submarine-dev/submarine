@@ -2,24 +2,7 @@ package interactor
 
 import (
 	"context"
-
-	"github.com/submarine/submarine/backend/internal/usecase/service"
 )
-
-type Login struct {
-	_session *service.SessionService
-	_user    *service.UserService
-}
-
-func NewLogin(
-	_session *service.SessionService,
-	_user *service.UserService,
-) *Login {
-	return &Login{
-		_session: _session,
-		_user:    _user,
-	}
-}
 
 type GoogleLoginParam struct {
 	Code string

@@ -2,6 +2,8 @@ package repository
 
 import (
 	"context"
+	"database/sql"
+	"errors"
 
 	"github.com/submarine/submarine/backend/internal/domain/entity"
 	"github.com/submarine/submarine/backend/internal/usecase/dai"
@@ -24,4 +26,20 @@ func (r *SessionRepo) CreateSession(ctx context.Context, session *entity.Session
 	}
 
 	return nil
+}
+
+func (r *SessionRepo) GetSessionByID(ctx context.Context, sessionID, userAgent string) (*entity.Session, bool, error) {
+	var session entity.Session
+	query := r.db.NewSelect().Model(&session).
+		Where("id = ?", sessionID).
+		Where("user_agent = ?", userAgent)
+
+	if err := query.Scan(ctx, &session); err != nil {
+		if !errors.Is(err, sql.ErrNoRows) {
+			return nil, false, err
+		}
+		return nil, false, nil
+	}
+
+	return &session, true, nil
 }
