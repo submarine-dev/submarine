@@ -1,3 +1,6 @@
 {
-  "recommendations": ["biomejs.biome", "sonarsource.sonarlint-vscode"]
+  "recommendations": [
+    "biomejs.biome",
+    "sonarsource.sonarlint-vscode"
+  ]
 }

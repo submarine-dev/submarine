@@ -1,5 +1,5 @@
-import IndexContainer from "./components/IndexContainer";
-import { FC } from "react";
+import { FC } from 'react';
+import IndexContainer from './components/IndexContainer';
 
 /**
  * ログイントップ

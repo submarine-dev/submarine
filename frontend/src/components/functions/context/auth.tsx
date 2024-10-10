@@ -1,6 +1,15 @@
-import { onAuthStateChanged, User as FirebaseUser } from "firebase/auth";
-import { createContext, ReactNode, useContext, useEffect, useState } from "react";
-import { auth } from "@/lib/firebase/client";
+import { auth } from '@/lib/firebase/client';
+import {
+  User as FirebaseUser,
+  onAuthStateChanged,
+} from 'firebase/auth';
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 
 type ContextType = {
   fbUser: FirebaseUser | null | undefined; // ログインしてるか判定
@@ -12,8 +21,11 @@ const AuthContext = createContext<ContextType>({
   isLoading: true,
 });
 
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [fbUser, setFbUser] = useState<FirebaseUser | null>();
+export const AuthProvider = ({
+  children,
+}: { children: ReactNode }) => {
+  const [fbUser, setFbUser] =
+    useState<FirebaseUser | null>();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

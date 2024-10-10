@@ -1,5 +1,5 @@
-import { FC } from "react";
-import SearchSubscriptionContainer from "./components/SearchSubscriptionContainer";
+import { FC } from 'react';
+import SearchSubscriptionContainer from './components/SearchSubscriptionContainer';
 
 /**
  * サブスクリプション検索

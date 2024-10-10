@@ -5,9 +5,9 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "biome lint",
-    "format": "biome format",
-    "check": "biome check && tsc --noEmit"
+    "lint": "biome lint --write",
+    "format": "biome format --write",
+    "check": "biome check --write && tsc --noEmit"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.0.5",

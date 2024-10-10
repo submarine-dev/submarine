@@ -1,5 +1,5 @@
-import { FC } from "react";
-import HomeContainer from "./components/HomeContainer";
+import { FC } from 'react';
+import HomeContainer from './components/HomeContainer';
 
 /**
  * ホーム

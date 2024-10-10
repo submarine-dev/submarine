@@ -1,9 +1,9 @@
 import { BoardWrapper } from '@/components/BoardWrapper';
 import { BodyTypo, H1 } from '@/components/Typography';
 import { ContractedSubscriptionType } from '@/types/ContractedSubscriptionType';
+import { addCommasToNumber } from '@/util/addCommasToNumber';
 import { FC } from 'react';
 import { ContractedSubscriptionsRow } from './SubscribedBoard/ContractedSubscriptionsRow';
-import { addCommasToNumber } from '@/util/addCommasToNumber';
 
 type Props = {
   totalPayment: number;
