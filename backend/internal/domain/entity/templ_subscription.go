@@ -18,3 +18,12 @@ type TemplSubscription struct {
 
 	TemplPlan []*TemplPlan `bun:"rel:has-many,join:id=subscription_id" json:"plans"`
 }
+
+func (ts TemplSubscription) FindPlan(planID string) (*TemplPlan, bool) {
+	for _, plan := range ts.TemplPlan {
+		if plan.ID == planID {
+			return plan, true
+		}
+	}
+	return nil, false
+}

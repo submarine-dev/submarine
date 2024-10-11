@@ -1,5 +1,27 @@
 basePath: /v1
 definitions:
+  controller.CreateUserSubscriptionRequest:
+    properties:
+      name:
+        type: string
+      planId:
+        type: string
+      planName:
+        type: string
+      planPaymentType:
+        $ref: '#/definitions/entity.PaymentType'
+      planPrice:
+        type: integer
+      subscriptionId:
+        type: string
+      unsubscribeLink:
+        type: string
+    type: object
+  controller.CreateUserSubscriptionResponse:
+    properties:
+      userSubscrionId:
+        type: string
+    type: object
   controller.GetSubscriptionResponse:
     properties:
       icon:
@@ -65,6 +87,8 @@ definitions:
     - PaymentTypeYearly
   entity.TemplPlan:
     properties:
+      id:
+        type: string
       name:
         type: string
       paymentType:
@@ -198,5 +222,34 @@ paths:
             $ref: '#/definitions/echo.HTTPError'
       summary: Get Subscription
       tags:
-      - Subscription
+      - UserSubscription
+    post:
+      consumes:
+      - application/json
+      operationId: CreateUserSubscription
+      parameters:
+      - description: CreateUserSubscriptionRequest
+        in: body
+        name: q
+        required: true
+        schema:
+          $ref: '#/definitions/controller.CreateUserSubscriptionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.CreateUserSubscriptionResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+      summary: User Subscription
+      tags:
+      - UserSubscription
 swagger: "2.0"

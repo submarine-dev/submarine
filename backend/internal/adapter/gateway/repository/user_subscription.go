@@ -29,3 +29,10 @@ func (r *UserSubscriptionRepo) GetUserSubscriptions(ctx context.Context, userID 
 
 	return userSubscriptions, nil
 }
+
+func (r *UserSubscriptionRepo) CreateUserSubscription(ctx context.Context, userSubscription entity.UserSubscription) error {
+	if _, err := r.db.NewInsert().Model(&userSubscription).Exec(ctx); err != nil {
+		return err
+	}
+	return nil
+}

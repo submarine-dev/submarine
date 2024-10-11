@@ -8,4 +8,5 @@ import (
 
 type UserSubscription interface {
 	GetUserSubscriptions(ctx context.Context, userID string) ([]entity.UserSubscription, error)
+	CreateUserSubscription(ctx context.Context, userSubscription entity.UserSubscription) error
 }

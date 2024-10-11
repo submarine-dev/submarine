@@ -21,7 +21,7 @@ func v1Route(engine *echo.Echo, i *di) {
 		userSubscriptionRoute := userRoute.Group("/:userId/subscriptions")
 		{
 			userSubscriptionRoute.GET("", controller.GetUserSubscriptions(i.us).MustLogin(i.login))
-			userSubscriptionRoute.POST("", nil)
+			userSubscriptionRoute.POST("", controller.CreateUserSubscription(i.us).MustLogin(i.login))
 
 			userSubscriptionRoute.PUT("/:userSubscriptionId", nil)
 			userSubscriptionRoute.DELETE("/:userSubscriptionId", nil)

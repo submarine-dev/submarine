@@ -25,6 +25,8 @@ type GoogleLoginResponse struct {
 // @Produce  json
 // @Param 	 q			 body 		 GoogleLoginRequest  true "GoogleLoginRequest"
 // @Success  200  	 {object}  GoogleLoginResponse
+// @Failure  400  {object}  echo.HTTPError
+// @Failure  500  {object}  echo.HTTPError
 // @Router   /login/google [post]
 func LoginGoogle(
 	login *interactor.Login,

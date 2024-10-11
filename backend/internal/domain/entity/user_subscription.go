@@ -10,8 +10,9 @@ type UserSubscription struct {
 	bun.BaseModel `bun:"table:user_subscriptions,alias:us"`
 
 	ID              string      `bun:"id,pk" json:"id"`
-	UserID          string      `bun:"user_id" json:"userID"`
-	TemplID         string      `bun:"templ_id" json:"templID"`
+	UserID          string      `bun:"user_id" json:"userId"`
+	TemplID         string      `bun:"templ_id,nullzero" json:"templId"`
+	PlanID          string      `bun:"plan_id,nullzero" json:"planId"`
 	Name            string      `bun:"name" json:"name"`
 	Icon            string      `bun:"icon" json:"icon"`
 	UnsubscribeLink string      `bun:"unsubscribe_link" json:"unsubscribeLink"`

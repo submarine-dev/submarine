@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"log/slog"
@@ -9,6 +10,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/submarine/submarine/backend/internal/domain/entity"
 	"github.com/submarine/submarine/backend/internal/framework/scontext"
+	"github.com/submarine/submarine/backend/internal/framework/serror"
 	"github.com/submarine/submarine/backend/internal/usecase/interactor"
 )
 
@@ -17,12 +19,12 @@ type GetUserSubscriptionsRequest struct {
 	UserID string `param:"userId"`
 }
 
-func (r GetUserSubscriptionsRequest) Validate(ctx echo.Context) error {
+func (r GetUserSubscriptionsRequest) Validate(ctx context.Context) error {
 	if r.UserID == "" {
 		return fmt.Errorf("userId is required")
 	}
 
-	if scontext.GetUserID(ctx.Request().Context()) != r.UserID {
+	if scontext.GetUserID(ctx) != r.UserID {
 		return fmt.Errorf("userID dont match")
 	}
 
@@ -39,7 +41,7 @@ type GetUserSubscriptionsResponse struct {
 // subscription godoc
 // @Summary  Get Subscription
 // @ID       GetUserSubscriptions
-// @Tags     Subscription
+// @Tags     UserSubscription
 // @Produce  json
 // @Param 	 userId		 	path 				string									false 	"user id"
 // @Success  200  {object}  GetUserSubscriptionsResponse
@@ -47,18 +49,20 @@ type GetUserSubscriptionsResponse struct {
 // @Failure  500  {object}  echo.HTTPError
 // @Router   /subscription/{userId}/subscriptions [get]
 func GetUserSubscriptions(us *interactor.UserSubscription) MustLogin {
-	return func(ctx echo.Context) error {
+	return func(c echo.Context) error {
 		var reqQuery GetUserSubscriptionsRequest
-		if err := ctx.Bind(&reqQuery); err != nil {
+		if err := c.Bind(&reqQuery); err != nil {
 			return echo.ErrBadRequest
 		}
+
+		ctx := scontext.ConvertContext(c)
 
 		if err := reqQuery.Validate(ctx); err != nil {
 			slog.Warn("validate error", "error", err)
 			return echo.ErrBadRequest
 		}
 
-		result, err := us.GetUserSubscriptions(ctx.Request().Context(), reqQuery.UserID)
+		result, err := us.GetUserSubscriptions(ctx, reqQuery.UserID)
 		if err != nil {
 			switch {
 			default:
@@ -67,7 +71,7 @@ func GetUserSubscriptions(us *interactor.UserSubscription) MustLogin {
 			}
 		}
 
-		ctx.JSON(http.StatusOK, GetUserSubscriptionsResponse(result))
+		c.JSON(http.StatusOK, GetUserSubscriptionsResponse(result))
 
 		return nil
 	}
@@ -85,7 +89,12 @@ type CreateUserSubscriptionRequest struct {
 	PlanPaymentType entity.PaymentType `json:"planPaymentType"`
 }
 
-func (r *CreateUserSubscriptionRequest) Validate(ctx echo.Context) error {
+func (r CreateUserSubscriptionRequest) Validate(ctx context.Context, userID string) error {
+	slog.Info("*****************", "suid", scontext.GetUserID(ctx), "uid", userID, "valid", userID == scontext.GetUserID(ctx))
+	if userID != scontext.GetUserID(ctx) {
+		return serror.ErrUserIDDontMatch
+	}
+
 	if r.SubscriptionID == "" || r.PlanID == "" {
 		if r.Name == "" || r.PlanPaymentType == "" {
 			return errors.New("invalid argment")
@@ -96,11 +105,63 @@ func (r *CreateUserSubscriptionRequest) Validate(ctx echo.Context) error {
 }
 
 type CreateUserSubscriptionResponse struct {
+	UserSubscrionID string `json:"userSubscrionId"`
 }
 
-func CreateUserSubscription() MustLogin {
-	return func(ctx echo.Context) error {
-		panic("impl me")
+// usersubscription godoc
+// @Summary  User Subscription
+// @ID       CreateUserSubscription
+// @Tags     UserSubscription
+// @Accept   json
+// @Produce  json
+// @Param 	 q			 body 		 CreateUserSubscriptionRequest  true "CreateUserSubscriptionRequest"
+// @Success  200  	 {object}  CreateUserSubscriptionResponse
+// @Failure  400  {object}  echo.HTTPError
+// @Failure  500  {object}  echo.HTTPError
+// @Router   /subscription/{userId}/subscriptions [post]
+func CreateUserSubscription(us *interactor.UserSubscription) MustLogin {
+	return func(c echo.Context) error {
+		var reqBody CreateUserSubscriptionRequest
+		if err := c.Bind(&reqBody); err != nil {
+			slog.Warn("failed to bind.", "error", err)
+			return echo.ErrBadRequest
+		}
+
+		ctx := scontext.ConvertContext(c)
+
+		userID := c.Param("userId")
+
+		if err := reqBody.Validate(ctx, userID); err != nil {
+			slog.Warn("failed to validate.", "error", err, "userID", userID, "sUserID", scontext.GetUserID(ctx))
+			return echo.ErrBadRequest
+		}
+
+		newID, err := us.CreateUserSubscription(ctx, interactor.CreateUserSubscriptionParam{
+			UserID:          userID,
+			TemplID:         reqBody.SubscriptionID,
+			TemplPlanID:     reqBody.PlanID,
+			Name:            reqBody.Name,
+			UnsubscribeLink: reqBody.UnsubscribeLink,
+			PlanName:        reqBody.PlanName,
+			Price:           reqBody.PlanPrice,
+			PaymentType:     reqBody.PlanPaymentType,
+		})
+
+		if err != nil {
+			switch {
+			case errors.Is(err, serror.ErrResourceNotFound):
+				return echo.ErrBadRequest
+
+			default:
+				return echo.ErrInternalServerError
+			}
+		}
+
+		c.JSON(http.StatusOK, CreateUserSubscriptionResponse{
+			UserSubscrionID: newID,
+		})
+
+		return nil
 	}
 }
 

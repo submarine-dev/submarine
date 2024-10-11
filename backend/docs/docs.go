@@ -130,7 +130,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Subscription"
+                    "UserSubscription"
                 ],
                 "summary": "Get Subscription",
                 "operationId": "GetUserSubscriptions",
@@ -162,10 +162,88 @@ const docTemplate = `{
                         }
                     }
                 }
+            },
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "UserSubscription"
+                ],
+                "summary": "User Subscription",
+                "operationId": "CreateUserSubscription",
+                "parameters": [
+                    {
+                        "description": "CreateUserSubscriptionRequest",
+                        "name": "q",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.CreateUserSubscriptionRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller.CreateUserSubscriptionResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
+                        }
+                    }
+                }
             }
         }
     },
     "definitions": {
+        "controller.CreateUserSubscriptionRequest": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "planId": {
+                    "type": "string"
+                },
+                "planName": {
+                    "type": "string"
+                },
+                "planPaymentType": {
+                    "$ref": "#/definitions/entity.PaymentType"
+                },
+                "planPrice": {
+                    "type": "integer"
+                },
+                "subscriptionId": {
+                    "type": "string"
+                },
+                "unsubscribeLink": {
+                    "type": "string"
+                }
+            }
+        },
+        "controller.CreateUserSubscriptionResponse": {
+            "type": "object",
+            "properties": {
+                "userSubscrionId": {
+                    "type": "string"
+                }
+            }
+        },
         "controller.GetSubscriptionResponse": {
             "type": "object",
             "properties": {
@@ -264,6 +342,9 @@ const docTemplate = `{
         "entity.TemplPlan": {
             "type": "object",
             "properties": {
+                "id": {
+                    "type": "string"
+                },
                 "name": {
                     "type": "string"
                 },

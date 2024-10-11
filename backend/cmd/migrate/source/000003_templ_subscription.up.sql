@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS "templ_subscriptions" (
 );
 
 CREATE TABLE IF NOT EXISTS "templ_plans" (
+  "id" varchar PRIMARY KEY,
   "subscription_id" varchar NOT NULL,
   "name" varchar NOT NULL,
   "price" int NOT NULL,

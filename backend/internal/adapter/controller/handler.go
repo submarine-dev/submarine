@@ -43,6 +43,7 @@ func (h MustLogin) MustLogin(login *interactor.Login) echo.HandlerFunc {
 				return echo.ErrInternalServerError
 			}
 		}
+
 		ctx.Set(scontext.UserID.String(), userID)
 
 		return h(ctx)

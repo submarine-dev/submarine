@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"time"
 
 	"github.com/google/uuid"
 	"github.com/submarine/submarine/backend/internal/domain/entity"
@@ -62,6 +63,6 @@ func (s *SessionService) GetSession(ctx context.Context, sessionID string) (*ent
 	if !found {
 		return nil, serror.ErrResourceNotFound
 	}
-
+	session.CreatedAt = time.Now()
 	return session, nil
 }
