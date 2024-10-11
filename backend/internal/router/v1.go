@@ -24,7 +24,7 @@ func v1Route(engine *echo.Echo, i *di) {
 			userSubscriptionRoute.POST("", controller.CreateUserSubscription(i.us).MustLogin(i.login))
 
 			userSubscriptionRoute.PUT("/:userSubscriptionId", nil)
-			userSubscriptionRoute.DELETE("/:userSubscriptionId", nil)
+			userSubscriptionRoute.DELETE("/:userSubscriptionId", controller.DeleteUserSubscription(i.us).MustLogin(i.login))
 		}
 	}
 }

@@ -90,7 +90,6 @@ type CreateUserSubscriptionRequest struct {
 }
 
 func (r CreateUserSubscriptionRequest) Validate(ctx context.Context, userID string) error {
-	slog.Info("*****************", "suid", scontext.GetUserID(ctx), "uid", userID, "valid", userID == scontext.GetUserID(ctx))
 	if userID != scontext.GetUserID(ctx) {
 		return serror.ErrUserIDDontMatch
 	}
@@ -114,8 +113,9 @@ type CreateUserSubscriptionResponse struct {
 // @Tags     UserSubscription
 // @Accept   json
 // @Produce  json
-// @Param 	 q			 body 		 CreateUserSubscriptionRequest  true "CreateUserSubscriptionRequest"
-// @Success  200  	 {object}  CreateUserSubscriptionResponse
+// @Param 	 userId	　path 			string													false 	"user id"
+// @Param 	 q			 	body 		 	CreateUserSubscriptionRequest  	true 		"CreateUserSubscriptionRequest"
+// @Success  200  	 	{object}  CreateUserSubscriptionResponse
 // @Failure  400  {object}  echo.HTTPError
 // @Failure  500  {object}  echo.HTTPError
 // @Router   /subscription/{userId}/subscriptions [post]
@@ -180,13 +180,66 @@ func UpdateUserSubscription() MustLogin {
 
 // MARK: DeleteUserSubscription
 type DeleteUserSubscriptionRequest struct {
+	UserID             string `param:"userId"`
+	UserSubscriptionID string `param:"userSubscriptionId"`
+}
+
+func (r *DeleteUserSubscriptionRequest) Validate(ctx context.Context) error {
+	if r.UserID != scontext.GetUserID(ctx) {
+		return serror.ErrUserIDDontMatch
+	}
+
+	if r.UserSubscriptionID == "" {
+		return errors.New("user subscription required")
+	}
+
+	return nil
 }
 
 type DeleteUserSubscriptionResponse struct {
+	UserSubscriptionID string `json:"userSubscriptionId"`
 }
 
-func DeleteUserSubscription() MustLogin {
-	return func(ctx echo.Context) error {
-		panic("impl me")
+// usersubscription godoc
+// @Summary  User Subscription
+// @ID       CreateUserSubscription
+// @Tags     UserSubscription
+// @Accept   json
+// @Produce  json
+// @Param 	 userId	　						path 			string		false 	"user id"
+// @Param 	 userSubscriptionId	　path 			string		false 	"user id"
+// @Success  200 	{object}  CreateUserSubscriptionResponse
+// @Failure  400  {object}  echo.HTTPError
+// @Failure  500  {object}  echo.HTTPError
+// @Router   /subscription/{userId}/subscriptions/{userSubscriptionId} [delete]
+func DeleteUserSubscription(us *interactor.UserSubscription) MustLogin {
+	return func(c echo.Context) error {
+		var reqQuery DeleteUserSubscriptionRequest
+		if err := c.Bind(&reqQuery); err != nil {
+			slog.Warn("failed to bind.", "error", err)
+			return echo.ErrBadRequest
+		}
+
+		ctx := scontext.ConvertContext(c)
+
+		if err := reqQuery.Validate(ctx); err != nil {
+			slog.Warn("failed to validate.", "error", err, "userID", reqQuery.UserID, "sUserID", scontext.GetUserID(ctx))
+			return echo.ErrBadRequest
+		}
+
+		if err := us.DeleteUserSubscription(ctx, reqQuery.UserSubscriptionID); err != nil {
+			switch {
+			case errors.Is(err, serror.ErrResourceNotFound):
+				return echo.ErrBadRequest
+
+			default:
+				return echo.ErrInternalServerError
+			}
+		}
+
+		c.JSON(http.StatusOK, CreateUserSubscriptionResponse{
+			UserSubscrionID: reqQuery.UserSubscriptionID,
+		})
+		return nil
 	}
 }

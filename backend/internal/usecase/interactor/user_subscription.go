@@ -108,6 +108,10 @@ func (us *UserSubscription) CreateUserSubscription(ctx context.Context, param Cr
 	return userSubscription.ID, nil
 }
 
+func (us *UserSubscription) DeleteUserSubscription(ctx context.Context, userSubscriptionID string) error {
+	return us._us.DeleteUserSubscription(ctx, userSubscriptionID)
+}
+
 func (us *UserSubscription) calculateTotalAmountPerDay(userSubscriptions []entity.UserSubscription) int {
 	var totalAmount int
 	for _, us := range userSubscriptions {

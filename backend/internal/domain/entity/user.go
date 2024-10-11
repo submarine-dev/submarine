@@ -16,8 +16,8 @@ type User struct {
 	Icon  string `bun:"icon"`
 
 	RefreshToken string    `bun:"refresh_token"`
-	CreatedAt    time.Time `bun:"created_at"`
-	UpdatedAt    time.Time `bun:"updated_at"`
+	CreatedAt    time.Time `bun:",nullzero,notnull,default:current_timestamp"`
+	UpdatedAt    time.Time `bun:",nullzero,notnull,default:current_timestamp"`
 }
 
 var _ bun.BeforeAppendModelHook = (*User)(nil)

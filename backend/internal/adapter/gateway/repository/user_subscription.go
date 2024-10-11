@@ -36,3 +36,13 @@ func (r *UserSubscriptionRepo) CreateUserSubscription(ctx context.Context, userS
 	}
 	return nil
 }
+
+func (r *UserSubscriptionRepo) DeleteUserSubscription(ctx context.Context, userSubscriptionID string) error {
+	if _, err := r.db.NewDelete().Model(&entity.UserSubscription{}).
+		Where("id = ?", userSubscriptionID).
+		Exec(ctx); err != nil {
+		return err
+	}
+
+	return nil
+}

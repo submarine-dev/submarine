@@ -16,8 +16,8 @@ type Session struct {
 	UserID    string `bun:"user_id"`
 	UserAgent string `bun:"user_agent"`
 
-	CreatedAt time.Time `bun:"created_at"`
-	UpdatedAt time.Time `bun:"updated_at"`
+	CreatedAt time.Time `bun:",nullzero,notnull,default:current_timestamp"`
+	UpdatedAt time.Time `bun:",nullzero,notnull,default:current_timestamp"`
 }
 
 var _ bun.BeforeAppendModelHook = (*Session)(nil)

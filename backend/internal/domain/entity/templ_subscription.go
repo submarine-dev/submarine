@@ -13,8 +13,8 @@ type TemplSubscription struct {
 	Name            string    `bun:"name"`
 	Icon            string    `bun:"icon"`
 	UnsubscribeLink string    `bun:"unsubscribe_link"`
-	CreatedAt       time.Time `bun:"created_at"`
-	UpdatedAt       time.Time `bun:"updated_at"`
+	CreatedAt       time.Time `bun:",nullzero,notnull,default:current_timestamp"`
+	UpdatedAt       time.Time `bun:",nullzero,notnull,default:current_timestamp"`
 
 	TemplPlan []*TemplPlan `bun:"rel:has-many,join:id=subscription_id" json:"plans"`
 }

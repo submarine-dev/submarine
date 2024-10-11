@@ -20,7 +20,7 @@ type UserSubscription struct {
 	PlanPrice       int         `bun:"plan_price" json:"price"`
 	PlanPaymentType PaymentType `bun:"plan_payment_type" json:"paymentType"`
 	PaidAt          *time.Time  `bun:"paid_at" json:"paidAt"`
-	CreatedAt       time.Time   `bun:"created_at" json:"-"`
-	UpdatedAt       time.Time   `bun:"updated_at" json:"-"`
-	DeletedAt       *time.Time  `bun:"deleted_at" json:"-"`
+	CreatedAt       time.Time   `bun:",nullzero,notnull,default:current_timestamp"`
+	UpdatedAt       time.Time   `bun:",nullzero,notnull,default:current_timestamp"`
+	DeletedAt       *time.Time  `bun:"deleted_at,soft_delete" json:"-"`
 }
