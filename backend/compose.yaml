@@ -4,7 +4,18 @@ services:
       context: .docker/app
       dockerfile: local.Dockerfile
     platform: linux/amd64
+    restart: always
     ports:
-      - 8080:8080
+    - 8080:8080
     volumes:
-      - ./:/app
+    - ./:/app
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: submarine
+    ports:
+    - 5432:5432

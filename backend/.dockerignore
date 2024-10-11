@@ -1,0 +1,6 @@
+tmp/
+nr-security-home/
+.bin/
+.env
+.env.*
+.docker

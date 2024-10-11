@@ -1,14 +1,24 @@
 BINARY_NAME=app
 ENV_FILE=
 
-build:
-	docker compose build
+.PHONY: setup
 
-run: build
-	docker compose up
+setup: 
+	cp .env.template .env
 
-rund: build
-	docker compose up -d
+.PHONY: new-migrate migrate-up migrate-down
 
-test:
-	go test -v ./...
+name=
+new-migrate:
+	migrate create -ext sql -dir cmd/migrate/source -seq $(name)
+
+
+migrate-up: # todo remove
+	migrate --path cmd/migrate/source --database 'postgresql://postgres:postgres@localhost:5432/submarine?sslmode=disable' -verbose up
+
+migrate-down: # todo remove
+	migrate --path cmd/migrate/source --database 'postgresql://postgres:postgres@localhost:5432/submarine?sslmode=disable' -verbose down
+
+
+swag:
+	swag init --dir cmd/app/ --parseDependencyLevel 10 

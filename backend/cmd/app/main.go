@@ -5,11 +5,12 @@ import (
 	"flag"
 	"log/slog"
 	"net/http"
+	"os"
 	"strings"
 
-	"github.com/murasame29/go-httpserver-template/cmd/config"
-	"github.com/murasame29/go-httpserver-template/internal/container"
-	"github.com/murasame29/go-httpserver-template/internal/server"
+	"github.com/submarine/submarine/backend/cmd/config"
+	"github.com/submarine/submarine/backend/internal/container"
+	"github.com/submarine/submarine/backend/internal/framework/server"
 )
 
 type envFlag []string
@@ -32,6 +33,10 @@ func init() {
 	if err := config.LoadEnv(envFile...); err != nil {
 		slog.Error("Error loading .env file", "error", err)
 	}
+
+	slog.SetDefault(slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{
+		Level: slog.LevelDebug,
+	})))
 }
 func main() {
 	if err := run(); err != nil {
@@ -39,6 +44,9 @@ func main() {
 	}
 }
 
+// @title         submarine-api
+// @version       0.0.1
+// @BasePath      /v1
 func run() error {
 	// サーバーの起動
 	if err := container.NewContainer(); err != nil {

@@ -1,8 +1,14 @@
 package container
 
 import (
-	"github.com/murasame29/go-httpserver-template/internal/driver"
-	"github.com/murasame29/go-httpserver-template/internal/router"
+	"github.com/submarine/submarine/backend/internal/adapter/gateway"
+	"github.com/submarine/submarine/backend/internal/driver"
+	"github.com/submarine/submarine/backend/internal/framework/cookie"
+	"github.com/submarine/submarine/backend/internal/router"
+	"github.com/submarine/submarine/backend/internal/usecase/dai"
+	"github.com/submarine/submarine/backend/internal/usecase/interactor"
+	"github.com/submarine/submarine/backend/internal/usecase/service"
+	"github.com/uptrace/bun"
 	"go.uber.org/dig"
 )
 
@@ -18,7 +24,26 @@ func NewContainer() error {
 	container = dig.New()
 
 	args := []provideArg{
+		// other
+		{constructor: cookie.DefaultCookieOptions, opts: []dig.ProvideOption{}},
+		{constructor: cookie.NewCookieSetter, opts: []dig.ProvideOption{}},
+		// driver
 		{constructor: driver.NewRelicApp, opts: []dig.ProvideOption{}},
+		{constructor: driver.NewDB, opts: []dig.ProvideOption{}},
+		{constructor: driver.NewBun, opts: []dig.ProvideOption{dig.As(new(bun.IDB))}},
+		// gateway
+		{constructor: gateway.NewRepositories, opts: []dig.ProvideOption{dig.As(new(dai.DataAccessInterfaces))}},
+		// service
+		{constructor: service.NewSession, opts: []dig.ProvideOption{}},
+		{constructor: service.NewUserService, opts: []dig.ProvideOption{}},
+		{constructor: service.NewTemplSubscription, opts: []dig.ProvideOption{}},
+		{constructor: service.NewUserSubscription, opts: []dig.ProvideOption{}},
+		// interactor
+		{constructor: interactor.NewLogin, opts: []dig.ProvideOption{}},
+		{constructor: interactor.NewTemplSubscription, opts: []dig.ProvideOption{}},
+		{constructor: interactor.NewUserSubscription, opts: []dig.ProvideOption{}},
+		// handler
+		{constructor: router.NewDI, opts: []dig.ProvideOption{}},
 		{constructor: router.NewEcho, opts: []dig.ProvideOption{}},
 	}
 

@@ -4,14 +4,14 @@ import (
 	"fmt"
 	"log/slog"
 
-	"github.com/murasame29/go-httpserver-template/cmd/config"
 	"github.com/newrelic/go-agent/v3/integrations/nrsecurityagent"
 	"github.com/newrelic/go-agent/v3/newrelic"
+	"github.com/submarine/submarine/backend/cmd/config"
 )
 
 func NewRelicApp() *newrelic.Application {
 	app, err := newrelic.NewApplication(
-		newrelic.ConfigAppName("submarine-backend"),
+		newrelic.ConfigAppName(fmt.Sprintf("submarine_backend_%s", config.Config.NewRelic.Suffix)),
 		newrelic.ConfigLicense(config.Config.NewRelic.LicenseKey),
 		newrelic.ConfigAppLogEnabled(true),
 		newrelic.ConfigAppLogForwardingEnabled(true),
@@ -26,6 +26,7 @@ func NewRelicApp() *newrelic.Application {
 
 	if err != nil {
 		slog.Error("failed to create new relic app instance", "error", err)
+		panic(err)
 	}
 
 	// Production以外でIASTを有効化する
@@ -38,6 +39,7 @@ func NewRelicApp() *newrelic.Application {
 			nrsecurityagent.ConfigSecurityEnable(true),
 		); err != nil {
 			slog.Error("failed to create new relic app instance", "error", err)
+			panic(err)
 		}
 	}
 

@@ -1,0 +1,273 @@
+basePath: /v1
+definitions:
+  controller.CreateUserSubscriptionRequest:
+    properties:
+      name:
+        type: string
+      planId:
+        type: string
+      planName:
+        type: string
+      planPaymentType:
+        $ref: '#/definitions/entity.PaymentType'
+      planPrice:
+        type: integer
+      subscriptionId:
+        type: string
+      unsubscribeLink:
+        type: string
+    type: object
+  controller.CreateUserSubscriptionResponse:
+    properties:
+      userSubscrionId:
+        type: string
+    type: object
+  controller.GetSubscriptionResponse:
+    properties:
+      icon:
+        type: string
+      id:
+        type: string
+      isSubscribed:
+        type: boolean
+      name:
+        type: string
+      plan:
+        items:
+          $ref: '#/definitions/entity.TemplPlan'
+        type: array
+    type: object
+  controller.GetSubscriptionsResponse:
+    properties:
+      icon:
+        type: string
+      id:
+        type: string
+      isSubscribed:
+        type: boolean
+      name:
+        type: string
+    type: object
+  controller.GetUserSubscriptionsResponse:
+    properties:
+      totalAmountPerDay:
+        type: integer
+      totalAmountPerMonth:
+        type: integer
+      totalAmountPerYear:
+        type: integer
+      userSubscriptions:
+        items:
+          $ref: '#/definitions/entity.UserSubscription'
+        type: array
+    type: object
+  controller.GoogleLoginRequest:
+    properties:
+      code:
+        type: string
+    type: object
+  controller.GoogleLoginResponse:
+    properties:
+      userId:
+        type: string
+    type: object
+  echo.HTTPError:
+    properties:
+      message: {}
+    type: object
+  entity.PaymentType:
+    enum:
+    - daily
+    - monthly
+    - yearly
+    type: string
+    x-enum-varnames:
+    - PaymentTypeDaily
+    - PaymentTypeMonthly
+    - PaymentTypeYearly
+  entity.TemplPlan:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      paymentType:
+        $ref: '#/definitions/entity.PaymentType'
+      price:
+        type: integer
+      subscriptionId:
+        type: string
+    type: object
+  entity.UserSubscription:
+    properties:
+      createdAt:
+        type: string
+      icon:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      paidAt:
+        type: string
+      paymentType:
+        $ref: '#/definitions/entity.PaymentType'
+      planId:
+        type: string
+      planName:
+        type: string
+      price:
+        type: integer
+      templId:
+        type: string
+      unsubscribeLink:
+        type: string
+      updatedAt:
+        type: string
+      userId:
+        type: string
+    type: object
+info:
+  contact: {}
+  title: submarine-api
+  version: 0.0.1
+paths:
+  /login/google:
+    post:
+      consumes:
+      - application/json
+      operationId: GoogleLogin
+      parameters:
+      - description: GoogleLoginRequest
+        in: body
+        name: q
+        required: true
+        schema:
+          $ref: '#/definitions/controller.GoogleLoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.GoogleLoginResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+      summary: Google Login
+      tags:
+      - LoginRequest
+  /subscription:
+    get:
+      operationId: GetSubscriptions
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/controller.GetSubscriptionsResponse'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+      summary: Get Subscriptions
+      tags:
+      - Subscription
+  /subscription/{subscriptionId}:
+    get:
+      operationId: GetSubscription
+      parameters:
+      - description: subscription id
+        in: path
+        name: subscriptionId
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.GetSubscriptionResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+      summary: Get Subscription
+      tags:
+      - Subscription
+  /users/{userId}/subscriptions:
+    get:
+      operationId: GetUserSubscriptions
+      parameters:
+      - description: user id
+        in: path
+        name: userId
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.GetUserSubscriptionsResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+      summary: Get Subscription
+      tags:
+      - UserSubscription
+    post:
+      consumes:
+      - application/json
+      operationId: CreateUserSubscription
+      parameters:
+      - description: user id
+        in: path
+        name: userId
+        type: string
+      - description: CreateUserSubscriptionRequest
+        in: body
+        name: q
+        required: true
+        schema:
+          $ref: '#/definitions/controller.CreateUserSubscriptionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.CreateUserSubscriptionResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+      summary: User Subscription
+      tags:
+      - UserSubscription
+swagger: "2.0"

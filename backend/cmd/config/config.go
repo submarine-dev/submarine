@@ -24,10 +24,17 @@ func LoadEnv(path ...string) error {
 		return err
 	}
 
+	if err := env.Parse(&config.DB); err != nil {
+		return err
+	}
+
 	if err := env.Parse(&config.NewRelic); err != nil {
 		return err
 	}
 
+	if err := env.Parse(&config.GoogleService); err != nil {
+		return err
+	}
 	// ... configに構造体を追加したら env.Parseする
 	Config = config
 
