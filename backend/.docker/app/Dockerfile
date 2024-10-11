@@ -3,17 +3,17 @@ WORKDIR /build
 
 COPY . .
 
-RUN go build -o app ./cmd/app/main.go
+RUN CGO_ENABLED=0  go build -o /build/main ./cmd/app/main.go
 
 FROM gcr.io/distroless/static-debian11:nonroot
 WORKDIR /app
 
-COPY --from=builder /build/app .
+COPY --from=builder /build/main /
 
 ENV PORT=
 
 EXPOSE ${PORT}
 
-USER 1001
+USER 1000
 
-CMD ["/app/main"]
+CMD ["/main"]
