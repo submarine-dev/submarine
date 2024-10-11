@@ -45,6 +45,18 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/controller.GoogleLoginResponse"
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
+                        }
                     }
                 }
             }
@@ -124,7 +136,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/subscription/{userId}/subscriptions": {
+        "/users/{userId}/subscriptions": {
             "get": {
                 "produces": [
                     "application/json"
@@ -176,6 +188,12 @@ const docTemplate = `{
                 "summary": "User Subscription",
                 "operationId": "CreateUserSubscription",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "userId",
+                        "in": "path"
+                    },
                     {
                         "description": "CreateUserSubscriptionRequest",
                         "name": "q",
@@ -362,6 +380,9 @@ const docTemplate = `{
         "entity.UserSubscription": {
             "type": "object",
             "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
                 "icon": {
                     "type": "string"
                 },
@@ -377,19 +398,25 @@ const docTemplate = `{
                 "paymentType": {
                     "$ref": "#/definitions/entity.PaymentType"
                 },
+                "planId": {
+                    "type": "string"
+                },
                 "planName": {
                     "type": "string"
                 },
                 "price": {
                     "type": "integer"
                 },
-                "templID": {
+                "templId": {
                     "type": "string"
                 },
                 "unsubscribeLink": {
                     "type": "string"
                 },
-                "userID": {
+                "updatedAt": {
+                    "type": "string"
+                },
+                "userId": {
                     "type": "string"
                 }
             }

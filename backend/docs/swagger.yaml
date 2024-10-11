@@ -100,6 +100,8 @@ definitions:
     type: object
   entity.UserSubscription:
     properties:
+      createdAt:
+        type: string
       icon:
         type: string
       id:
@@ -110,15 +112,19 @@ definitions:
         type: string
       paymentType:
         $ref: '#/definitions/entity.PaymentType'
+      planId:
+        type: string
       planName:
         type: string
       price:
         type: integer
-      templID:
+      templId:
         type: string
       unsubscribeLink:
         type: string
-      userID:
+      updatedAt:
+        type: string
+      userId:
         type: string
     type: object
 info:
@@ -145,6 +151,14 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/controller.GoogleLoginResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
       summary: Google Login
       tags:
       - LoginRequest
@@ -197,7 +211,7 @@ paths:
       summary: Get Subscription
       tags:
       - Subscription
-  /subscription/{userId}/subscriptions:
+  /users/{userId}/subscriptions:
     get:
       operationId: GetUserSubscriptions
       parameters:
@@ -228,6 +242,10 @@ paths:
       - application/json
       operationId: CreateUserSubscription
       parameters:
+      - description: user id
+        in: path
+        name: userId
+        type: string
       - description: CreateUserSubscriptionRequest
         in: body
         name: q

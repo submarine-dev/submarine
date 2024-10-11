@@ -47,7 +47,7 @@ type GetUserSubscriptionsResponse struct {
 // @Success  200  {object}  GetUserSubscriptionsResponse
 // @Failure  400  {object}  echo.HTTPError
 // @Failure  500  {object}  echo.HTTPError
-// @Router   /subscription/{userId}/subscriptions [get]
+// @Router   /users/{userId}/subscriptions [get]
 func GetUserSubscriptions(us *interactor.UserSubscription) MustLogin {
 	return func(c echo.Context) error {
 		var reqQuery GetUserSubscriptionsRequest
@@ -113,12 +113,12 @@ type CreateUserSubscriptionResponse struct {
 // @Tags     UserSubscription
 // @Accept   json
 // @Produce  json
-// @Param 	 userId	　path 			string													false 	"user id"
+// @Param 	 userId		 	path 				string									false 	"user id"
 // @Param 	 q			 	body 		 	CreateUserSubscriptionRequest  	true 		"CreateUserSubscriptionRequest"
 // @Success  200  	 	{object}  CreateUserSubscriptionResponse
 // @Failure  400  {object}  echo.HTTPError
 // @Failure  500  {object}  echo.HTTPError
-// @Router   /subscription/{userId}/subscriptions [post]
+// @Router   /users/{userId}/subscriptions [post]
 func CreateUserSubscription(us *interactor.UserSubscription) MustLogin {
 	return func(c echo.Context) error {
 		var reqBody CreateUserSubscriptionRequest
@@ -200,18 +200,6 @@ type DeleteUserSubscriptionResponse struct {
 	UserSubscriptionID string `json:"userSubscriptionId"`
 }
 
-// usersubscription godoc
-// @Summary  User Subscription
-// @ID       CreateUserSubscription
-// @Tags     UserSubscription
-// @Accept   json
-// @Produce  json
-// @Param 	 userId	　						path 			string		false 	"user id"
-// @Param 	 userSubscriptionId	　path 			string		false 	"user id"
-// @Success  200 	{object}  CreateUserSubscriptionResponse
-// @Failure  400  {object}  echo.HTTPError
-// @Failure  500  {object}  echo.HTTPError
-// @Router   /subscription/{userId}/subscriptions/{userSubscriptionId} [delete]
 func DeleteUserSubscription(us *interactor.UserSubscription) MustLogin {
 	return func(c echo.Context) error {
 		var reqQuery DeleteUserSubscriptionRequest
