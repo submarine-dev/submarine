@@ -1,4 +1,5 @@
 import React, { ReactNode, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/auth';
 
 interface Props {
@@ -9,11 +10,11 @@ const UnauthenticatedLayout: React.FC<Props> = ({
   children,
 }) => {
   const { fbUser, isLoading } = useAuth();
-  const router = useRouter();
+  const router = useNavigate();
 
   useEffect(() => {
     if (fbUser) {
-      router.push('/home');
+      router('/home');
     }
   }, [fbUser, isLoading, router]);
 

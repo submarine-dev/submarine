@@ -1,10 +1,10 @@
 import { data } from './data';
 
 export async function GET(
-  request: Request,
-  { params }: { params: { userId: string } }
+  // request: Request,
+  // { params }: { params: { userId: string } }
 ) {
-  const userId = params.userId;
+  // const userId = params.userId;
 
   try {
     return new Response(JSON.stringify({ data }), {

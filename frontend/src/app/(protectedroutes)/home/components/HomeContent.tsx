@@ -3,16 +3,15 @@ import { axiosFn } from '@/lib/axiosFn';
 import { ContractedSubscriptionType } from '@/types/ContractedSubscriptionType';
 import { SubscriptionBaseType } from '@/types/SubscriptionBaseType';
 import { FC, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AddSubscriptionBoard } from './AddSubscriptionBoard';
 import { SubscribedBoard } from './SubscribedBoard';
-
-type Props = {};
 
 /**
  * ログイントップ/content
  */
-const HomeContent: FC<Props> = ({}) => {
-  const router = useRouter();
+const HomeContent: FC = () => {
+  const router = useNavigate();
   const [totalPayment, setTotalPayment] =
     useState<number>(0);
   const [
@@ -30,7 +29,7 @@ const HomeContent: FC<Props> = ({}) => {
   const handleClickSubscription = (
     subscriptionId: string
   ): void => {
-    router.push(`/detail/${subscriptionId}`);
+    router(`/detail/${subscriptionId}`);
   };
 
   /**

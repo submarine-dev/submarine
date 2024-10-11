@@ -9,7 +9,8 @@ import { SearchSubscriptionBoard } from './SearchSubscriptionBoard';
  */
 const SearchSubscriptionContent: FC = () => {
   const [
-    contractedSubscriptions,
+    ,
+    // contractedSubscriptions
     setContractedSubscriptions,
   ] = useState<ContractedSubscriptionType[]>([]);
   const [listOfSubscriptions, setListOfSubscriptions] =

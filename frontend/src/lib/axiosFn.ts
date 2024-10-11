@@ -1,10 +1,15 @@
+import {
+  DEV_API_END_POINT,
+  ENV_NAME,
+  PROD_API_END_POINT,
+} from '@/const/env';
 import { Axios } from 'axios';
 
-const isMockApiMode =
-  process.env.NEXT_PUBLIC_MOCK_API_MODE === 'true';
-const apiUrl = isMockApiMode
-  ? process.env.NEXT_PUBLIC_MOCK_API_URL
-  : 'https://submarine-server.com';
+const apiUrl = (() => {
+  if (ENV_NAME === 'dev') return DEV_API_END_POINT;
+  return PROD_API_END_POINT;
+})();
+
 export const axiosFn = new Axios({
   baseURL: apiUrl,
   responseType: 'json',

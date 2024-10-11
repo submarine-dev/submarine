@@ -7,6 +7,7 @@ import {
 import { logout } from '@/lib/firebase/auth';
 import { FC } from 'react';
 import { IoMdArrowRoundBack } from 'react-icons/io';
+import { useNavigate } from 'react-router-dom';
 import { H2 } from './Typography';
 import { useAuth } from './functions/context/auth';
 import { Button } from './ui/button';
@@ -16,14 +17,14 @@ import { Button } from './ui/button';
  */
 export const HeaderComponents: FC = () => {
   const { fbUser } = useAuth();
-  const router = useRouter();
-  const pathName = usePathname();
+  const router = useNavigate();
+  const pathName = window.location.pathname;
 
   /**
    * 戻るボタンクリック
    */
   const handleClickBackScreen = (): void => {
-    router.back();
+    router(-1);
   };
 
   /**

@@ -1,11 +1,9 @@
 import { FC } from 'react';
 
-const ErrorPage: FC<{ statusCode: number }> = ({
-  statusCode,
-}) => {
+const ErrorPage: FC = () => {
   return (
     <div>
-      <h1>Error {statusCode}</h1>
+      <h1>Error</h1>
       <p>Oops! Something went wrong.</p>
     </div>
   );

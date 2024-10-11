@@ -1,22 +1,23 @@
 import { FC } from 'react';
+import ProtectedRoutesLayout from '../../layout';
 import SubscriptionDetailContainer from './components/SubscriptionDetailContainer';
 
 type Props = {
-  params: {
-    subscriptionId: string;
-  };
+  subscriptionId: string;
 };
 
 /**
  * サブスクリプション詳細
  */
 const SubscriptionDetailPage: FC<Props> = ({
-  params: { subscriptionId },
+  subscriptionId,
 }) => {
   return (
-    <SubscriptionDetailContainer
-      subscriptionId={subscriptionId}
-    />
+    <ProtectedRoutesLayout>
+      <SubscriptionDetailContainer
+        subscriptionId={subscriptionId}
+      />
+    </ProtectedRoutesLayout>
   );
 };
 

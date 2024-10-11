@@ -26,7 +26,8 @@ export const SearchSubscriptionBoard: FC<Props> = ({
   >([]);
   const [
     selectedSubscriptionPlanId,
-    setSelectedSubscriptionPlanId,
+    ,
+    // setSelectedSubscriptionPlanId
   ] = useState<string | null>(null);
 
   const searchHandler = () => {

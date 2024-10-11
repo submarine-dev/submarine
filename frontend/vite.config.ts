@@ -5,7 +5,7 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   server: {
     strictPort: true,
-    port: 5000,
+    port: 3000,
   },
   resolve: {
     mainFields: ['browser', 'module', 'main'],
