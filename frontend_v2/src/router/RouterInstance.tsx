@@ -13,7 +13,7 @@ type RouteItemType = {
 export const RouterInstance: FC = () => {
   const routeArray: RouteItemType[] = [
     {
-            path: '/',
+      path: '/',
       element: <div>IndexPage</div>,
     },
     {
