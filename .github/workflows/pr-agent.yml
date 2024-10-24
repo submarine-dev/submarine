@@ -1,0 +1,32 @@
+name: pr-agent
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+permissions:
+  pull-requests: write
+
+jobs:
+  pr_agent:
+    runs-on: ubuntu-latest
+    name: Run PR Agent
+    if: ${{ github.event.sender.type != 'Bot' }}
+    steps:
+      - id: pr-agent
+        uses: Codium-ai/pr-agent@main
+        env:
+          OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          config.verbosity_level: 1
+          pr_reviewer.extra_instructions: "Please use Japanese in your answers."
+          pr_description.extra_instructions: 'Please use Japanese in descriptions. Titles should have prefix of commitlint pattern such as `feat:`, `chore:`, `test:`, `fix:`, `ci:`, `docs:` etc'
+          pr_reviewer.require_estimate_effort_to_review: 'false'
+          pr_description.inline_file_summary: 'true'
+          pr_description.use_description_markers: 'true'
+          pr_description.include_generated_by_header: 'false'
+          pr_description.final_update_message: 'false'
+          pr_description.enable_help_text: 'false'
+          github_action_config.auto_review: 'true'
+          github_action_config-auto_describe: 'true'
+          github_action_config.auto_improve: 'true'
