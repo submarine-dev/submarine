@@ -1,4 +1,4 @@
-import { axiosFn } from '@/lib/axiosFn';
+import { apiClient,  } from '@/lib/axiosFn';
 import { ContractedSubscriptionType } from '@/types/ContractedSubscriptionType';
 import { SubscriptionBaseType } from '@/types/SubscriptionBaseType';
 import { FC, useEffect, useState } from 'react';
@@ -23,19 +23,11 @@ const SearchSubscriptionContent: FC = () => {
    */
   useEffect(() => {
     (async () => {
-      const userRes = await axiosFn.get(
-        '/users/1/subscriptions'
-      );
-      const subscriptionsRes = await axiosFn.get(
-        '/subscriptions'
-      );
+                const userSubscriptionRes = await apiClient.users._userId("").subscriptions.get();
+                const subscriptionsRes = await apiClient.subscription.get();
 
-      const newUserData = userRes.data.data;
-      const newSubscriptions =
-        subscriptionsRes.data.subscriptionMaster;
-
-      setContractedSubscriptions(newUserData.subscriptions);
-      setListOfSubscriptions(newSubscriptions);
+                setContractedSubscriptions(userSubscriptionRes.body.userSubscriptions as any);
+                setListOfSubscriptions(subscriptionsRes.body as any);
     })();
   }, []);
 

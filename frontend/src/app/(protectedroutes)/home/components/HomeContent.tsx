@@ -1,11 +1,11 @@
 import { Body2Typo } from '@/components/Typography';
-import { axiosFn } from '@/lib/axiosFn';
 import { ContractedSubscriptionType } from '@/types/ContractedSubscriptionType';
 import { SubscriptionBaseType } from '@/types/SubscriptionBaseType';
 import { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AddSubscriptionBoard } from './AddSubscriptionBoard';
 import { SubscribedBoard } from './SubscribedBoard';
+import { apiClient } from '@/lib/axiosFn';
 
 /**
  * ログイントップ/content
@@ -39,20 +39,12 @@ const HomeContent: FC = () => {
    */
   useEffect(() => {
     (async () => {
-      const userRes = await axiosFn.get(
-        '/users/1/subscriptions'
-      );
-      const subscriptionsRes = await axiosFn.get(
-        '/subscriptions'
-      );
+      const userSubscriptionRes = await apiClient.users._userId("").subscriptions.get();
+      const subscriptionsRes = await apiClient.subscription.get();
 
-      const newUserData = userRes.data.data;
-      const newSubscriptions =
-        subscriptionsRes.data.subscriptionMaster;
-
-      setTotalPayment(newUserData.totalPayment);
-      setContractedSubscriptions(newUserData.subscriptions);
-      setListOfSubscriptions(newSubscriptions);
+      setTotalPayment(userSubscriptionRes.body.totalAmountPerMonth ?? 0)
+      setContractedSubscriptions(userSubscriptionRes.body.userSubscriptions as any);
+      setListOfSubscriptions(subscriptionsRes.body as any);
     })();
   }, []);
 
