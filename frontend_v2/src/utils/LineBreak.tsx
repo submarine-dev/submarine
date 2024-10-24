@@ -16,13 +16,9 @@ export const LineBreak: FC<Props> = ({ children }) => {
   return (
     <>
       {children.split('\n').map((line, index) => {
-        const ifEmptyTargetLine =
-          index === 0
-            ? children[arrayLength]
-            : children[index - 1];
+        const ifEmptyTargetLine = index === 0 ? children[arrayLength] : children[index - 1];
         const isEmptyLine = line === '';
-        const isStartOrLastLine =
-          index === arrayLength - 1 || index === 0;
+        const isStartOrLastLine = index === arrayLength - 1 || index === 0;
 
         const key = isEmptyLine ? ifEmptyTargetLine : line;
 

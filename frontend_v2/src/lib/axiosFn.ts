@@ -1,19 +1,10 @@
-import {
-  DEV_API_END_POINT,
-  ENV_NAME,
-  PROD_API_END_POINT,
-} from '@/const/env';
+import { APP_END_POINT } from '@/const/env';
 import aspida from '@aspida/axios';
 import axios, { AxiosRequestConfig } from 'axios';
-import api from '../../api/$api';
-
-const apiUrl = (() => {
-  if (ENV_NAME === 'dev') return DEV_API_END_POINT;
-  return PROD_API_END_POINT;
-})();
+import api from '../../../frontend/api/$api';
 
 const config: AxiosRequestConfig = {
-  baseURL: apiUrl,
+  baseURL: APP_END_POINT,
   responseType: 'json',
   headers: {
     'Content-Type': 'application/json',
@@ -30,9 +21,7 @@ const config: AxiosRequestConfig = {
   ],
 };
 
-const generateApiClient = (
-  attachConfig: AxiosRequestConfig
-) => {
+const generateApiClient = (attachConfig: AxiosRequestConfig) => {
   return api(aspida(axios, attachConfig));
 };
 
