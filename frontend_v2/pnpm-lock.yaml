@@ -32,6 +32,9 @@ importers:
       '@vitejs/plugin-react-swc':
         specifier: ^3.7.1
         version: 3.7.1(vite@5.4.4(@types/node@22.5.4))
+      aspida:
+        specifier: ^1.14.0
+        version: 1.14.0
       axios:
         specifier: ^1.7.2
         version: 1.7.7
