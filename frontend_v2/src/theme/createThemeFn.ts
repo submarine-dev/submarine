@@ -1,7 +1,7 @@
 import { createTheme } from '@mui/material';
 import breakpoints from './breakpoints';
-import typography from './typography';
 import { palette } from './paletteFn.ts';
+import typography from './typography';
 
 export const theme = createTheme({
   shape: {

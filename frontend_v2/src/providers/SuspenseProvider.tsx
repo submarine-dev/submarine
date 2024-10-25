@@ -1,5 +1,5 @@
 import { LoadingPage } from '@/components/page/LoadingPage';
-import { FC, ReactNode, Suspense } from 'react';
+import { type FC, type ReactNode, Suspense } from 'react';
 
 type Props = {
   children: ReactNode;

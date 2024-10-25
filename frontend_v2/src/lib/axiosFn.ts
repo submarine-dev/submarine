@@ -1,6 +1,6 @@
 import { APP_END_POINT } from '@/const/env';
 import aspida from '@aspida/axios';
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, { type AxiosRequestConfig } from 'axios';
 import api from '../../../frontend/api/$api';
 
 const config: AxiosRequestConfig = {

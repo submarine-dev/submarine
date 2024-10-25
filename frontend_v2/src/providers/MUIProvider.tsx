@@ -1,6 +1,6 @@
 import { theme } from '@/theme/createThemeFn';
 import { ThemeProvider } from '@mui/material';
-import { FC, ReactNode } from 'react';
+import type { FC, ReactNode } from 'react';
 
 type Props = {
   children: ReactNode;

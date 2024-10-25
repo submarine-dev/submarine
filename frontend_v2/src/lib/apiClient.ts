@@ -1,5 +1,5 @@
 import { APP_END_POINT } from '@/const/env';
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, { type AxiosRequestConfig } from 'axios';
 
 const config: AxiosRequestConfig = {
   baseURL: APP_END_POINT,

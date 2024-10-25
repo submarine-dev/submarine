@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
+import { type ChangeEvent, type Dispatch, type SetStateAction, useState } from 'react';
 
 export type UseHandlerType<T> = [
   T,

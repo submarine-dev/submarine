@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react';
+import type { FC, ReactNode } from 'react';
 import { MUIProvider } from './MUIProvider';
 import { SuspenseProvider } from './SuspenseProvider';
 import { TanStackQueryProvider } from './TanStackQueryProvider';

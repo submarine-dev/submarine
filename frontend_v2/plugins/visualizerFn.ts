@@ -1,8 +1,8 @@
-import { exec } from 'child_process';
-import { log } from 'console';
-import { resolve } from 'path';
+import { exec } from 'node:child_process';
+import { log } from 'node:console';
+import { resolve } from 'node:path';
 import { visualizer } from 'rollup-plugin-visualizer';
-import { Plugin } from 'vite';
+import type { Plugin } from 'vite';
 
 const fileName = 'stats.html';
 

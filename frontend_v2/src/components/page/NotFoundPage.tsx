@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import { Button, Stack, Typography } from '@mui/material';
-import { FC } from 'react';
+import type { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const styles = {

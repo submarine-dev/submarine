@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 import { ProviderRoot } from './providers/ProviderRoot';
 import { RouterInstance } from './router/RouterInstance';
 
