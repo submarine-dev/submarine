@@ -1,12 +1,19 @@
-import { APP_END_POINT } from '@/const/env';
+import { API_END_POINT } from '@/const/env';
+import aspida from '@aspida/axios';
 import axios, { type AxiosRequestConfig } from 'axios';
+import api from '../../api/$api';
 
 const config: AxiosRequestConfig = {
-  baseURL: APP_END_POINT,
+  baseURL: API_END_POINT,
   responseType: 'json',
   headers: {
     'Content-Type': 'application/json',
   },
+  transformRequest: [
+    function transformRequest(data) {
+      return JSON.stringify(data);
+    },
+  ],
   transformResponse: [
     function transformResponse(data) {
       return JSON.parse(data);
@@ -14,4 +21,11 @@ const config: AxiosRequestConfig = {
   ],
 };
 
-export const apiClient = axios.create(config);
+const generateApiClient = (attachConfig: AxiosRequestConfig) => {
+  return api(aspida(axios, attachConfig));
+};
+
+/**
+ * aspidaのclient
+ */
+export const apiClient = generateApiClient(config);

@@ -1,6 +1,6 @@
 {
   "extensions.ignoreRecommendations": false,
-  "cSpell.words": ["usecases"],
+  "cSpell.words": ["usecases", "aspida"],
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "biomejs.biome",
   "[typescript]": {

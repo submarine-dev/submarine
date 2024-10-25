@@ -5,9 +5,7 @@ import type { Methods as Methods_1x83wiu } from './subscription/_subscriptionId@
 import type { Methods as Methods_ofkqqi } from './users/_userId@string/subscriptions';
 
 const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
-  const prefix = (
-    baseURL === undefined ? '/v1' : baseURL
-  ).replace(/\/$/, '');
+  const prefix = (baseURL === undefined ? '/v1' : baseURL).replace(/\/$/, '');
   const PATH0 = '/login/google';
   const PATH1 = '/subscription';
   const PATH2 = '/users';
@@ -22,10 +20,7 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
          * @param option.body - GoogleLoginRequest
          * @returns OK
          */
-        post: (option: {
-          body: Methods_17j1g8v['post']['reqBody'];
-          config?: T | undefined;
-        }) =>
+        post: (option: { body: Methods_17j1g8v['post']['reqBody']; config?: T | undefined }) =>
           fetch<
             Methods_17j1g8v['post']['resBody'],
             BasicHeaders,
@@ -35,10 +30,7 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
          * @param option.body - GoogleLoginRequest
          * @returns OK
          */
-        $post: (option: {
-          body: Methods_17j1g8v['post']['reqBody'];
-          config?: T | undefined;
-        }) =>
+        $post: (option: { body: Methods_17j1g8v['post']['reqBody']; config?: T | undefined }) =>
           fetch<
             Methods_17j1g8v['post']['resBody'],
             BasicHeaders,
@@ -57,9 +49,7 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
           /**
            * @returns OK
            */
-          get: (
-            option?: { config?: T | undefined } | undefined
-          ) =>
+          get: (option?: { config?: T | undefined } | undefined) =>
             fetch<
               Methods_1x83wiu['get']['resBody'],
               BasicHeaders,
@@ -68,9 +58,7 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
           /**
            * @returns OK
            */
-          $get: (
-            option?: { config?: T | undefined } | undefined
-          ) =>
+          $get: (option?: { config?: T | undefined } | undefined) =>
             fetch<
               Methods_1x83wiu['get']['resBody'],
               BasicHeaders,
@@ -84,25 +72,23 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
       /**
        * @returns OK
        */
-      get: (
-        option?: { config?: T | undefined } | undefined
-      ) =>
-        fetch<
-          Methods_u5gjfz['get']['resBody'],
-          BasicHeaders,
-          Methods_u5gjfz['get']['status']
-        >(prefix, PATH1, GET, option).json(),
+      get: (option?: { config?: T | undefined } | undefined) =>
+        fetch<Methods_u5gjfz['get']['resBody'], BasicHeaders, Methods_u5gjfz['get']['status']>(
+          prefix,
+          PATH1,
+          GET,
+          option
+        ).json(),
       /**
        * @returns OK
        */
-      $get: (
-        option?: { config?: T | undefined } | undefined
-      ) =>
-        fetch<
-          Methods_u5gjfz['get']['resBody'],
-          BasicHeaders,
-          Methods_u5gjfz['get']['status']
-        >(prefix, PATH1, GET, option)
+      $get: (option?: { config?: T | undefined } | undefined) =>
+        fetch<Methods_u5gjfz['get']['resBody'], BasicHeaders, Methods_u5gjfz['get']['status']>(
+          prefix,
+          PATH1,
+          GET,
+          option
+        )
           .json()
           .then((r) => r.body),
       $path: () => `${prefix}${PATH1}`,
@@ -116,29 +102,16 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
             /**
              * @returns OK
              */
-            get: (
-              option?:
-                | { config?: T | undefined }
-                | undefined
-            ) =>
+            get: (option?: { config?: T | undefined } | undefined) =>
               fetch<
                 Methods_ofkqqi['get']['resBody'],
                 BasicHeaders,
                 Methods_ofkqqi['get']['status']
-              >(
-                prefix,
-                `${prefix1}${PATH3}`,
-                GET,
-                option
-              ).json(),
+              >(prefix, `${prefix1}${PATH3}`, GET, option).json(),
             /**
              * @returns OK
              */
-            $get: (
-              option?:
-                | { config?: T | undefined }
-                | undefined
-            ) =>
+            $get: (option?: { config?: T | undefined } | undefined) =>
               fetch<
                 Methods_ofkqqi['get']['resBody'],
                 BasicHeaders,
@@ -150,28 +123,17 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
              * @param option.body - CreateUserSubscriptionRequest
              * @returns OK
              */
-            post: (option: {
-              body: Methods_ofkqqi['post']['reqBody'];
-              config?: T | undefined;
-            }) =>
+            post: (option: { body: Methods_ofkqqi['post']['reqBody']; config?: T | undefined }) =>
               fetch<
                 Methods_ofkqqi['post']['resBody'],
                 BasicHeaders,
                 Methods_ofkqqi['post']['status']
-              >(
-                prefix,
-                `${prefix1}${PATH3}`,
-                POST,
-                option
-              ).json(),
+              >(prefix, `${prefix1}${PATH3}`, POST, option).json(),
             /**
              * @param option.body - CreateUserSubscriptionRequest
              * @returns OK
              */
-            $post: (option: {
-              body: Methods_ofkqqi['post']['reqBody'];
-              config?: T | undefined;
-            }) =>
+            $post: (option: { body: Methods_ofkqqi['post']['reqBody']; config?: T | undefined }) =>
               fetch<
                 Methods_ofkqqi['post']['resBody'],
                 BasicHeaders,

@@ -45,10 +45,7 @@ export type Controller_GoogleLoginResponse = {
 
 export type Echo_HTTPError = {};
 
-export type Entity_PaymentType =
-  | 'daily'
-  | 'monthly'
-  | 'yearly';
+export type Entity_PaymentType = 'daily' | 'monthly' | 'yearly';
 
 export type Entity_TemplPlan = {
   id?: string | undefined;

@@ -19,7 +19,8 @@
     "build:analyze": "tsc && vite build --mode dev",
     "lint": "biome lint --write ./ && tsc --noEmit",
     "format": "biome format --write ./",
-    "check": "biome check --write ./ && tsc --noEmit"
+    "check": "biome check --write ./ && tsc --noEmit",
+    "aspida": "rm -rf ./api && npx openapi2aspida -i=../backend/docs/swagger.yaml && pnpm format"
   },
   "dependencies": {
     "@aspida/axios": "^1.14.0",
