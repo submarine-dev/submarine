@@ -1,6 +1,6 @@
-import { PaletteOptions } from '@mui/material';
+import type { PaletteOptions } from '@mui/material';
 
-const PRIMARY_COLOR = '#2850BF';
+export const PRIMARY_COLOR = '#2850BF';
 
 /**
  * theme/palette
@@ -13,5 +13,8 @@ export const palette: PaletteOptions = {
   secondary: {
     main: '#333333',
     contrastText: '#ffffff',
+  },
+  background: {
+    default: PRIMARY_COLOR,
   },
 };
