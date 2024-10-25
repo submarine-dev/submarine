@@ -1,0 +1,9 @@
+{
+  "name": "submarine-root",
+  "dependencies": {
+    "biome": "^0.3.3"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4"
+  }
+}
