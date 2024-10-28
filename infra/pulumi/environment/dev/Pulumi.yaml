@@ -1,0 +1,7 @@
+name: submarine-dev
+description: submarine develop environment on Google Cloud With Pulumi
+runtime: go
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: container-gcp-go
