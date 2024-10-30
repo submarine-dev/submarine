@@ -8,18 +8,31 @@ type Props = {
 
 const Background: FC = () => {
   return (
-    <Box
-      sx={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '40dvh',
-        zIndex: -1,
-        background: 'linear-gradient(0deg, #0B1C31 0%, #2850BF 100%)',
-        borderRadius: '0 0 2% 2%',
-      }}
-    />
+    <>
+      <Box
+        sx={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '40dvh',
+          zIndex: -1,
+          background: 'linear-gradient(0deg, #0B1C31 0%, #2850BF 100%)',
+          borderRadius: '0 0 2% 2%',
+        }}
+      />
+      <Box
+        sx={{
+          position: 'fixed',
+          top: '40dvh',
+          left: 0,
+          width: '100%',
+          height: '60dvh',
+          zIndex: -1,
+          bgcolor: '#F5F5F5',
+        }}
+      />
+    </>
   );
 };
 
