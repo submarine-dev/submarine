@@ -1,5 +1,5 @@
-import { authService } from '@/service/AuthService';
-import type { UserType } from '@/types/domain/auth/UserType';
+import { authService } from '@/service/authService';
+import { UserType } from '@/types/domain/UserType';
 import { useAtom } from 'jotai';
 import { useEffect } from 'react';
 import { authCodeAtom } from './atom/authAtom';

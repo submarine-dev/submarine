@@ -15,17 +15,8 @@ const IndexContent: FC = () => {
           Submarine
         </H1>
         <UnauthenticatedLayout>
-          <Button
-            variant="outline"
-            onClick={login}
-            className="my-10"
-          >
-            <img
-              src={'/google-icon.png'}
-              alt={'google icon'}
-              width={20}
-              height={20}
-            />
+          <Button variant="outline" onClick={login} className="my-10">
+            <img src={'/google-icon.png'} alt={'google icon'} width={20} height={20} />
             &nbsp;&nbsp; Sign With Google
           </Button>
         </UnauthenticatedLayout>

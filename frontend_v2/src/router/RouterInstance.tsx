@@ -1,8 +1,10 @@
-import { NotFoundPage } from '@/components/page/NotFoundPage';
 import { AuthPage } from '@/feature/auth/AuthPage';
+import { NotFoundPage } from '@/feature/common/NotFoundPage';
+import { IndexPage } from '@/feature/index/IndexPage';
 import type { FC, ReactNode } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { RouterServiceProvider } from './RouterServiceProvider';
+import { DetailPage } from '@/feature/detail/DetailPage';
 
 type RouteItemType = {
   path: string;
@@ -20,7 +22,11 @@ export const RouterInstance: FC = () => {
     },
     {
       path: '/',
-      element: <div>IndexPage</div>,
+      element: <IndexPage />,
+    },
+    {
+      path: '/subscription/:id',
+      element: <DetailPage />,
     },
     {
       path: '/google/callback',

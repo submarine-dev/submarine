@@ -1,5 +1,5 @@
 import { apiClient } from '@/lib/apiClient';
-import type { UserType } from '@/types/domain/auth/UserType';
+import { UserType } from '@/types/domain/UserType';
 
 export const authService = {
   google: {
