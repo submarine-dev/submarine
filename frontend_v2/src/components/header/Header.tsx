@@ -1,10 +1,11 @@
+import { useAuth } from '@/store/useAuth';
 import { Avatar, Button, Stack, Typography } from '@mui/material';
 import type { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export const Header: FC = () => {
   const router = useNavigate();
-  // const {user:{} } = useAuth();
+  const { user } = useAuth();
 
   const handleBackHome = (): void => {
     router('/');
@@ -23,10 +24,7 @@ export const Header: FC = () => {
         </Typography>
       </Button>
       <Stack onClick={handleClickProfile} alignItems="flex-end">
-        <Avatar
-          src="https://cdn-ak.f.st-hatena.com/images/fotolife/n/nsmr_jx/20220902/20220902153856.png"
-          alt=""
-        />
+        <Avatar src={user.icon} alt={user.userId} />
       </Stack>
     </Stack>
   );

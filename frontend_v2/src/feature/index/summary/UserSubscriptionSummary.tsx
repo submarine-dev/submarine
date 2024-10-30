@@ -1,4 +1,5 @@
 import { CardLayout } from '@/components/card/CardLayout';
+import { PaymentType } from '@/types/domain/PaymentEnum';
 import { convertPaymentEnum } from '@/utils/convertPaymentEnum';
 import { Avatar, Button, Grid, Stack, Typography } from '@mui/material';
 import { FC } from 'react';
@@ -10,7 +11,7 @@ type Props = {
     icon?: string;
     name?: string;
     planName?: string;
-    paymentType?: string;
+    paymentType?: PaymentType;
     price?: number;
   }[];
   onClickColumn: (subscriptionId: string) => void;
@@ -51,7 +52,7 @@ export const UserSubscriptionSummary: FC<Props> = ({
                   <Stack alignItems="flex-start" spacing={1}>
                     <Typography color="black">{name}</Typography>
                     <Typography variant="body2" color="gray">
-                      {planName}/{convertPaymentEnum(paymentType)}
+                      {planName}/{paymentType && convertPaymentEnum(paymentType)}
                     </Typography>
                   </Stack>
                 </Grid>

@@ -4,4 +4,4 @@ import { atom } from 'jotai';
 /**
  * TODO: userIdの初期値を仮で設定している
  */
-export const userAtom = atom<UserType>({ userId: 'demo' });
+export const userAtom = atom<UserType>({ userId: '', icon: '' });

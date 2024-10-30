@@ -41,6 +41,7 @@ export type Controller_GoogleLoginRequest = {
 
 export type Controller_GoogleLoginResponse = {
   userId?: string | undefined;
+  icon: string;
 };
 
 export type Echo_HTTPError = {};

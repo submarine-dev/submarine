@@ -1,4 +1,5 @@
 import { UserSubscriptionType } from '@/types/domain/UserSubscriptionType';
+import { UserType } from '@/types/domain/UserType';
 
 const userSubscriptions: UserSubscriptionType = {
   totalAmountPerDay: 0,
@@ -72,6 +73,12 @@ const userSubscriptions: UserSubscriptionType = {
   ],
 };
 
+const user: UserType = {
+  userId: 'trail_user',
+  icon: 'https://picsum.photos/300',
+};
+
 export const trailMock = {
   userSubscriptions,
+  user,
 };
