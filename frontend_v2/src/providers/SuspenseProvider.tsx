@@ -1,4 +1,4 @@
-import { LoadingPage } from '@/components/page/LoadingPage';
+import { LoadingPage } from '@/feature/common/LoadingPage';
 import { type FC, type ReactNode, Suspense } from 'react';
 
 type Props = {
