@@ -3,11 +3,7 @@ import SearchSubscriptionPage from '@/app/(protectedroutes)/search/page';
 import ErrorPage from '@/app/_error';
 import IndexPage from '@/app/page';
 import { FC, ReactNode } from 'react';
-import {
-  BrowserRouter,
-  Route,
-  Routes,
-} from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 type RouteItemType = {
   path: string;
@@ -41,11 +37,7 @@ export const RouterInstance: FC = () => {
     <BrowserRouter>
       <Routes>
         {routeArray.map((routeItem) => (
-          <Route
-            key={routeItem.path}
-            path={routeItem.path}
-            element={routeItem.element}
-          />
+          <Route key={routeItem.path} path={routeItem.path} element={routeItem.element} />
         ))}
       </Routes>
     </BrowserRouter>
