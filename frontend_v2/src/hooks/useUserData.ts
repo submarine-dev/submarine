@@ -2,6 +2,7 @@ import { userSubscriptionService } from '@/service/userSubscriptionService';
 import { useAuth } from '@/store/useAuth';
 import { useQuery } from '@tanstack/react-query';
 import { UserSubscriptionsType, UserSubscriptionType } from '@/types/domain/UserSubscriptionType';
+import { useProductMode } from '@/store/useProductMode';
 
 export const useUserData = (): {
   userSubscription: UserSubscriptionType | null | undefined;
@@ -9,19 +10,18 @@ export const useUserData = (): {
   isError: boolean;
   getUserSubscription: (subscriptionId: string) => UserSubscriptionsType | null;
 } => {
-  const {
-    user: { userId },
-  } = useAuth();
+  const { user } = useAuth();
+  const { productMode } = useProductMode();
 
   const {
     data: userSubscription,
     isPending: isPendingUserSubscription,
     isError: isErrorUserSubscription,
   } = useQuery({
-    queryKey: ['userSubscription', userId],
+    queryKey: ['userSubscription', user.userId],
     queryFn: async () => {
-      if (!userId) return null;
-      const data = await userSubscriptionService.get(userId);
+      if (!user.userId) return null;
+      const data = await userSubscriptionService.get({ userId: user.userId, productMode });
       if (!data) return null;
       return data;
     },

@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { authCodeAtom } from './atom/authAtom';
 import { userAtom } from './atom/userAtom';
 import { localStorageKeys } from '@/const/localStorageKeys';
+import { useProductMode } from './useProductMode';
 
 export const useAuth = (): {
   authCode: string;
@@ -14,6 +15,7 @@ export const useAuth = (): {
 } => {
   const [authCode, setAuthCode] = useAtom(authCodeAtom);
   const [user, setUser] = useAtom(userAtom);
+  const { productMode } = useProductMode();
 
   useEffect(() => {
     const localStorageAuthCode = localStorage.getItem(localStorageKeys.AUTH_CODE_KEY);
@@ -25,7 +27,7 @@ export const useAuth = (): {
     if (!currentAuthCode || user.userId) return;
 
     (async () => {
-      const userData = await authService.google.login(currentAuthCode);
+      const userData = await authService.google.login({ authCode: currentAuthCode, productMode });
       if (!userData) return;
       setUser(userData);
     })();
