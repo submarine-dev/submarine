@@ -1,4 +1,5 @@
 import { GCP_CLIENT_ID, GCP_REDIRECT_URI } from '@/const/env';
+import { localStorageKeys } from '@/const/localStorageKeys';
 import { useAuth } from '@/store/useAuth';
 
 const O_AUTH2_ENDPOINT = 'https://accounts.google.com/o/oauth2/v2/auth';
@@ -26,6 +27,7 @@ export const useHandleAuth = (): {
 
   const handleCatchAuthCode = (authCode: string): void => {
     setAuthCode(authCode);
+    localStorage.setItem(localStorageKeys.AUTH_CODE_KEY, authCode);
   };
 
   return {
