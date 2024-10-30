@@ -1,4 +1,4 @@
-import { theme } from '@/theme/createThemeFn';
+import { theme } from '@/theme/theme';
 import { ThemeProvider } from '@mui/material';
 import type { FC, ReactNode } from 'react';
 

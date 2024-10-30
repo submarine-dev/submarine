@@ -42,7 +42,7 @@ export const Header: FC = () => {
         <KeyboardBackspaceIcon fontSize="medium" sx={{ color: 'white' }} />
       </IconButton>
       <Button onClick={handleBackHome} variant="text">
-        <Typography variant="h5" color="white" sx={{ textTransform: 'none', fontWeight: 'bold' }}>
+        <Typography variant="h5" color="white" sx={{ fontWeight: 'bold' }}>
           Submarine
         </Typography>
       </Button>
