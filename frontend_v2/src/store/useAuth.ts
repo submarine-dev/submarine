@@ -12,10 +12,24 @@ export const useAuth = (): {
   user: UserType;
   setAuthCode: (authCode: string) => void;
   setUser: (user: UserType) => void;
+  logout: () => void;
 } => {
   const [authCode, setAuthCode] = useAtom(authCodeAtom);
   const [user, setUser] = useAtom(userAtom);
   const { productMode } = useProductMode();
+
+  /**
+   * ログアウトの処理
+   */
+  const logout = (): void => {
+    /**
+     * TODO: 実装
+     */
+    // authService.google.logout();
+    localStorage.removeItem(localStorageKeys.AUTH_CODE_KEY);
+    setAuthCode('');
+    setUser({ userId: '', icon: '' });
+  };
 
   useEffect(() => {
     const localStorageAuthCode = localStorage.getItem(localStorageKeys.AUTH_CODE_KEY);
@@ -38,5 +52,6 @@ export const useAuth = (): {
     user,
     setAuthCode,
     setUser,
+    logout,
   };
 };
