@@ -1,6 +1,6 @@
 import { CardLayout } from '@/components/card/CardLayout';
 import { PaymentType } from '@/types/domain/PaymentEnum';
-import { convertPaymentEnum } from '@/utils/convertPaymentEnum';
+import { ConvertPaymentEnumToChip } from '@/components/chip/ConvertPaymentEnumToChip';
 import { Avatar, Button, Grid, Stack, Typography } from '@mui/material';
 import { FC } from 'react';
 
@@ -51,9 +51,12 @@ export const UserSubscriptionSummary: FC<Props> = ({
                 <Grid item xs={7}>
                   <Stack alignItems="flex-start" spacing={1}>
                     <Typography color="black">{name}</Typography>
-                    <Typography variant="body2" color="gray">
-                      {planName}/{paymentType && convertPaymentEnum(paymentType)}
-                    </Typography>
+                    <Stack direction="row" alignItems="center" spacing={1}>
+                      <Typography variant="body2" color="gray">
+                        {planName}
+                      </Typography>
+                      {paymentType && <ConvertPaymentEnumToChip payment={paymentType} />}
+                    </Stack>
                   </Stack>
                 </Grid>
                 <Grid item xs={3} color="black" sx={{ textAlign: 'end' }}>

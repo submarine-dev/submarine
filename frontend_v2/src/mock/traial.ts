@@ -11,7 +11,9 @@ const userSubscriptions: UserSubscriptionType = {
       icon: 'https://fluxfilm.in/wp-content/uploads/2024/04/92dd8733114cb40986002878c7a6a59d9325c1516f8f4e95b96896a2279c2afb_.webp',
       id: 'subscription_youtube_premium_personal',
       name: 'Youtube Premium',
-      paidAt: '',
+      paidAt: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)
+        .toISOString()
+        .split('T')[0],
       paymentType: 'monthly',
       planId: 'plan_youtube_premium_personal',
       planName: '個人プラン',
@@ -27,7 +29,9 @@ const userSubscriptions: UserSubscriptionType = {
       icon: 'https://fluxfilm.in/wp-content/uploads/2024/04/92dd8733114cb40986002878c7a6a59d9325c1516f8f4e95b96896a2279c2afb_.webp',
       id: 'subscription_youtube_premium_family',
       name: 'Youtube Premium',
-      paidAt: '',
+      paidAt: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)
+        .toISOString()
+        .split('T')[0],
       paymentType: 'monthly',
       planId: 'plan_youtube_premium_personal',
       planName: 'ファミリープラン',
@@ -43,7 +47,9 @@ const userSubscriptions: UserSubscriptionType = {
       icon: 'https://fluxfilm.in/wp-content/uploads/2024/04/92dd8733114cb40986002878c7a6a59d9325c1516f8f4e95b96896a2279c2afb_.webp',
       id: 'subscription_youtube_premium_student',
       name: 'Youtube Premium',
-      paidAt: '',
+      paidAt: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)
+        .toISOString()
+        .split('T')[0],
       paymentType: 'monthly',
       planId: 'plan_youtube_premium_personal',
       planName: '学生プラン',
@@ -59,7 +65,9 @@ const userSubscriptions: UserSubscriptionType = {
       icon: 'https://fluxfilm.in/wp-content/uploads/2024/04/92dd8733114cb40986002878c7a6a59d9325c1516f8f4e95b96896a2279c2afb_.webp',
       id: 'subscription_youtube_premium_personal_yearly',
       name: 'Youtube Premium',
-      paidAt: '',
+      paidAt: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)
+        .toISOString()
+        .split('T')[0],
       paymentType: 'yearly',
       planId: 'plan_youtube_premium_personal',
       planName: '個人プラン1年間',
