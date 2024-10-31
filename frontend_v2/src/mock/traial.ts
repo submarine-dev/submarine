@@ -2,84 +2,83 @@ import { SubscriptionSummaryType, SubscriptionType } from '@/types/domain/Subscr
 import { UserSubscriptionType } from '@/types/domain/UserSubscriptionType';
 import { UserType } from '@/types/domain/UserType';
 
+const userSubscriptionsBody: UserSubscriptionType['userSubscriptions'] = [
+  {
+    createdAt: new Date().toISOString(),
+    icon: 'https://fluxfilm.in/wp-content/uploads/2024/04/92dd8733114cb40986002878c7a6a59d9325c1516f8f4e95b96896a2279c2afb_.webp',
+    id: 'subscription_youtube_premium_personal',
+    name: 'Youtube Premium',
+    paidAt: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)
+      .toISOString()
+      .split('T')[0],
+    paymentType: 'monthly',
+    planId: 'plan_youtube_premium_personal',
+    planName: '個人プラン',
+    price: 1280,
+    templId: 'templ_youtube',
+    unsubscribeLink:
+      'https://support.google.com/youtube/answer/6308278?hl=ja&co=GENIE.Platform%3DAndroid',
+    updatedAt: new Date().toISOString(),
+    userId: 'user_google',
+  },
+  {
+    createdAt: new Date().toISOString(),
+    icon: '/images/icon/subscription/netflix_icon.png',
+    id: 'netflix',
+    name: 'Netflix',
+    paidAt: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)
+      .toISOString()
+      .split('T')[0],
+    paymentType: 'monthly',
+    planId: 'standard_plan',
+    planName: 'スタンダード',
+    price: 1590,
+    templId: 'templ_netflix',
+    unsubscribeLink: 'https://www.netflix.com/cancel',
+    updatedAt: new Date().toISOString(),
+    userId: 'user_google',
+  },
+  {
+    createdAt: new Date().toISOString(),
+    icon: '/images/icon/subscription/amazon_prime_icon.png',
+    id: 'amazon_prime',
+    name: 'Amazon Prime',
+    paidAt: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)
+      .toISOString()
+      .split('T')[0],
+    paymentType: 'monthly',
+    planId: 'monthly_plan',
+    planName: '月額プラン',
+    price: 600,
+    templId: 'templ_amazon_prime',
+    unsubscribeLink: 'https://www.amazon.co.jp/cancelprime',
+    updatedAt: new Date().toISOString(),
+    userId: 'user_google',
+  },
+  {
+    createdAt: new Date().toISOString(),
+    icon: '/images/icon/subscription/spotify_icon.png',
+    id: 'spotify_premium',
+    name: 'Spotify Premium',
+    paidAt: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)
+      .toISOString()
+      .split('T')[0],
+    paymentType: 'monthly',
+    planId: 'standard_plan',
+    planName: 'Standard',
+    price: 980,
+    templId: 'templ_spotify',
+    unsubscribeLink: 'https://support.spotify.com/cancel',
+    updatedAt: new Date().toISOString(),
+    userId: 'user_google',
+  },
+];
+
 const userSubscriptions: UserSubscriptionType = {
   totalAmountPerDay: 0,
-  totalAmountPerMonth: 7345,
-  totalAmountPerYear: 7345 * 12,
-  userSubscriptions: [
-    {
-      createdAt: new Date().toISOString(),
-      icon: 'https://fluxfilm.in/wp-content/uploads/2024/04/92dd8733114cb40986002878c7a6a59d9325c1516f8f4e95b96896a2279c2afb_.webp',
-      id: 'subscription_youtube_premium_personal',
-      name: 'Youtube Premium',
-      paidAt: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)
-        .toISOString()
-        .split('T')[0],
-      paymentType: 'monthly',
-      planId: 'plan_youtube_premium_personal',
-      planName: '個人プラン',
-      price: 1280,
-      templId: 'templ_youtube',
-      unsubscribeLink:
-        'https://support.google.com/youtube/answer/6308278?hl=ja&co=GENIE.Platform%3DAndroid',
-      updatedAt: new Date().toISOString(),
-      userId: 'user_google',
-    },
-    {
-      createdAt: new Date().toISOString(),
-      icon: 'https://fluxfilm.in/wp-content/uploads/2024/04/92dd8733114cb40986002878c7a6a59d9325c1516f8f4e95b96896a2279c2afb_.webp',
-      id: 'subscription_youtube_premium_family',
-      name: 'Youtube Premium',
-      paidAt: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)
-        .toISOString()
-        .split('T')[0],
-      paymentType: 'monthly',
-      planId: 'plan_youtube_premium_personal',
-      planName: 'ファミリープラン',
-      price: 2280,
-      templId: 'templ_youtube',
-      unsubscribeLink:
-        'https://support.google.com/youtube/answer/6308278?hl=ja&co=GENIE.Platform%3DAndroid',
-      updatedAt: new Date().toISOString(),
-      userId: 'user_google',
-    },
-    {
-      createdAt: new Date().toISOString(),
-      icon: 'https://fluxfilm.in/wp-content/uploads/2024/04/92dd8733114cb40986002878c7a6a59d9325c1516f8f4e95b96896a2279c2afb_.webp',
-      id: 'subscription_youtube_premium_student',
-      name: 'Youtube Premium',
-      paidAt: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)
-        .toISOString()
-        .split('T')[0],
-      paymentType: 'monthly',
-      planId: 'plan_youtube_premium_personal',
-      planName: '学生プラン',
-      price: 780,
-      templId: 'templ_youtube',
-      unsubscribeLink:
-        'https://support.google.com/youtube/answer/6308278?hl=ja&co=GENIE.Platform%3DAndroid',
-      updatedAt: new Date().toISOString(),
-      userId: 'user_google',
-    },
-    {
-      createdAt: new Date().toISOString(),
-      icon: 'https://fluxfilm.in/wp-content/uploads/2024/04/92dd8733114cb40986002878c7a6a59d9325c1516f8f4e95b96896a2279c2afb_.webp',
-      id: 'subscription_youtube_premium_personal_yearly',
-      name: 'Youtube Premium',
-      paidAt: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)
-        .toISOString()
-        .split('T')[0],
-      paymentType: 'yearly',
-      planId: 'plan_youtube_premium_personal',
-      planName: '個人プラン1年間',
-      price: 12800,
-      templId: 'templ_youtube',
-      unsubscribeLink:
-        'https://support.google.com/youtube/answer/6308278?hl=ja&co=GENIE.Platform%3DAndroid',
-      updatedAt: new Date().toISOString(),
-      userId: 'user_google',
-    },
-  ],
+  totalAmountPerMonth: userSubscriptionsBody.reduce((acc, cur) => acc + cur.price, 0),
+  totalAmountPerYear: userSubscriptionsBody.reduce((acc, cur) => acc + cur.price, 0) * 12,
+  userSubscriptions: userSubscriptionsBody,
 };
 
 const user: UserType = {

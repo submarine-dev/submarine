@@ -24,7 +24,7 @@ export const UserSubscriptionSummary: FC<Props> = ({
 }) => {
   return (
     <CardLayout>
-      <Stack spacing={3}>
+      <Stack spacing={2}>
         <Stack spacing={0.5}>
           <Typography variant="caption" color="gray">
             今月の支払い
@@ -46,7 +46,7 @@ export const UserSubscriptionSummary: FC<Props> = ({
             >
               <Grid container columns={12} alignItems="flex-start" sx={{ py: 1 }}>
                 <Grid item xs={2}>
-                  <Avatar src={icon} alt={name} sx={{ width: 50, height: 50 }} />
+                  <Avatar src={icon} alt={name} sx={{ width: 40, height: 40 }} />
                 </Grid>
                 <Grid item xs={7}>
                   <Stack alignItems="flex-start" spacing={1}>
