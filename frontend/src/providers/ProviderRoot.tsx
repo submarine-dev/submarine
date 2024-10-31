@@ -1,5 +1,5 @@
-import { AuthProvider } from '@/components/functions/context/auth';
-import { FC, ReactNode } from 'react';
+import type { FC, ReactNode } from 'react';
+import { MUIProvider } from './MUIProvider';
 import { SuspenseProvider } from './SuspenseProvider';
 import { TanStackQueryProvider } from './TanStackQueryProvider';
 
@@ -9,12 +9,10 @@ type Props = {
 
 export const ProviderRoot: FC<Props> = (props) => {
   return (
-    <AuthProvider>
-      <SuspenseProvider>
-        <TanStackQueryProvider>
-          {props.children}
-        </TanStackQueryProvider>
-      </SuspenseProvider>
-    </AuthProvider>
+    <SuspenseProvider>
+      <TanStackQueryProvider>
+        <MUIProvider>{props.children}</MUIProvider>
+      </TanStackQueryProvider>
+    </SuspenseProvider>
   );
 };

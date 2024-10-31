@@ -1,4 +1,5 @@
-import { FC, ReactNode, Suspense } from 'react';
+import { LoadingPage } from '@/feature/common/LoadingPage';
+import { type FC, type ReactNode, Suspense } from 'react';
 
 type Props = {
   children: ReactNode;
@@ -8,7 +9,5 @@ type Props = {
  * SuspenseのProvider
  */
 export const SuspenseProvider: FC<Props> = (props) => {
-  return (
-    <Suspense fallback={null}>{props.children}</Suspense>
-  );
+  return <Suspense fallback={<LoadingPage />}>{props.children}</Suspense>;
 };

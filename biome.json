@@ -192,7 +192,8 @@
         "useNumericLiterals": "error",
         "useShorthandAssign": "error",
         "useSingleVarDeclarator": "error",
-        "useTemplate": "error"
+        "useTemplate": "error",
+        "useImportType": "off"
       },
       "suspicious": {
         "noArrayIndexKey": "error",
@@ -232,7 +233,15 @@
         "noConsole": "error"
       }
     },
-    "ignore": ["dist", "**/dist/**", "**/dist/", "**/node_modules/", "**/pnpm-lock.yaml"]
+    "ignore": [
+      "dist",
+      "**/dist/**",
+      "**/dist/",
+      "**/node_modules/",
+      "**/pnpm-lock.yaml",
+      "**/api/**",
+      "**/api/"
+    ]
   },
   "javascript": {
     "formatter": {

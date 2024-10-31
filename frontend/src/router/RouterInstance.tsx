@@ -1,13 +1,12 @@
-import HomePage from '@/app/(protectedroutes)/home/page';
-import SearchSubscriptionPage from '@/app/(protectedroutes)/search/page';
-import ErrorPage from '@/app/_error';
-import IndexPage from '@/app/page';
-import { FC, ReactNode } from 'react';
-import {
-  BrowserRouter,
-  Route,
-  Routes,
-} from 'react-router-dom';
+import { AuthPage } from '@/feature/auth/AuthPage';
+import { NotFoundPage } from '@/feature/common/NotFoundPage';
+import { IndexPage } from '@/feature/index/IndexPage';
+import type { FC, ReactNode } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { RouterServiceProvider } from './RouterServiceProvider';
+import { DetailPage } from '@/feature/detail/DetailPage';
+import { AuthCallbackPage } from '@/feature/authCallback/AuthCallbackPage';
+import { SubscriptionsPage } from '@/feature/subscriptions/SubscriptionsPage';
 
 type RouteItemType = {
   path: string;
@@ -24,30 +23,42 @@ export const RouterInstance: FC = () => {
       element: <IndexPage />,
     },
     {
-      path: '/search',
-      element: <SearchSubscriptionPage />,
+      /**
+       * ユーザのサブスクリプション詳細ページ
+       */
+      path: '/subscription/:id',
+      element: <DetailPage />,
     },
     {
-      path: '/home',
-      element: <HomePage />,
+      /**
+       * サブスク一覧ページ（idがある場合には、そのサブスクのdrawerが開いた状態で表示）
+       */
+      path: '/subscriptions/:id',
+      element: <SubscriptionsPage />,
+    },
+    {
+      path: '/auth',
+      element: <AuthPage />,
+    },
+    {
+      path: '/google/callback',
+      element: <AuthCallbackPage />,
     },
     {
       path: '*',
-      element: <ErrorPage />,
+      element: <NotFoundPage />,
     },
   ];
 
   return (
     <BrowserRouter>
-      <Routes>
-        {routeArray.map((routeItem) => (
-          <Route
-            key={routeItem.path}
-            path={routeItem.path}
-            element={routeItem.element}
-          />
-        ))}
-      </Routes>
+      <RouterServiceProvider>
+        <Routes>
+          {routeArray.map((routeItem) => (
+            <Route key={routeItem.path} path={routeItem.path} element={routeItem.element} />
+          ))}
+        </Routes>
+      </RouterServiceProvider>
     </BrowserRouter>
   );
 };

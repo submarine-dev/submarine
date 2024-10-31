@@ -1,29 +1,49 @@
-# submarine-frontend
+# Submarine-Frontend
 
-## 技術構成
-- Next.js
-- TypeScript
-- Tailwind
-- shadcn/ui
+## Getting Started
 
-## Dockerを使用して起動
+### install pnpm
 
-※先にルートディレクトリに.envファイルを作成する必要があります。
-```bash
-cp .env.example .env
+もし`pnpm`がインストールされていない場合のみ
+
+```zsh
+npm install -g pnpm
 ```
 
-```bash
-docker compose -f docker-compose.dev.yml build
-docker compose -f docker-compose.dev.yml up -d
+### install VSCode extensions
+
+レコメンドされる拡張機能をインストールしてください。
+
+## Commands
+
+### install dependencies
+
+```zsh
+pnpm i
 ```
 
-## Dockerを使わずに起動
+### start dev server
 
-nodeのバージョンは18.17.0以上を使用してください。
-
-```bash
-npm install
-npm run dev
+```zsh
+pnpm dev
 ```
 
+### build
+
+```zsh
+pnpm build
+```
+
+### lint
+
+```zsh
+pnpm check
+```
+
+### GenerateAnalyze
+
+バンドルサイズのマップ（`status.html`）を生成します。
+
+```zsh
+pnpm build:analyze
+```
