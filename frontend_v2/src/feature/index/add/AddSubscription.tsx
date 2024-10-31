@@ -20,7 +20,11 @@ export const AddSubscription: FC<Props> = ({
       id: subscription.id,
       title: subscription.name ?? '',
       icon: subscription.icon ?? '',
-      bgcolor: '#E50914',
+      /**
+       * TODO: 色があった方がオシャレだと思ったこともありました
+       */
+      bgcolor: '#FFFFFF',
+      // bgcolor: subscription.color ?? '#FFFFFF',
     };
   });
 
@@ -36,6 +40,7 @@ export const AddSubscription: FC<Props> = ({
           zIndex: 2,
           pointerEvents: 'auto',
           width: '100%',
+          height: 100,
         }}
       >
         <SquareCard
