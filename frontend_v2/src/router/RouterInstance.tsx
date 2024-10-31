@@ -5,6 +5,8 @@ import type { FC, ReactNode } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { RouterServiceProvider } from './RouterServiceProvider';
 import { DetailPage } from '@/feature/detail/DetailPage';
+import { AuthCallbackPage } from '@/feature/authCallback/AuthCallbackPage';
+import { SubscriptionsPage } from '@/feature/subscriptions/SubscriptionsPage';
 
 type RouteItemType = {
   path: string;
@@ -17,20 +19,30 @@ type RouteItemType = {
 export const RouterInstance: FC = () => {
   const routeArray: RouteItemType[] = [
     {
-      path: '/auth',
-      element: <AuthPage />,
-    },
-    {
       path: '/',
       element: <IndexPage />,
     },
     {
+      /**
+       * ユーザのサブスクリプション詳細ページ
+       */
       path: '/subscription/:id',
       element: <DetailPage />,
     },
     {
+      /**
+       * サブスク一覧ページ（idがある場合には、そのサブスクのdrawerが開いた状態で表示）
+       */
+      path: '/subscriptions/:id',
+      element: <SubscriptionsPage />,
+    },
+    {
+      path: '/auth',
+      element: <AuthPage />,
+    },
+    {
       path: '/google/callback',
-      element: <div>GoogleAuth is success✅</div>,
+      element: <AuthCallbackPage />,
     },
     {
       path: '*',

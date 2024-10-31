@@ -1,4 +1,4 @@
-import { SubscriptionSummaryType } from '@/types/domain/SubscriptionType';
+import { SubscriptionSummaryType, SubscriptionType } from '@/types/domain/SubscriptionType';
 import { UserSubscriptionType } from '@/types/domain/UserSubscriptionType';
 import { UserType } from '@/types/domain/UserType';
 
@@ -101,8 +101,8 @@ const subscriptions: SubscriptionSummaryType[] = [
     isSubscribed: false,
   },
   {
-    id: 'spotify',
-    name: 'Spotify',
+    id: 'spotify_premium',
+    name: 'Spotify Premium',
     icon: '/images/icon/subscription/spotify_icon.png',
     isSubscribed: false,
   },
@@ -120,8 +120,171 @@ const subscriptions: SubscriptionSummaryType[] = [
   },
 ];
 
+const subscriptionsDetails: SubscriptionType[] = [
+  {
+    id: 'netflix',
+    name: 'Netflix',
+    icon: 'https://cdn.icon-icons.com/icons2/3053/PNG/512/netflix_macos_bigsur_icon_189917.png',
+    isSubscribed: false,
+    plan: [
+      {
+        id: 'standard_with_ad_plan',
+        name: '広告付きスタンダード',
+        paymentType: 'monthly',
+        price: 890,
+        subscriptionId: 'netflix',
+      },
+      {
+        id: 'standard_plan',
+        name: 'スタンダード',
+        paymentType: 'monthly',
+        price: 1590,
+        subscriptionId: 'netflix',
+      },
+      {
+        id: 'premium_plan',
+        name: 'プレミアム',
+        paymentType: 'monthly',
+        price: 2290,
+        subscriptionId: 'netflix',
+      },
+    ],
+  },
+  {
+    id: 'amazon_prime',
+    name: 'Amazon Prime',
+    icon: '/images/icon/subscription/amazon_prime_icon.png',
+    isSubscribed: false,
+    plan: [
+      {
+        id: 'yearly_plan',
+        name: '年間プラン',
+        paymentType: 'yearly',
+        price: 5900,
+        subscriptionId: 'amazon_prime',
+      },
+      {
+        id: 'monthly_plan',
+        name: '月額プラン',
+        paymentType: 'monthly',
+        price: 600,
+        subscriptionId: 'amazon_prime',
+      },
+    ],
+  },
+  {
+    id: 'spotify_premium',
+    name: 'Spotify Premium',
+    icon: '/images/icon/subscription/spotify_icon.png',
+    isSubscribed: false,
+    plan: [
+      {
+        id: 'standard_plan',
+        name: 'Standard',
+        paymentType: 'monthly',
+        price: 980,
+        subscriptionId: 'spotify_premium',
+      },
+      {
+        id: 'student_plan',
+        name: 'Student',
+        paymentType: 'monthly',
+        price: 480,
+        subscriptionId: 'spotify_premium',
+      },
+      {
+        id: 'duo_plan',
+        name: 'Duo',
+        paymentType: 'monthly',
+        price: 1280,
+        subscriptionId: 'spotify_premium',
+      },
+      {
+        id: 'family_plan',
+        name: 'Family',
+        paymentType: 'monthly',
+        price: 1580,
+        subscriptionId: 'spotify_premium',
+      },
+    ],
+  },
+  {
+    id: 'disney_plus',
+    name: 'Disney+',
+    icon: '/images/icon/subscription/disney_plus_icon.png',
+    isSubscribed: false,
+    plan: [
+      {
+        id: 'standard_monthly_plan',
+        name: 'スタンダード 月額プラン',
+        paymentType: 'monthly',
+        price: 990,
+        subscriptionId: 'disney_plus',
+      },
+      {
+        id: 'standard_yearly_plan',
+        name: 'スタンダード 年額プラン',
+        paymentType: 'yearly',
+        price: 9900,
+        subscriptionId: 'disney_plus',
+      },
+      {
+        id: 'premium_monthly_plan',
+        name: 'プレミアム 月額プラン',
+        paymentType: 'monthly',
+        price: 1320,
+        subscriptionId: 'disney_plus',
+      },
+      {
+        id: 'premium_yearly_plan',
+        name: 'プレミアム 年額プラン',
+        paymentType: 'yearly',
+        price: 13200,
+        subscriptionId: 'disney_plus',
+      },
+    ],
+  },
+  {
+    id: 'youtube_premium',
+    name: 'Youtube Premium',
+    icon: '/images/icon/subscription/youtube_premium_icon.webp',
+    isSubscribed: false,
+    plan: [
+      {
+        id: 'individual_monthly_plan',
+        name: '個人 月額プラン',
+        paymentType: 'monthly',
+        price: 1280,
+        subscriptionId: 'youtube_premium',
+      },
+      {
+        id: 'individual_yearly_plan',
+        name: '個人 年額プラン',
+        paymentType: 'yearly',
+        price: 12800,
+        subscriptionId: 'youtube_premium',
+      },
+      {
+        id: 'student_plan',
+        name: '学生',
+        paymentType: 'monthly',
+        price: 780,
+        subscriptionId: 'youtube_premium',
+      },
+      {
+        id: 'family_plan',
+        name: 'ファミリー',
+        paymentType: 'monthly',
+        price: 2280,
+        subscriptionId: 'youtube_premium',
+      },
+    ],
+  },
+];
+
 export const trailMock = {
   userSubscriptions,
   user,
   subscriptions,
+  subscriptionsDetails,
 };

@@ -42,7 +42,6 @@ export const IndexContainer: FC = () => {
           />
         </SectionLayout>
       ) : null}
-      aaa
     </Stack>
   );
 };
