@@ -7,5 +7,5 @@ type Props = {
 };
 
 export const CardLayout: FC<Props> = ({ children, sx }) => {
-  return <Paper sx={{ width: '100%', p: 3, ...sx }}>{children}</Paper>;
+  return <Paper sx={{ width: '100%', p: 3, mb: 1, ...sx }}>{children}</Paper>;
 };

@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { SectionLayout } from '@/components/section/SectionLayout';
 import { AddSubscription } from './add/AddSubscription';
 import { useSubscription } from '@/hooks/useSubscription';
+import { AutoRegister } from './autoRegister/AutRegister';
 
 export const IndexContainer: FC = () => {
   const router = useNavigate();
@@ -33,8 +34,14 @@ export const IndexContainer: FC = () => {
           onClickColumn={handleClickColumn}
         />
       ) : null}
+      <SectionLayout
+        sectionTitle="自動で登録"
+        helpText="メール情報から、AIによってサブスクリプションの登録をサジェストします"
+      >
+        <AutoRegister />
+      </SectionLayout>
       {subscriptionSummaries ? (
-        <SectionLayout sectionTitle="サブスクを追加">
+        <SectionLayout sectionTitle="手動で登録">
           <AddSubscription
             subscriptionSummaries={subscriptionSummaries}
             onFindSubscriptionClick={handleFindSubscriptionClick}
