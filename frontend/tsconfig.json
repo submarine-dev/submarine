@@ -25,13 +25,11 @@
     "noImplicitThis": true,
     "alwaysStrict": true,
     "sourceMap": true,
-    "noImplicitAny": true
+    "noImplicitAny": true,
+
+    /* Emotion */
+    "jsxImportSource": "@emotion/react"
   },
-  "include": [
-    "src",
-    "types",
-    "../frontend_v2/src/utils/LineBreak.tsx",
-    "../frontend_v2/src/utils/getTextColor.ts"
-  ],
+  "include": ["src", "types"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
