@@ -27,6 +27,11 @@
     "sourceMap": true,
     "noImplicitAny": true
   },
-  "include": ["src", "types", "../frontend_v2/src/utils/LineBreak.tsx"],
+  "include": [
+    "src",
+    "types",
+    "../frontend_v2/src/utils/LineBreak.tsx",
+    "../frontend_v2/src/utils/getTextColor.ts"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

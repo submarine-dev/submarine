@@ -1,3 +1,4 @@
+import { SubscriptionSummaryType } from '@/types/domain/SubscriptionType';
 import { UserSubscriptionType } from '@/types/domain/UserSubscriptionType';
 import { UserType } from '@/types/domain/UserType';
 
@@ -86,7 +87,41 @@ const user: UserType = {
   icon: 'https://picsum.photos/300',
 };
 
+const subscriptions: SubscriptionSummaryType[] = [
+  {
+    id: 'netflix',
+    name: 'Netflix',
+    icon: 'https://cdn.icon-icons.com/icons2/3053/PNG/512/netflix_macos_bigsur_icon_189917.png',
+    isSubscribed: false,
+  },
+  {
+    id: 'amazon_prime',
+    name: 'Amazon Prime',
+    icon: '/images/icon/subscription/amazon_prime_icon.png',
+    isSubscribed: false,
+  },
+  {
+    id: 'spotify',
+    name: 'Spotify',
+    icon: '/images/icon/subscription/spotify_icon.png',
+    isSubscribed: false,
+  },
+  {
+    id: 'disney_plus',
+    name: 'Disney+',
+    icon: '/images/icon/subscription/disney_plus_icon.png',
+    isSubscribed: false,
+  },
+  {
+    id: 'youtube_premium',
+    name: 'Youtube Premium',
+    icon: '/images/icon/subscription/youtube_premium_icon.webp',
+    isSubscribed: false,
+  },
+];
+
 export const trailMock = {
   userSubscriptions,
   user,
+  subscriptions,
 };

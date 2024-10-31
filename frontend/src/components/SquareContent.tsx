@@ -1,5 +1,5 @@
 import { BodyTypo } from '@/components/Typography';
-import { getTextColor } from '@/util/getTextColor';
+import { getTextColor } from '../../../frontend_v2/src/utils/getTextColor';
 import { FC, ReactNode } from 'react';
 
 type Props = {
@@ -13,13 +13,7 @@ type Props = {
 /**
  * 四角表示するコンポーネント
  */
-export const SquareContent: FC<Props> = ({
-  index,
-  label,
-  color,
-  icon,
-  onClick,
-}) => {
+export const SquareContent: FC<Props> = ({ index, label, color, icon, onClick }) => {
   const textColor = getTextColor(color) ? 'black' : 'white';
   return (
     <button
