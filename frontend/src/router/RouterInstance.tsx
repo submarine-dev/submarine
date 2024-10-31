@@ -31,7 +31,14 @@ export const RouterInstance: FC = () => {
     },
     {
       /**
-       * サブスク一覧ページ（idがある場合には、そのサブスクのdrawerが開いた状態で表示）
+       * サブスク一覧ページ
+       */
+      path: '/subscriptions',
+      element: <SubscriptionsPage />,
+    },
+    {
+      /**
+       * サブスク一覧ページ→idがある場合には、そのサブスクのdrawerが開いた状態で表示
        */
       path: '/subscriptions/:id',
       element: <SubscriptionsPage />,

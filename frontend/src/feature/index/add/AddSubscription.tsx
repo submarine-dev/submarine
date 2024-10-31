@@ -23,7 +23,6 @@ export const AddSubscription: FC<Props> = ({
       /**
        * TODO: 色があった方がオシャレだと思ったこともありました
        */
-      bgcolor: '#FFFFFF',
       // bgcolor: subscription.color ?? '#FFFFFF',
     };
   });
@@ -49,12 +48,11 @@ export const AddSubscription: FC<Props> = ({
           bgcolor="#FFFFFF"
           onClick={onFindSubscriptionClick}
         />
-        {[...subscriptionItems].map((item) => (
+        {subscriptionItems.map((item) => (
           <SquareCard
             key={item.id}
             title={item.title}
             icon={item.icon}
-            bgcolor={item.bgcolor}
             onClick={() => onSubscriptionClick(item.id ?? '')}
           />
         ))}

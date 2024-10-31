@@ -5,12 +5,12 @@ import { FC, ReactNode } from 'react';
 type Props = {
   title: string;
   icon: string | ReactNode;
-  bgcolor: string;
+  bgcolor?: string;
   size?: number;
   onClick: () => void;
 };
 
-export const SquareCard: FC<Props> = ({ title, icon, bgcolor, size = 90, onClick }) => {
+export const SquareCard: FC<Props> = ({ title, icon, bgcolor = '#FFFFFF', size = 90, onClick }) => {
   return (
     <Button
       variant="contained"

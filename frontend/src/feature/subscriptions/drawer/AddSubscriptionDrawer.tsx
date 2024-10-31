@@ -7,7 +7,7 @@ type Props = {
   open: boolean;
   onClose: () => void;
   subscription: SubscriptionType;
-  onAddSubscription: (planId: string) => void;
+  onAddSubscription: () => Promise<void>;
 };
 
 export const AddSubscriptionDrawer: FC<Props> = ({ open, onClose, subscription }) => {
