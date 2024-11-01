@@ -23,7 +23,7 @@ const userSubscriptionsBody: UserSubscriptionType['userSubscriptions'] = [
   },
   {
     createdAt: new Date().toISOString(),
-    icon: '/images/icon/subscription/netflix_icon.png',
+    icon: '/images/subscription/netflix_icon.png',
     id: 'netflix',
     name: 'Netflix',
     paidAt: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)
@@ -40,7 +40,7 @@ const userSubscriptionsBody: UserSubscriptionType['userSubscriptions'] = [
   },
   {
     createdAt: new Date().toISOString(),
-    icon: '/images/icon/subscription/amazon_prime_icon.png',
+    icon: '/images/subscription/amazon_prime_icon.png',
     id: 'amazon_prime',
     name: 'Amazon Prime',
     paidAt: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)
@@ -57,7 +57,7 @@ const userSubscriptionsBody: UserSubscriptionType['userSubscriptions'] = [
   },
   {
     createdAt: new Date().toISOString(),
-    icon: '/images/icon/subscription/spotify_icon.png',
+    icon: '/images/subscription/spotify_icon.png',
     id: 'spotify_premium',
     name: 'Spotify Premium',
     paidAt: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)
@@ -96,25 +96,25 @@ const subscriptions: SubscriptionSummaryType[] = [
   {
     id: 'amazon_prime',
     name: 'Amazon Prime',
-    icon: '/images/icon/subscription/amazon_prime_icon.png',
+    icon: '/images/subscription/amazon_prime_icon.png',
     isSubscribed: false,
   },
   {
     id: 'spotify_premium',
     name: 'Spotify Premium',
-    icon: '/images/icon/subscription/spotify_icon.png',
+    icon: '/images/subscription/spotify_icon.png',
     isSubscribed: false,
   },
   {
     id: 'disney_plus',
     name: 'Disney+',
-    icon: '/images/icon/subscription/disney_plus_icon.png',
+    icon: '/images/subscription/disney_plus_icon.png',
     isSubscribed: false,
   },
   {
     id: 'youtube_premium',
     name: 'Youtube Premium',
-    icon: '/images/icon/subscription/youtube_premium_icon.webp',
+    icon: '/images/subscription/youtube_premium_icon.webp',
     isSubscribed: false,
   },
 ];
@@ -152,7 +152,7 @@ const subscriptionsDetails: SubscriptionType[] = [
   {
     id: 'amazon_prime',
     name: 'Amazon Prime',
-    icon: '/images/icon/subscription/amazon_prime_icon.png',
+    icon: '/images/subscription/amazon_prime_icon.png',
     isSubscribed: false,
     plan: [
       {
@@ -174,7 +174,7 @@ const subscriptionsDetails: SubscriptionType[] = [
   {
     id: 'spotify_premium',
     name: 'Spotify Premium',
-    icon: '/images/icon/subscription/spotify_icon.png',
+    icon: '/images/subscription/spotify_icon.png',
     isSubscribed: false,
     plan: [
       {
@@ -210,7 +210,7 @@ const subscriptionsDetails: SubscriptionType[] = [
   {
     id: 'disney_plus',
     name: 'Disney+',
-    icon: '/images/icon/subscription/disney_plus_icon.png',
+    icon: '/images/subscription/disney_plus_icon.png',
     isSubscribed: false,
     plan: [
       {
@@ -246,7 +246,7 @@ const subscriptionsDetails: SubscriptionType[] = [
   {
     id: 'youtube_premium',
     name: 'Youtube Premium',
-    icon: '/images/icon/subscription/youtube_premium_icon.webp',
+    icon: '/images/subscription/youtube_premium_icon.webp',
     isSubscribed: false,
     plan: [
       {
