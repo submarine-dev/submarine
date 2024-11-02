@@ -84,7 +84,7 @@ export const Header: FC = () => {
         </Stack>
       </Stack>
       {productMode === ProductModeEnum.DEMO ? (
-        <Stack sx={{ pb: 1, pl: 0.5 }}>
+        <Stack sx={{ pb: 1 }}>
           <Typography variant="caption" sx={{ color: 'white' }}>
             デモモード中。サブスクリプション等の変更は保存されません。
           </Typography>
