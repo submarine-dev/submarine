@@ -1,12 +1,14 @@
 import { useAuth } from '@/store/useAuth';
 import { Avatar, Button, IconButton, Stack, Typography } from '@mui/material';
-import { MouseEvent, useState, type FC } from 'react';
+import { MouseEvent, useRef, useState, type FC } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import { ProfileMenu } from './ProfileMenu';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useProductMode } from '@/store/useProductMode';
 import { ProductModeEnum } from '@/types/domain/ProductModeEnum';
+import GoogleIcon from '@mui/icons-material/Google';
+import { GoogleLoginButtonBase } from '../button/GoogleLoginButtonBase';
 
 export const Header: FC = () => {
   const { productMode } = useProductMode();
@@ -14,6 +16,7 @@ export const Header: FC = () => {
   const router = useNavigate();
   const { user, logout } = useAuth();
 
+  const googleLoginButtonRef = useRef<HTMLButtonElement | null>(null);
   const [menuAnchorEl, setMenuAnchorEl] = useState<null | HTMLElement>(null);
 
   const isHiddenBackButton = pathname === '/';
@@ -39,7 +42,18 @@ export const Header: FC = () => {
         router('/auth');
       },
     },
-  ];
+    (() => {
+      if (productMode !== ProductModeEnum.DEMO) return null;
+      return {
+        label: 'Submarineに登録する',
+        icon: <GoogleIcon />,
+        onClick: () => {
+          if (!googleLoginButtonRef.current) return;
+          googleLoginButtonRef.current.click();
+        },
+      };
+    })(),
+  ].filter((item) => item !== null);
 
   return (
     <>
@@ -75,6 +89,7 @@ export const Header: FC = () => {
         onClose={() => setMenuAnchorEl(null)}
         menuItem={profileMenuItems}
       />
+      <GoogleLoginButtonBase ref={googleLoginButtonRef} />
     </>
   );
 };

@@ -11,17 +11,20 @@ export const useUserData = (): {
   getUserSubscription: (subscriptionId: string) => UserSubscriptionsType | null;
 } => {
   const { user } = useAuth();
-  const { productMode } = useProductMode();
+  const { productMode, forAuthGetProductMode } = useProductMode();
 
   const {
     data: userSubscription,
     isPending: isPendingUserSubscription,
     isError: isErrorUserSubscription,
   } = useQuery({
-    queryKey: ['userSubscription', user.userId],
+    queryKey: ['userSubscription', user.userId, productMode],
     queryFn: async () => {
       if (!user.userId) return null;
-      const data = await userSubscriptionService.get({ userId: user.userId, productMode });
+      const data = await userSubscriptionService.get({
+        userId: user.userId,
+        productMode: forAuthGetProductMode(),
+      });
       if (!data) return null;
       return data;
     },

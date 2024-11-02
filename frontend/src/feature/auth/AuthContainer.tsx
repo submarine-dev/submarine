@@ -7,10 +7,11 @@ import { ProductModeEnum } from '@/types/domain/ProductModeEnum';
 import useDiscloser from '@/hooks/common/useDiscloser';
 import { DemoDescriptionModal } from './descriptionModal/DemoDescriptionModal';
 import { useNavigate } from 'react-router-dom';
+import { GoogleLoginButton } from '@/components/button/GoogleLoginButton';
 
 export const AuthContainer: FC = () => {
   const router = useNavigate();
-  const { authUrl, handleCatchAuthCode } = useHandleAuth();
+
   const { productMode, changeToDemo } = useProductMode();
   const [isDemoDescriptionModalOpen, onOpenDemoDescriptionModal, onCloseDemoDescriptionModal] =
     useDiscloser();
@@ -31,6 +32,11 @@ export const AuthContainer: FC = () => {
     onCloseDemoDescriptionModal();
     router('/');
   };
+
+  const googleLoginLabel = (() => {
+    if (productMode === ProductModeEnum.DEMO) return 'Googleでスタート';
+    return 'Googleでログイン';
+  })();
 
   return (
     <Stack
@@ -55,32 +61,7 @@ export const AuthContainer: FC = () => {
           </Typography>
         </Stack>
         <Stack alignItems="stretch" spacing={3}>
-          {productMode !== ProductModeEnum.DEMO ? (
-            <OauthPopup
-              title="Login with Google"
-              width={600}
-              height={600}
-              url={authUrl}
-              onCode={handleCatchAuthCode}
-              // biome-ignore lint/suspicious/noEmptyBlockStatements: <explanation>
-              onClose={() => {}}
-            >
-              <Button
-                variant="contained"
-                startIcon={
-                  <Stack
-                    justifyContent="center"
-                    alignItems="center"
-                    sx={{ bgcolor: 'white', borderRadius: '100%', p: 0.5 }}
-                  >
-                    <img src="/images/common/google_icon.svg" alt="google" height={20} />
-                  </Stack>
-                }
-              >
-                Googleでログイン
-              </Button>
-            </OauthPopup>
-          ) : null}
+          <GoogleLoginButton label={googleLoginLabel} />
           {productMode !== ProductModeEnum.PRODUCTION ? (
             <Button
               onClick={handleDemoModeButtonClick}

@@ -26,6 +26,7 @@ export const RouterServiceProvider: FC<Props> = ({ children }) => {
     ) {
       router('/auth');
     }
+
     /**
      * 認証済
      */

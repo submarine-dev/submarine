@@ -3,7 +3,7 @@ import { UserType } from '@/types/domain/UserType';
 import { useAtom } from 'jotai';
 import { useEffect } from 'react';
 import { authCodeAtom } from './atom/authAtom';
-import { userAtom } from './atom/userAtom';
+import { initialUserData, userAtom } from './atom/userAtom';
 import { localStorageKeys } from '@/const/localStorageKeys';
 import { useProductMode } from './useProductMode';
 
@@ -16,7 +16,7 @@ export const useAuth = (): {
 } => {
   const [authCode, setAuthCode] = useAtom(authCodeAtom);
   const [user, setUser] = useAtom(userAtom);
-  const { productMode } = useProductMode();
+  const { forAuthGetProductMode } = useProductMode();
 
   /**
    * ログアウトの処理
@@ -28,7 +28,7 @@ export const useAuth = (): {
     // authService.google.logout();
     localStorage.removeItem(localStorageKeys.AUTH_CODE_KEY);
     setAuthCode('');
-    setUser({ userId: '', icon: '' });
+    setUser(initialUserData);
   };
 
   useEffect(() => {
@@ -41,7 +41,10 @@ export const useAuth = (): {
     if (!currentAuthCode || user.userId) return;
 
     (async () => {
-      const userData = await authService.google.login({ authCode: currentAuthCode, productMode });
+      const userData = await authService.google.login({
+        authCode: currentAuthCode,
+        productMode: forAuthGetProductMode(),
+      });
       if (!userData) return;
       setUser(userData);
     })();

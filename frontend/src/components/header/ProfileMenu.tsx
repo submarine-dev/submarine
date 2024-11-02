@@ -17,7 +17,7 @@ export const ProfileMenu: FC<Props> = ({ anchorEl, open, onClose, menuItem }) =>
     <Menu anchorEl={anchorEl} open={open} onClose={onClose}>
       {menuItem.map((item) => (
         <MenuItem key={item.label} onClick={item.onClick}>
-          <Stack direction="row" spacing={0.5}>
+          <Stack direction="row" spacing={1}>
             <div>{item.icon}</div>
             <Typography>{item.label}</Typography>
           </Stack>

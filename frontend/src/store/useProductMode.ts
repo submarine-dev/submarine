@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 
 export const useProductMode = (): {
   productMode: ProductModeEnum;
+  forAuthGetProductMode: () => ProductModeEnum;
   changeToDemo: () => void;
   changeToProduction: () => void;
 } => {
@@ -20,25 +21,32 @@ export const useProductMode = (): {
   };
 
   /**
-   * 初回ロード時のみlocalStorageから取得
+   * localStorageから現在のproductModeを取得
+   * @returns ProductModeEnum
    */
-  useEffect(() => {
+  const getCurrentProductMode = (): ProductModeEnum => {
     const productMode = localStorage.getItem(localStorageKeys.PRODUCT_MODE_KEY);
     switch (productMode) {
       case ProductModeEnum.DEMO:
-        handleChangeProductMode(ProductModeEnum.DEMO);
-        break;
+        return ProductModeEnum.DEMO;
       case ProductModeEnum.PRODUCTION:
-        handleChangeProductMode(ProductModeEnum.PRODUCTION);
-        break;
+        return ProductModeEnum.PRODUCTION;
       default:
-        handleChangeProductMode(ProductModeEnum.NONE_SELECTED);
-        break;
+        return ProductModeEnum.NONE_SELECTED;
     }
+  };
+
+  /**
+   * 初回ロード時のみlocalStorageから取得
+   */
+  useEffect(() => {
+    const currentProductMode = getCurrentProductMode();
+    handleChangeProductMode(currentProductMode);
   }, []);
 
   return {
     productMode,
+    forAuthGetProductMode: getCurrentProductMode,
     changeToDemo: () => {
       handleChangeProductMode(ProductModeEnum.DEMO);
     },
