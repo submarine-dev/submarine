@@ -14,7 +14,7 @@ export const subscriptionService = {
     if (!subscriptionId) return null;
     try {
       const res = (async () => {
-        if (productMode === ProductModeEnum.TRIAL)
+        if (productMode === ProductModeEnum.DEMO)
           return trailMock.subscriptionsDetails.find(
             (subscription) => subscription.id === subscriptionId
           );
@@ -37,7 +37,7 @@ export const subscriptionService = {
   }): Promise<SubscriptionSummaryType[] | null> => {
     try {
       const res = (async () => {
-        if (productMode === ProductModeEnum.TRIAL) return trailMock.subscriptions;
+        if (productMode === ProductModeEnum.DEMO) return trailMock.subscriptions;
         await apiClient.subscription.$get();
       })();
       if (!res) return null;

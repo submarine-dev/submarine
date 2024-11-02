@@ -14,7 +14,7 @@ export const userSubscriptionService = {
     if (!userId) return null;
     try {
       const res = (async () => {
-        if (productMode === ProductModeEnum.TRIAL) return trailMock.userSubscriptions;
+        if (productMode === ProductModeEnum.DEMO) return trailMock.userSubscriptions;
         return await apiClient.users._userId(userId).subscriptions.$get();
       })();
       return res;

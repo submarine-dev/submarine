@@ -11,16 +11,23 @@ import { useNavigate } from 'react-router-dom';
 export const AuthContainer: FC = () => {
   const router = useNavigate();
   const { authUrl, handleCatchAuthCode } = useHandleAuth();
-  const { productMode, changeToTrial } = useProductMode();
+  const { productMode, changeToDemo } = useProductMode();
   const [isDemoDescriptionModalOpen, onOpenDemoDescriptionModal, onCloseDemoDescriptionModal] =
     useDiscloser();
 
   const handleDemoModeButtonClick = (): void => {
+    /**
+     * 既にデモモードを過去に選択していた場合は、ホームに遷移する
+     */
+    if (productMode === ProductModeEnum.DEMO) {
+      router('/');
+      return;
+    }
     onOpenDemoDescriptionModal();
   };
 
   const handleDemoModeSubmit = (): void => {
-    changeToTrial();
+    changeToDemo();
     onCloseDemoDescriptionModal();
     router('/');
   };
@@ -33,6 +40,7 @@ export const AuthContainer: FC = () => {
         background: 'linear-gradient(0deg, #0B1C31 0%, #2850BF 100%)',
       }}
     >
+      {productMode}
       <Stack
         spacing={10}
         sx={{
@@ -47,53 +55,53 @@ export const AuthContainer: FC = () => {
             Submarine
           </Typography>
         </Stack>
-        <Stack alignItems="center" spacing={3}>
-          <OauthPopup
-            title="Login with Google"
-            width={600}
-            height={600}
-            url={authUrl}
-            onCode={handleCatchAuthCode}
-            // biome-ignore lint/suspicious/noEmptyBlockStatements: <explanation>
-            onClose={() => {}}
-          >
-            <Button
-              variant="contained"
-              startIcon={
-                <Stack
-                  justifyContent="center"
-                  alignItems="center"
-                  sx={{ bgcolor: 'white', borderRadius: '100%', p: 0.5 }}
-                >
-                  <img src="/images/common/google_icon.svg" alt="google" height={20} />
-                </Stack>
-              }
+        <Stack alignItems="stretch" spacing={3}>
+          {productMode !== ProductModeEnum.DEMO ? (
+            <OauthPopup
+              title="Login with Google"
+              width={600}
+              height={600}
+              url={authUrl}
+              onCode={handleCatchAuthCode}
+              // biome-ignore lint/suspicious/noEmptyBlockStatements: <explanation>
+              onClose={() => {}}
             >
-              <Typography>Googleでログイン</Typography>
-            </Button>
-          </OauthPopup>
-          {productMode !== ProductModeEnum.PRODUCTION ? (
-            <Stack alignItems="center">
               <Button
-                onClick={handleDemoModeButtonClick}
-                variant="outlined"
+                variant="contained"
                 startIcon={
                   <Stack
                     justifyContent="center"
                     alignItems="center"
                     sx={{ bgcolor: 'white', borderRadius: '100%', p: 0.5 }}
                   >
-                    <img src="/images/icon/submarine_icon.png" alt="submarine" height={20} />
+                    <img src="/images/common/google_icon.svg" alt="google" height={20} />
                   </Stack>
                 }
-                sx={{
-                  bgcolor: 'white',
-                  '&:hover': { bgcolor: 'white', opacity: 0.8 },
-                }}
               >
-                <Typography>デモモード</Typography>
+                Googleでログイン
               </Button>
-            </Stack>
+            </OauthPopup>
+          ) : null}
+          {productMode !== ProductModeEnum.PRODUCTION ? (
+            <Button
+              onClick={handleDemoModeButtonClick}
+              variant="outlined"
+              startIcon={
+                <Stack
+                  justifyContent="center"
+                  alignItems="center"
+                  sx={{ bgcolor: 'white', borderRadius: '100%', p: 0.5 }}
+                >
+                  <img src="/images/icon/submarine_icon.png" alt="submarine" height={20} />
+                </Stack>
+              }
+              sx={{
+                bgcolor: 'white',
+                '&:hover': { bgcolor: 'white', opacity: 0.8 },
+              }}
+            >
+              デモモード
+            </Button>
           ) : null}
           <DemoDescriptionModal
             open={isDemoDescriptionModalOpen}

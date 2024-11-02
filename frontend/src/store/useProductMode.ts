@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 
 export const useProductMode = (): {
   productMode: ProductModeEnum;
-  changeToTrial: () => void;
+  changeToDemo: () => void;
   changeToProduction: () => void;
 } => {
   const [productMode, setProductMode] = useAtom(productModeAtom);
@@ -25,22 +25,22 @@ export const useProductMode = (): {
   useEffect(() => {
     const productMode = localStorage.getItem(localStorageKeys.PRODUCT_MODE_KEY);
     switch (productMode) {
-      case ProductModeEnum.TRIAL:
-        handleChangeProductMode(ProductModeEnum.TRIAL);
+      case ProductModeEnum.DEMO:
+        handleChangeProductMode(ProductModeEnum.DEMO);
         break;
       case ProductModeEnum.PRODUCTION:
         handleChangeProductMode(ProductModeEnum.PRODUCTION);
         break;
       default:
-        handleChangeProductMode(ProductModeEnum.TRIAL);
+        handleChangeProductMode(ProductModeEnum.NONE_SELECTED);
         break;
     }
   }, []);
 
   return {
     productMode,
-    changeToTrial: () => {
-      handleChangeProductMode(ProductModeEnum.TRIAL);
+    changeToDemo: () => {
+      handleChangeProductMode(ProductModeEnum.DEMO);
     },
     changeToProduction: () => {
       handleChangeProductMode(ProductModeEnum.PRODUCTION);

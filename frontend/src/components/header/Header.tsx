@@ -5,8 +5,11 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import { ProfileMenu } from './ProfileMenu';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { useProductMode } from '@/store/useProductMode';
+import { ProductModeEnum } from '@/types/domain/ProductModeEnum';
 
 export const Header: FC = () => {
+  const { productMode } = useProductMode();
   const { pathname } = useLocation();
   const router = useNavigate();
   const { user, logout } = useAuth();
@@ -29,7 +32,7 @@ export const Header: FC = () => {
 
   const profileMenuItems = [
     {
-      label: 'ログアウト',
+      label: productMode === ProductModeEnum.DEMO ? 'トップに戻る' : 'ログアウト',
       icon: <LogoutIcon />,
       onClick: () => {
         logout();

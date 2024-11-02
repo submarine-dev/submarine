@@ -11,7 +11,7 @@ export const authService = {
     }: { authCode: string; productMode: ProductModeEnum }): Promise<UserType | null> => {
       try {
         const res = (async () => {
-          if (productMode === ProductModeEnum.TRIAL) return trailMock.user;
+          if (productMode === ProductModeEnum.DEMO) return trailMock.user;
           return await apiClient.login.google.$post({
             body: {
               code: authCode,

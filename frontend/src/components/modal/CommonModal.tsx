@@ -34,7 +34,7 @@ export const CommonModal: FC<Props> = ({
         <Typography>{title}</Typography>
       </DialogTitle>
       <DialogContent>{children}</DialogContent>
-      <DialogActions sx={{ pb: 2 }}>
+      <DialogActions sx={{ pb: 2.5 }}>
         <Stack direction="row" justifyContent="center" width="100%" spacing={2}>
           <Button variant="outlined" onClick={onCancel}>
             {cancelLabel}
