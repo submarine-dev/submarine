@@ -76,13 +76,13 @@ const userSubscriptionsBody: UserSubscriptionType['userSubscriptions'] = [
 
 const userSubscriptions: UserSubscriptionType = {
   totalAmountPerDay: 0,
-  totalAmountPerMonth: userSubscriptionsBody.reduce((acc, cur) => acc + cur.price, 0),
-  totalAmountPerYear: userSubscriptionsBody.reduce((acc, cur) => acc + cur.price, 0) * 12,
+  totalAmountPerMonth: userSubscriptionsBody.reduce((acc, cur) => acc + (cur.price ?? 0), 0),
+  totalAmountPerYear: userSubscriptionsBody.reduce((acc, cur) => acc + (cur.price ?? 0), 0) * 12,
   userSubscriptions: userSubscriptionsBody,
 };
 
 const user: UserType = {
-  userId: 'trail_user',
+  userId: 'demo_user',
   icon: 'https://picsum.photos/300',
 };
 
