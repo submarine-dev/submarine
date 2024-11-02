@@ -1,8 +1,8 @@
+import { localStorageKeys } from '@/const/localStorageKeys';
 import { ProductModeEnum } from '@/types/domain/ProductModeEnum';
 import { useAtom } from 'jotai';
-import { productModeAtom } from './atom/productModeAtom';
-import { localStorageKeys } from '@/const/localStorageKeys';
 import { useEffect } from 'react';
+import { productModeAtom } from './atom/productModeAtom';
 
 export const useProductMode = (): {
   productMode: ProductModeEnum;

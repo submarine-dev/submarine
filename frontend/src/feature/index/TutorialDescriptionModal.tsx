@@ -1,6 +1,6 @@
+import CheckIcon from '@mui/icons-material/Check';
 import { Alert, Popover, Stack } from '@mui/material';
 import { FC } from 'react';
-import CheckIcon from '@mui/icons-material/Check';
 
 type Props = {
   open: boolean;

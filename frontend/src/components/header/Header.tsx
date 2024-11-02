@@ -1,14 +1,14 @@
 import { useAuth } from '@/store/useAuth';
-import { Avatar, Button, IconButton, Stack, Typography } from '@mui/material';
-import { MouseEvent, useRef, useState, type FC } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
-import { ProfileMenu } from './ProfileMenu';
-import LogoutIcon from '@mui/icons-material/Logout';
 import { useProductMode } from '@/store/useProductMode';
 import { ProductModeEnum } from '@/types/domain/ProductModeEnum';
 import GoogleIcon from '@mui/icons-material/Google';
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { Avatar, Button, IconButton, Stack, Typography } from '@mui/material';
+import { type FC, MouseEvent, useRef, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { GoogleLoginButtonBase } from '../button/GoogleLoginButtonBase';
+import { ProfileMenu } from './ProfileMenu';
 
 export const Header: FC = () => {
   const { productMode } = useProductMode();

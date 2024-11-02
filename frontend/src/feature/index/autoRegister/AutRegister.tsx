@@ -1,7 +1,7 @@
 import { CardLayout } from '@/components/card/CardLayout';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Stack, Typography } from '@mui/material';
 import { FC } from 'react';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 export const AutoRegister: FC = () => {
   return (

@@ -281,7 +281,7 @@ const subscriptionsDetails: SubscriptionType[] = [
   },
 ];
 
-export const trailMock = {
+export const demoMock = {
   userSubscriptions,
   user,
   subscriptions,

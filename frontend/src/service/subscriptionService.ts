@@ -1,5 +1,5 @@
 import { apiClient } from '@/lib/apiClient';
-import { trailMock } from '@/mock/traial';
+import { demoMock } from '@/mock/demoMock';
 import { ProductModeEnum } from '@/types/domain/ProductModeEnum';
 import { SubscriptionSummaryType, SubscriptionType } from '@/types/domain/SubscriptionType';
 
@@ -15,7 +15,7 @@ export const subscriptionService = {
     try {
       const res = (async () => {
         if (productMode === ProductModeEnum.DEMO)
-          return trailMock.subscriptionsDetails.find(
+          return demoMock.subscriptionsDetails.find(
             (subscription) => subscription.id === subscriptionId
           );
         return await apiClient.subscription._subscriptionId(subscriptionId).$get();
@@ -37,7 +37,7 @@ export const subscriptionService = {
   }): Promise<SubscriptionSummaryType[] | null> => {
     try {
       const res = (async () => {
-        if (productMode === ProductModeEnum.DEMO) return trailMock.subscriptions;
+        if (productMode === ProductModeEnum.DEMO) return demoMock.subscriptions;
         await apiClient.subscription.$get();
       })();
       if (!res) return null;

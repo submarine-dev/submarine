@@ -1,12 +1,12 @@
 import { AuthPage } from '@/feature/auth/AuthPage';
+import { AuthCallbackPage } from '@/feature/authCallback/AuthCallbackPage';
 import { NotFoundPage } from '@/feature/common/NotFoundPage';
+import { DetailPage } from '@/feature/detail/DetailPage';
 import { IndexPage } from '@/feature/index/IndexPage';
+import { SubscriptionsPage } from '@/feature/subscriptions/SubscriptionsPage';
 import type { FC, ReactNode } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { RouterServiceProvider } from './RouterServiceProvider';
-import { DetailPage } from '@/feature/detail/DetailPage';
-import { AuthCallbackPage } from '@/feature/authCallback/AuthCallbackPage';
-import { SubscriptionsPage } from '@/feature/subscriptions/SubscriptionsPage';
 
 type RouteItemType = {
   path: string;

@@ -1,5 +1,5 @@
 import { apiClient } from '@/lib/apiClient';
-import { trailMock } from '@/mock/traial';
+import { demoMock } from '@/mock/demoMock';
 import { ProductModeEnum } from '@/types/domain/ProductModeEnum';
 import { UserSubscriptionType } from '@/types/domain/UserSubscriptionType';
 
@@ -14,7 +14,7 @@ export const userSubscriptionService = {
     if (!userId) return null;
     try {
       const res = (async () => {
-        if (productMode === ProductModeEnum.DEMO) return trailMock.userSubscriptions;
+        if (productMode === ProductModeEnum.DEMO) return demoMock.userSubscriptions;
         return await apiClient.users._userId(userId).subscriptions.$get();
       })();
       return res;

@@ -1,5 +1,5 @@
-import { PaymentType } from '@/types/domain/PaymentEnum';
 import { ConvertPaymentEnumToChip } from '@/components/chip/ConvertPaymentEnumToChip';
+import { PaymentType } from '@/types/domain/PaymentEnum';
 import { Stack, Typography } from '@mui/material';
 import { FC } from 'react';
 

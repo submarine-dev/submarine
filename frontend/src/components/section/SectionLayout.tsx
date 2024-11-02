@@ -1,6 +1,6 @@
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { Stack, SxProps, Tooltip, Typography } from '@mui/material';
 import { FC, ReactNode } from 'react';
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 
 type Props = {
   sectionTitle: string;

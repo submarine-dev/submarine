@@ -1,13 +1,11 @@
-import { Button, Stack, Typography } from '@mui/material';
-import type { FC } from 'react';
-import OauthPopup from 'react-oauth-popup';
-import { useHandleAuth } from './hooks/useHandleAuth';
+import { GoogleLoginButton } from '@/components/button/GoogleLoginButton';
+import useDiscloser from '@/hooks/common/useDiscloser';
 import { useProductMode } from '@/store/useProductMode';
 import { ProductModeEnum } from '@/types/domain/ProductModeEnum';
-import useDiscloser from '@/hooks/common/useDiscloser';
-import { DemoDescriptionModal } from './descriptionModal/DemoDescriptionModal';
+import { Button, Stack, Typography } from '@mui/material';
+import type { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { GoogleLoginButton } from '@/components/button/GoogleLoginButton';
+import { DemoDescriptionModal } from './descriptionModal/DemoDescriptionModal';
 
 export const AuthContainer: FC = () => {
   const router = useNavigate();

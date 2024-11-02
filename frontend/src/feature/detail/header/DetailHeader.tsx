@@ -1,7 +1,7 @@
-import { Avatar, IconButton, Stack, Typography } from '@mui/material';
-import { FC } from 'react';
 import { Delete } from '@mui/icons-material';
 import { Edit } from '@mui/icons-material';
+import { Avatar, IconButton, Stack, Typography } from '@mui/material';
+import { FC } from 'react';
 
 type Props = {
   icon: string;

@@ -1,9 +1,9 @@
 import { FC, ReactNode, useEffect } from 'react';
 import '@sjmc11/tourguidejs/src/scss/tour.scss';
+import { sessionStorageKeys } from '@/const/localStorageKeys';
 // import { TourGuideClient } from '@sjmc11/tourguidejs/src/Tour';
 import { useProductMode } from '@/store/useProductMode';
 import { ProductModeEnum } from '@/types/domain/ProductModeEnum';
-import { localStorageKeys } from '@/const/localStorageKeys';
 // import { TourGuideOptions } from '@sjmc11/tourguidejs/src/core/options';
 
 // const options: TourGuideOptions = {
@@ -23,7 +23,7 @@ export const TutorialProvider: FC<Props> = ({ children }) => {
   useEffect(() => {
     if (
       productMode !== ProductModeEnum.DEMO ||
-      localStorage.getItem(localStorageKeys.IS_DEMO_TUTORIAL_COMPLETED_KEY)
+      sessionStorage.getItem(sessionStorageKeys.IS_DEMO_TUTORIAL_COMPLETED_KEY)
     ) {
       return;
     }
@@ -31,7 +31,7 @@ export const TutorialProvider: FC<Props> = ({ children }) => {
      * TODO: 動かないためコメントアウト、いつか修正する
      */
     // tg.start();
-    // localStorage.setItem(localStorageKeys.IS_DEMO_TUTORIAL_COMPLETED_KEY, 'true');
+    // localStorage.setItem(sessionStorageKeys.IS_DEMO_TUTORIAL_COMPLETED_KEY, 'true');
   }, [productMode]);
 
   return <>{children}</>;

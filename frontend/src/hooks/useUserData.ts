@@ -1,8 +1,8 @@
 import { userSubscriptionService } from '@/service/userSubscriptionService';
 import { useAuth } from '@/store/useAuth';
-import { useQuery } from '@tanstack/react-query';
-import { UserSubscriptionsType, UserSubscriptionType } from '@/types/domain/UserSubscriptionType';
 import { useProductMode } from '@/store/useProductMode';
+import { UserSubscriptionType, UserSubscriptionsType } from '@/types/domain/UserSubscriptionType';
+import { useQuery } from '@tanstack/react-query';
 
 export const useUserData = (): {
   userSubscription: UserSubscriptionType | null | undefined;

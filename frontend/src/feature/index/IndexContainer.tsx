@@ -1,17 +1,17 @@
-import { useUserData } from '@/hooks/useUserData';
-import { Stack } from '@mui/material';
-import { useEffect, useState, type FC } from 'react';
-import { UserSubscriptionSummary } from './summary/UserSubscriptionSummary';
-import { useNavigate } from 'react-router-dom';
 import { SectionLayout } from '@/components/section/SectionLayout';
-import { AddSubscription } from './add/AddSubscription';
+import { sessionStorageKeys } from '@/const/localStorageKeys';
+import useDiscloser from '@/hooks/common/useDiscloser';
 import { useSubscription } from '@/hooks/useSubscription';
-import { AutoRegister } from './autoRegister/AutRegister';
+import { useUserData } from '@/hooks/useUserData';
 import { useProductMode } from '@/store/useProductMode';
 import { ProductModeEnum } from '@/types/domain/ProductModeEnum';
-import useDiscloser from '@/hooks/common/useDiscloser';
+import { Stack } from '@mui/material';
+import { type FC, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { TutorialDescriptionModal } from './TutorialDescriptionModal';
-import { sessionStorageKeys } from '@/const/localStorageKeys';
+import { AddSubscription } from './add/AddSubscription';
+import { AutoRegister } from './autoRegister/AutRegister';
+import { UserSubscriptionSummary } from './summary/UserSubscriptionSummary';
 
 export const IndexContainer: FC = () => {
   const router = useNavigate();
