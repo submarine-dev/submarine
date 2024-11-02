@@ -34,7 +34,7 @@ export const AuthContainer: FC = () => {
   };
 
   const googleLoginLabel = (() => {
-    if (productMode === ProductModeEnum.DEMO) return 'Googleでスタート';
+    if (productMode === ProductModeEnum.DEMO) return 'Submarineに登録する';
     return 'Googleでログイン';
   })();
 

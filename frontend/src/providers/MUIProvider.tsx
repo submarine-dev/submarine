@@ -1,5 +1,5 @@
 import { theme } from '@/theme/theme';
-import { ThemeProvider } from '@mui/material';
+import { CssBaseline, ThemeProvider } from '@mui/material';
 import type { FC, ReactNode } from 'react';
 
 type Props = {
@@ -10,5 +10,10 @@ type Props = {
  * MUIのProvider
  */
 export const MUIProvider: FC<Props> = (props) => {
-  return <ThemeProvider theme={theme}>{props.children}</ThemeProvider>;
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      {props.children}
+    </ThemeProvider>
+  );
 };

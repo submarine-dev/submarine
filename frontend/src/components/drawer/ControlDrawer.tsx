@@ -18,7 +18,6 @@ export const ControlDrawer: FC<Props> = ({ open, onClose, title, subscription, c
       anchor="bottom"
       open={open}
       onClose={onClose}
-      hideBackdrop
       sx={{
         /* 背景のブラックアウトを削除 */
         boxShadow: '0px -4px 4px rgba(0, 0, 0, 0.05)',
@@ -33,8 +32,9 @@ export const ControlDrawer: FC<Props> = ({ open, onClose, title, subscription, c
       <Stack
         spacing={1}
         sx={{
+          boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.05)',
           bgcolor: 'white',
-          borderRadius: 2,
+          borderRadius: 1,
           p: 3,
           /* イベント復活 */
           pointerEvents: 'auto',

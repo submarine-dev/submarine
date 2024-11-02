@@ -80,7 +80,7 @@ export const Header: FC = () => {
           </Typography>
         </Button>
         <Stack onClick={handleClickProfile} alignItems="flex-end">
-          <Avatar src={user.icon} alt={user.userId} />
+          <Avatar src={user.icon} alt={user.userId} id="profile-menu-icon" />
         </Stack>
       </Stack>
       <ProfileMenu
