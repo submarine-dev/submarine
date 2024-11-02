@@ -83,6 +83,13 @@ export const Header: FC = () => {
           <Avatar src={user.icon} alt={user.userId} id="profile-menu-icon" />
         </Stack>
       </Stack>
+      {productMode === ProductModeEnum.DEMO ? (
+        <Stack sx={{ pb: 1, pl: 0.5 }}>
+          <Typography variant="caption" sx={{ color: 'white' }}>
+            デモモード中。サブスクリプション等の変更は保存されません。
+          </Typography>
+        </Stack>
+      ) : null}
       <ProfileMenu
         anchorEl={menuAnchorEl}
         open={Boolean(menuAnchorEl)}

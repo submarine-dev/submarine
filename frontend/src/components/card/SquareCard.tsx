@@ -6,7 +6,7 @@ type Props = {
   title: string;
   icon: string | ReactNode;
   bgcolor?: string;
-  size?: number;
+  size?: number | 'auto';
   onClick: () => void;
 };
 
@@ -16,10 +16,11 @@ export const SquareCard: FC<Props> = ({ title, icon, bgcolor = '#FFFFFF', size =
       variant="contained"
       onClick={onClick}
       sx={{
-        height: size,
-        width: size,
-        minWidth: size,
-        minHeight: size,
+        height: size === 'auto' ? 'auto' : size,
+        width: size === 'auto' ? '100%' : size,
+        minHeight: size === 'auto' ? 'auto' : size,
+        minWidth: size === 'auto' ? '100%' : size,
+        aspectRatio: 1,
         padding: 1,
         bgcolor,
         '&:hover': {

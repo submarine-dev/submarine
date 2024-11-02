@@ -1,4 +1,4 @@
-import { Box, Stack } from '@mui/material';
+import { Box, Container, Stack } from '@mui/material';
 import { FC, ReactNode } from 'react';
 import { Header } from '../header/Header';
 
@@ -39,9 +39,11 @@ const Background: FC = () => {
 export const PrimaryLayout: FC<Props> = ({ children }) => {
   return (
     <Stack sx={{ py: 1, px: 2 }}>
-      <Background />
-      <Header />
-      {children}
+      <Container disableGutters maxWidth="sm">
+        <Background />
+        <Header />
+        {children}
+      </Container>
     </Stack>
   );
 };

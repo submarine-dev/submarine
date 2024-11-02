@@ -1,5 +1,5 @@
 import { useUserData } from '@/hooks/useUserData';
-import { Stack, Typography } from '@mui/material';
+import { Stack } from '@mui/material';
 import { useEffect, useState, type FC } from 'react';
 import { UserSubscriptionSummary } from './summary/UserSubscriptionSummary';
 import { useNavigate } from 'react-router-dom';
@@ -61,13 +61,6 @@ export const IndexContainer: FC = () => {
   return (
     <>
       <Stack>
-        {productMode === ProductModeEnum.DEMO ? (
-          <Stack sx={{ pb: 1, pl: 0.5 }}>
-            <Typography variant="caption" sx={{ color: 'white' }}>
-              デモモード中。サブスクリプション等の変更は保存されません。
-            </Typography>
-          </Stack>
-        ) : null}
         {userSubscription?.userSubscriptions ? (
           <UserSubscriptionSummary
             currentMonthPayment={userSubscription.totalAmountPerMonth ?? 0}
