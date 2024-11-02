@@ -40,7 +40,6 @@ export const AuthContainer: FC = () => {
         background: 'linear-gradient(0deg, #0B1C31 0%, #2850BF 100%)',
       }}
     >
-      {productMode}
       <Stack
         spacing={10}
         sx={{
