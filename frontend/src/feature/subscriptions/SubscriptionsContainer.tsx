@@ -6,16 +6,22 @@ import { subscriptionService } from '@/service/subscriptionService';
 import { useProductMode } from '@/store/useProductMode';
 import { SubscriptionsList } from './list/SubscriptionsList';
 import { useSubscription } from '@/hooks/useSubscription';
+import { useNavigate } from 'react-router-dom';
+import { Alert, Snackbar } from '@mui/material';
 
 type Props = {
   subscriptionId: string | null;
+  planId: string | null;
 };
 
-export const SubscriptionsContainer: FC<Props> = ({ subscriptionId }) => {
+export const SubscriptionsContainer: FC<Props> = ({ subscriptionId, planId }) => {
+  const router = useNavigate();
   const { productMode } = useProductMode();
   const { subscriptionSummaries } = useSubscription();
+
   const [isOpenControlDrawer, controlDrawerOpen, controlDrawerClose] = useDiscloser();
   const [targetSubscription, setTargetSubscription] = useState<SubscriptionType | null>(null);
+  const [isOpenSnackBar, onOpenSnackBar, onCloseSnackBar] = useDiscloser();
 
   /**
    * サブスクが選択された時にサブスクをセットしてdrawerを開く
@@ -34,12 +40,20 @@ export const SubscriptionsContainer: FC<Props> = ({ subscriptionId }) => {
    * 登録のハンドリング
    *
    * @param targetSubscriptionParam
+   * @param planId
    */
-  const handleAddSubscription = (_targetSubscriptionParam: SubscriptionType): Promise<void> => {
+  const handleAddSubscription = (
+    _targetSubscriptionParam: SubscriptionType,
+    _planId: string
+  ): Promise<void> => {
     /**
      * TODO: CRUD生え次第変更
      */
     controlDrawerClose();
+    onOpenSnackBar();
+    setTimeout(() => {
+      router('/');
+    }, 3000);
     return new Promise((resolve) => resolve());
   };
 
@@ -64,9 +78,15 @@ export const SubscriptionsContainer: FC<Props> = ({ subscriptionId }) => {
           open={isOpenControlDrawer}
           onClose={controlDrawerClose}
           subscription={targetSubscription}
-          onAddSubscription={() => handleAddSubscription(targetSubscription)}
+          onAddSubscription={(planId: string) => handleAddSubscription(targetSubscription, planId)}
+          paramPlanId={planId}
         />
       ) : null}
+      <Snackbar open={isOpenSnackBar} onClose={onCloseSnackBar} autoHideDuration={3000}>
+        <Alert onClose={onCloseSnackBar} severity="success" variant="filled" sx={{ width: '100%' }}>
+          サブスクリプションを追加しました
+        </Alert>
+      </Snackbar>
     </>
   );
 };

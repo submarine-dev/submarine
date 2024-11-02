@@ -1,22 +1,32 @@
 import { ControlDrawer } from '@/components/drawer/ControlDrawer';
-import useDiscloser from '@/hooks/common/useDiscloser';
 import { SubscriptionType } from '@/types/domain/SubscriptionType';
-import { Alert, Button, Snackbar, Stack, Typography } from '@mui/material';
-import { FC, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Button, Stack, Typography } from '@mui/material';
+import { FC, useEffect, useState } from 'react';
 
 type Props = {
   open: boolean;
   onClose: () => void;
   subscription: SubscriptionType;
-  onAddSubscription: () => Promise<void>;
+  paramPlanId: string | null;
+  onAddSubscription: (planId: string) => Promise<void>;
 };
 
-export const AddSubscriptionDrawer: FC<Props> = ({ open, onClose, subscription }) => {
-  const router = useNavigate();
-
+export const AddSubscriptionDrawer: FC<Props> = ({
+  open,
+  onClose,
+  subscription,
+  paramPlanId,
+  onAddSubscription,
+}) => {
   const [selectedPlanId, setSelectedPlanId] = useState<string | null>(null);
-  const [isOpenSnackBar, onOpenSnackBar, onCloseSnackBar] = useDiscloser();
+
+  /**
+   * クエリパラメータにplanIdがある場合には、選択されたプランをセットする
+   */
+  useEffect(() => {
+    if (!paramPlanId) return;
+    setSelectedPlanId(paramPlanId);
+  }, [paramPlanId]);
 
   if (!subscription.plan) return null;
   const planItems = subscription.plan.map((plan) => {
@@ -47,72 +57,61 @@ export const AddSubscriptionDrawer: FC<Props> = ({ open, onClose, subscription }
   /**
    * 選択のsubmit
    */
-  const handleSubmit = (): void => {
+  const handleSubmit = async (): Promise<void> => {
     /**
      * TODO: サブスクリプションの追加処理
      */
-    onOpenSnackBar();
-    onClose();
-    setTimeout(() => {
-      router('/');
-    }, 3000);
+    await onAddSubscription(selectedPlanId ?? '');
   };
 
   return (
-    <>
-      <ControlDrawer
-        open={open}
-        onClose={onClose}
-        title="新しいサブスクリプションをを追加"
-        subscription={{ icon: subscription.icon ?? '', name: subscription.name ?? '' }}
-      >
-        <Stack spacing={3}>
-          <Stack spacing={1} sx={{ pt: 1 }}>
-            {planItems.map((plan) => {
-              const selected = selectedPlanId === plan.id;
-              return (
-                <Button
-                  key={plan.id}
-                  variant={selected ? 'contained' : 'outlined'}
-                  onClick={plan.onCLick}
+    <ControlDrawer
+      open={open}
+      onClose={onClose}
+      title="新しいサブスクリプションをを追加"
+      subscription={{ icon: subscription.icon ?? '', name: subscription.name ?? '' }}
+    >
+      <Stack spacing={3}>
+        <Stack spacing={1} sx={{ pt: 1 }}>
+          {planItems.map((plan) => {
+            const selected = selectedPlanId === plan.id;
+            return (
+              <Button
+                key={plan.id}
+                variant={selected ? 'contained' : 'outlined'}
+                onClick={plan.onCLick}
+              >
+                <Stack
+                  direction="row"
+                  justifyContent="space-between"
+                  sx={{
+                    p: 1,
+                    py: 2,
+                    color: selected ? 'white' : 'black',
+                    width: '100%',
+                  }}
                 >
-                  <Stack
-                    direction="row"
-                    justifyContent="space-between"
-                    sx={{
-                      p: 1,
-                      py: 2,
-                      color: selected ? 'white' : 'black',
-                      width: '100%',
-                    }}
-                  >
-                    <Typography>{plan.label}</Typography>
-                    <Typography>{plan.price?.toLocaleString()} 円</Typography>
-                  </Stack>
-                </Button>
-              );
-            })}
-          </Stack>
-          <Stack direction="row" justifyContent="center" spacing={2} sx={{ width: '100%' }}>
-            <Button onClick={handleCancel} variant="outlined" sx={{ width: '120px' }}>
-              キャンセル
-            </Button>
-            <Button
-              onClick={handleSubmit}
-              disabled={selectedPlanId === null}
-              variant="contained"
-              sx={{ width: '120px' }}
-            >
-              追加する
-            </Button>
-          </Stack>
+                  <Typography>{plan.label}</Typography>
+                  <Typography>{plan.price?.toLocaleString()} 円</Typography>
+                </Stack>
+              </Button>
+            );
+          })}
         </Stack>
-      </ControlDrawer>
-      <Snackbar open={isOpenSnackBar} onClose={onCloseSnackBar} autoHideDuration={3000}>
-        <Alert onClose={onCloseSnackBar} severity="success" variant="filled" sx={{ width: '100%' }}>
-          サブスクリプションを追加しました
-        </Alert>
-      </Snackbar>
-    </>
+        <Stack direction="row" justifyContent="center" spacing={2} sx={{ width: '100%' }}>
+          <Button onClick={handleCancel} variant="outlined" sx={{ width: '120px' }}>
+            キャンセル
+          </Button>
+          <Button
+            onClick={handleSubmit}
+            disabled={selectedPlanId === null}
+            variant="contained"
+            sx={{ width: '120px' }}
+          >
+            追加する
+          </Button>
+        </Stack>
+      </Stack>
+    </ControlDrawer>
   );
 };

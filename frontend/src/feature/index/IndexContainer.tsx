@@ -36,7 +36,7 @@ export const IndexContainer: FC = () => {
   };
 
   const handleSubscriptionClick = (subscriptionId: string): void => {
-    router(`/subscriptions/${subscriptionId}`);
+    router(`/subscriptions?subscriptionId=${subscriptionId}`);
   };
 
   const handleCloseTutorialDescriptionModal = (): void => {
