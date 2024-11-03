@@ -83,6 +83,15 @@ export const IndexContainer: FC = () => {
           />
         </SectionLayout>
       ) : null}
+      {subscriptionSummaries ? (
+        <SectionLayout sectionTitle="レコメンド">
+          <AddSubscription
+            subscriptionSummaries={subscriptionSummaries}
+            onFindSubscriptionClick={handleFindSubscriptionClick}
+            onSubscriptionClick={handleSubscriptionClick}
+          />
+        </SectionLayout>
+      ) : null}
       <TutorialDescriptionModal
         open={isOpenTutorialDescriptionModal}
         onClose={handleCloseTutorialDescriptionModal}
