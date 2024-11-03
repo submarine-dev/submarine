@@ -11,6 +11,7 @@ import { TutorialDescriptionModal } from './TutorialDescriptionModal';
 import { AddSubscription } from './add/AddSubscription';
 import { AutoManagement } from './autoManagement/AutoManagement';
 import { UserSubscriptionSummary } from './summary/UserSubscriptionSummary';
+import { AddSubscriptionRecommend } from './add/AddSubscriptionRecommend';
 
 export const IndexContainer: FC = () => {
   const router = useNavigate();
@@ -84,10 +85,12 @@ export const IndexContainer: FC = () => {
         </SectionLayout>
       ) : null}
       {subscriptionSummaries ? (
-        <SectionLayout sectionTitle="レコメンド">
-          <AddSubscription
+        <SectionLayout
+          sectionTitle="レコメンド"
+          helpText="あなたと似たユーザーが登録しているサブスクリプションをレコメンドします"
+        >
+          <AddSubscriptionRecommend
             subscriptionSummaries={subscriptionSummaries}
-            onFindSubscriptionClick={handleFindSubscriptionClick}
             onSubscriptionClick={handleSubscriptionClick}
           />
         </SectionLayout>
