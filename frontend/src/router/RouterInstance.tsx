@@ -4,6 +4,7 @@ import { NotFoundPage } from '@/feature/common/NotFoundPage';
 import { DetailPage } from '@/feature/detail/DetailPage';
 import { IndexPage } from '@/feature/index/IndexPage';
 import { SubscriptionsPage } from '@/feature/subscriptions/SubscriptionsPage';
+import { SuggestPage } from '@/feature/suggest/SuggestPage';
 import type { FC, ReactNode } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { RouterServiceProvider } from './RouterServiceProvider';
@@ -31,16 +32,16 @@ export const RouterInstance: FC = () => {
     },
     {
       /**
-       * サブスク一覧ページ
+       * サブスク自動管理ページ
        */
-      path: '/subscriptions',
-      element: <SubscriptionsPage />,
+      path: '/suggest',
+      element: <SuggestPage />,
     },
     {
       /**
-       * サブスク一覧ページ→idがある場合には、そのサブスクのdrawerが開いた状態で表示
+       * サブスク一覧ページ
        */
-      path: '/subscriptions/:id',
+      path: '/subscriptions',
       element: <SubscriptionsPage />,
     },
     {

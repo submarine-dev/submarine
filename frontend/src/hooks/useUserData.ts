@@ -1,11 +1,13 @@
 import { userSubscriptionService } from '@/service/userSubscriptionService';
 import { useAuth } from '@/store/useAuth';
 import { useProductMode } from '@/store/useProductMode';
+import { AutoManagementSuggestSubscriptionType } from '@/types/domain/AutoManagementSuggestSubscriptionType';
 import { UserSubscriptionType, UserSubscriptionsType } from '@/types/domain/UserSubscriptionType';
 import { useQuery } from '@tanstack/react-query';
 
 export const useUserData = (): {
   userSubscription: UserSubscriptionType | null | undefined;
+  autoManagementSuggestSubscriptions: AutoManagementSuggestSubscriptionType[] | null | undefined;
   isPending: boolean;
   isError: boolean;
   getUserSubscription: (subscriptionId: string) => UserSubscriptionsType | null;
@@ -30,8 +32,25 @@ export const useUserData = (): {
     },
   });
 
-  const isPending = isPendingUserSubscription;
-  const isError = isErrorUserSubscription;
+  const {
+    data: autoManagementSuggestSubscriptions,
+    isPending: isPendingAutoManagementSuggests,
+    isError: isErrorAutoManagementSuggests,
+  } = useQuery({
+    queryKey: ['autoManagementSuggests', user.userId, productMode],
+    queryFn: async () => {
+      if (!user.userId) return null;
+      const data = await userSubscriptionService.getAutoManagementSuggests({
+        userId: user.userId,
+        productMode: forAuthGetProductMode(),
+      });
+      if (!data) return [];
+      return data;
+    },
+  });
+
+  const isPending = isPendingUserSubscription || isPendingAutoManagementSuggests;
+  const isError = isErrorUserSubscription || isErrorAutoManagementSuggests;
 
   /**
    * userSubscriptionの中から特定のsubscriptionを取得する
@@ -50,6 +69,7 @@ export const useUserData = (): {
 
   return {
     userSubscription,
+    autoManagementSuggestSubscriptions,
     isPending,
     isError,
     getUserSubscription,

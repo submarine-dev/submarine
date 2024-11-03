@@ -5,17 +5,16 @@ import { useSubscription } from '@/hooks/useSubscription';
 import { useUserData } from '@/hooks/useUserData';
 import { useProductMode } from '@/store/useProductMode';
 import { ProductModeEnum } from '@/types/domain/ProductModeEnum';
-import { Stack } from '@mui/material';
 import { type FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TutorialDescriptionModal } from './TutorialDescriptionModal';
 import { AddSubscription } from './add/AddSubscription';
-import { AutoRegister } from './autoRegister/AutRegister';
+import { AutoManagement } from './autoManagement/AutoManagement';
 import { UserSubscriptionSummary } from './summary/UserSubscriptionSummary';
 
 export const IndexContainer: FC = () => {
   const router = useNavigate();
-  const { userSubscription } = useUserData();
+  const { userSubscription, autoManagementSuggestSubscriptions } = useUserData();
   const { subscriptionSummaries } = useSubscription();
   const { productMode } = useProductMode();
 
@@ -60,30 +59,30 @@ export const IndexContainer: FC = () => {
 
   return (
     <>
-      <Stack>
-        {userSubscription?.userSubscriptions ? (
+      {userSubscription?.userSubscriptions ? (
+        <SectionLayout sectionTitle="" titleColor="white">
           <UserSubscriptionSummary
             currentMonthPayment={userSubscription.totalAmountPerMonth ?? 0}
             userSubscriptions={userSubscription.userSubscriptions}
             onClickColumn={handleClickColumn}
           />
-        ) : null}
-        <SectionLayout
-          sectionTitle="自動で登録"
-          helpText="メール情報から、AIによってサブスクリプションの登録をサジェストします"
-        >
-          <AutoRegister />
         </SectionLayout>
-        {subscriptionSummaries ? (
-          <SectionLayout sectionTitle="手動で登録">
-            <AddSubscription
-              subscriptionSummaries={subscriptionSummaries}
-              onFindSubscriptionClick={handleFindSubscriptionClick}
-              onSubscriptionClick={handleSubscriptionClick}
-            />
-          </SectionLayout>
-        ) : null}
-      </Stack>
+      ) : null}
+      <SectionLayout
+        sectionTitle="自動で管理"
+        helpText="メール情報から、AIによってサブスクリプションの管理をサジェストします"
+      >
+        <AutoManagement autoManagementSuggestSubscriptions={autoManagementSuggestSubscriptions} />
+      </SectionLayout>
+      {subscriptionSummaries ? (
+        <SectionLayout sectionTitle="手動で登録">
+          <AddSubscription
+            subscriptionSummaries={subscriptionSummaries}
+            onFindSubscriptionClick={handleFindSubscriptionClick}
+            onSubscriptionClick={handleSubscriptionClick}
+          />
+        </SectionLayout>
+      ) : null}
       <TutorialDescriptionModal
         open={isOpenTutorialDescriptionModal}
         onClose={handleCloseTutorialDescriptionModal}

@@ -1,11 +1,14 @@
+import { AutoManagementSuggestSubscriptionType } from '@/types/domain/AutoManagementSuggestSubscriptionType';
+import { MailDomainEnum } from '@/types/domain/MailDomainEnum';
 import { SubscriptionSummaryType, SubscriptionType } from '@/types/domain/SubscriptionType';
+import { SuggestTypeEnum } from '@/types/domain/SuggestTypeEnum';
 import { UserSubscriptionType } from '@/types/domain/UserSubscriptionType';
 import { UserType } from '@/types/domain/UserType';
 
 const userSubscriptionsBody: UserSubscriptionType['userSubscriptions'] = [
   {
     createdAt: new Date().toISOString(),
-    icon: 'https://fluxfilm.in/wp-content/uploads/2024/04/92dd8733114cb40986002878c7a6a59d9325c1516f8f4e95b96896a2279c2afb_.webp',
+    icon: '/images/subscription/youtube_premium_icon.webp',
     id: 'subscription_youtube_premium_personal',
     name: 'Youtube Premium',
     paidAt: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)
@@ -90,7 +93,7 @@ const subscriptions: SubscriptionSummaryType[] = [
   {
     id: 'netflix',
     name: 'Netflix',
-    icon: 'https://cdn.icon-icons.com/icons2/3053/PNG/512/netflix_macos_bigsur_icon_189917.png',
+    icon: '/images/subscription/netflix_icon.png',
     isSubscribed: false,
   },
   {
@@ -123,7 +126,7 @@ const subscriptionsDetails: SubscriptionType[] = [
   {
     id: 'netflix',
     name: 'Netflix',
-    icon: 'https://cdn.icon-icons.com/icons2/3053/PNG/512/netflix_macos_bigsur_icon_189917.png',
+    icon: '/images/subscription/netflix_icon.png',
     isSubscribed: false,
     plan: [
       {
@@ -281,9 +284,55 @@ const subscriptionsDetails: SubscriptionType[] = [
   },
 ];
 
+const autoManagementSuggestSubscriptions: AutoManagementSuggestSubscriptionType[] = [
+  {
+    id: 'subscription_youtube_premium_personal',
+    name: 'Youtube Premium',
+    icon: '/images/subscription/youtube_premium_icon.webp',
+    plan: {
+      id: 'plan_youtube_premium_personal',
+      name: '個人プラン',
+      paymentType: 'monthly',
+      price: 1280,
+    },
+    suggestType: SuggestTypeEnum.REGISTER,
+    mailSubject: '【お知らせ】Youtube Premiumのご請求が完了しました',
+    mailDomain: MailDomainEnum.GMAIL,
+  },
+  {
+    id: 'subscription_netflix_standard',
+    name: 'Netflix',
+    icon: '/images/subscription/netflix_icon.png',
+    plan: {
+      id: 'standard_plan',
+      name: 'スタンダード',
+      paymentType: 'monthly',
+      price: 1590,
+    },
+    suggestType: SuggestTypeEnum.CANCEL,
+    mailSubject: '【Netflix】ご利用料金のお支払いが完了しました',
+    mailDomain: MailDomainEnum.GMAIL,
+  },
+  {
+    id: 'subscription_amazon_prime_monthly',
+    name: 'Amazon Prime',
+    icon: '/images/subscription/amazon_prime_icon.png',
+    plan: {
+      id: 'monthly_plan',
+      name: '月額プラン',
+      paymentType: 'monthly',
+      price: 600,
+    },
+    suggestType: SuggestTypeEnum.CHANGE,
+    mailSubject: '【Amazon】Amazon Primeのご請求が完了しました',
+    mailDomain: MailDomainEnum.GMAIL,
+  },
+];
+
 export const demoMock = {
   userSubscriptions,
   user,
   subscriptions,
   subscriptionsDetails,
+  autoManagementSuggestSubscriptions,
 };
