@@ -1,8 +1,9 @@
 import { useAuth } from '@/store/useAuth';
 import { useProductMode } from '@/store/useProductMode';
 import { ProductModeEnum } from '@/types/domain/ProductModeEnum';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import GoogleIcon from '@mui/icons-material/Google';
-import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Avatar, Button, IconButton, Stack, Typography } from '@mui/material';
 import { type FC, MouseEvent, useRef, useState } from 'react';
@@ -53,6 +54,17 @@ export const Header: FC = () => {
         },
       };
     })(),
+    {
+      label: 'プロフィール（開発中）',
+      icon: <AccountCircleIcon />,
+      onClick: () => {
+        /**
+         * TODO: プロフィールページ実装
+         */
+        // router('/friends');
+      },
+      isDisabled: true,
+    },
   ].filter((item) => item !== null);
 
   return (
@@ -72,7 +84,7 @@ export const Header: FC = () => {
           disabled={isHiddenBackButton}
           sx={{ opacity: isHiddenBackButton ? 0 : 1 }}
         >
-          <KeyboardBackspaceIcon fontSize="medium" sx={{ color: 'white' }} />
+          <ArrowCircleLeftIcon fontSize="large" sx={{ color: 'white' }} />
         </IconButton>
         <Button onClick={handleBackHome} variant="text">
           <Typography variant="h5" color="white" sx={{ fontWeight: 'bold' }}>
