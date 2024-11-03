@@ -40,6 +40,7 @@ export const AddSubscription: FC<Props> = ({
           pointerEvents: 'auto',
           width: '100%',
           height: 100,
+          maxWidth: 'sm',
         }}
       >
         <SquareCard
