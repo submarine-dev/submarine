@@ -72,7 +72,14 @@ export const AddSubscriptionDrawer: FC<Props> = ({
       subscription={{ icon: subscription.icon ?? '', name: subscription.name ?? '' }}
     >
       <Stack spacing={3}>
-        <Stack spacing={1} sx={{ pt: 1 }}>
+        <Stack
+          spacing={1}
+          sx={{
+            pt: 1,
+            overflowY: 'auto',
+            height: '300px',
+          }}
+        >
           {planItems.map((plan) => {
             const selected = selectedPlanId === plan.id;
             return (
@@ -80,6 +87,7 @@ export const AddSubscriptionDrawer: FC<Props> = ({
                 key={plan.id}
                 variant={selected ? 'contained' : 'outlined'}
                 onClick={plan.onCLick}
+                sx={{ minHeight: '70px' }}
               >
                 <Stack
                   direction="row"
