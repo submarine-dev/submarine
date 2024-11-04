@@ -15,6 +15,7 @@ type GoogleLoginRequest struct {
 
 type GoogleLoginResponse struct {
 	ID string `json:"userId"`
+	Icon string `json:"icon"`
 }
 
 // googleLogin godoc
@@ -54,6 +55,7 @@ func LoginGoogle(
 
 		c.JSON(http.StatusOK, GoogleLoginResponse{
 			ID: result.UserID,
+			Icon: result.Icon,
 		})
 		return nil
 	}
