@@ -10,6 +10,7 @@ import { SectionLayout } from '@/components/section/SectionLayout';
 import { EditSubscriptionDrawer } from './drawer/EditSubscriptionDrawer';
 import useDiscloser from '@/hooks/common/useDiscloser';
 import { useSubscription } from '@/hooks/useSubscription';
+import { CancelSubscriptionDrawer } from './drawer/CancelSubscriptionDrawer';
 
 export const DetailPageContainer: FC = () => {
   const { pathname } = useLocation();
@@ -18,9 +19,20 @@ export const DetailPageContainer: FC = () => {
   const { getUserSubscription } = useUserData();
   const { targetSubscription, setSubscriptionId } = useSubscription();
 
+  const [selectedPlanId, setSelectedPlanId] = useState<string | null>(null);
+
+  /**
+   * edit
+   */
   const [isOpenEditSubscription, onOpenEditSubscription, onCloseEditSubscription] = useDiscloser();
   const [isOpenSnackBar, onOpenSnackBar, onCloseSnackBar] = useDiscloser();
-  const [selectedPlanId, setSelectedPlanId] = useState<string | null>(null);
+
+  /**
+   * cancel
+   */
+  const [isOpenCancelSubscription, onOpenCancelSubscription, onCloseCancelSubscription] =
+    useDiscloser();
+  const [isOpenCancelSnackBar, onOpenCancelSnackBar, onCloseCancelSnackBar] = useDiscloser();
 
   const subscriptionId = pathname.split('/').pop();
   if (!subscriptionId) return null;
@@ -58,6 +70,21 @@ export const DetailPageContainer: FC = () => {
     return new Promise((resolve) => resolve());
   };
 
+  /**
+   * サブスク解約のハンドリング
+   */
+  const handleCancelSubscription = (): Promise<void> => {
+    /**
+     * TODO: CRUD生え次第変更
+     */
+    onCloseCancelSubscription();
+    onOpenCancelSnackBar();
+    setTimeout(() => {
+      router('/');
+    }, 3000);
+    return new Promise((resolve) => resolve());
+  };
+
   return (
     <>
       <Stack>
@@ -66,10 +93,8 @@ export const DetailPageContainer: FC = () => {
             <DetailHeader
               icon={subscription.icon ?? ''}
               name={subscription.name ?? ''}
-              // biome-ignore lint/suspicious/noEmptyBlockStatements: <explanation>
               onEditClick={handleEditStart}
-              // biome-ignore lint/suspicious/noEmptyBlockStatements: <explanation>
-              onDeleteClick={() => {}}
+              onDeleteClick={onOpenCancelSubscription}
             />
             <CurrentDetailHistory
               history={{
@@ -100,6 +125,18 @@ export const DetailPageContainer: FC = () => {
         onCancel={onCloseEditSubscription}
         onSubmit={handleUpdateSubscription}
         onCloseSnackBar={onCloseSnackBar}
+      />
+      <CancelSubscriptionDrawer
+        open={isOpenCancelSubscription}
+        subscription={{
+          icon: subscription.icon ?? '',
+          name: subscription.name ?? '',
+          unsubscribeLink: subscription.unsubscribeLink ?? '',
+        }}
+        isOpenSnackBar={isOpenCancelSnackBar}
+        onClose={onCloseCancelSubscription}
+        onCancelSubmit={handleCancelSubscription}
+        onCloseSnackBar={onCloseCancelSnackBar}
       />
     </>
   );
