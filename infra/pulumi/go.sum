@@ -153,6 +153,8 @@ github.com/pulumi/pulumi-docker-build/sdk/go/dockerbuild v0.0.7 h1:ElFKxZW1zCse3
 github.com/pulumi/pulumi-docker-build/sdk/go/dockerbuild v0.0.7/go.mod h1:rQMXgMTu9Jh/Oa2tSbqPSZ9t/t2VhEUGb4RSOYHV3h8=
 github.com/pulumi/pulumi-gcp/sdk/v8 v8.7.0 h1:WRJ0pVrag5bJ01urgsroqSMhyI017eoazJXitcU6hn8=
 github.com/pulumi/pulumi-gcp/sdk/v8 v8.7.0/go.mod h1:ayh4aCuf3vxH9pg0MVIGXdHmqdjPPKyV0hEKV59blJs=
+github.com/pulumi/pulumi-synced-folder/sdk v0.11.1 h1:08JhEHEdcZjuhoOz5t432bSUcZYjRRhowNfbj0yKtv4=
+github.com/pulumi/pulumi-synced-folder/sdk v0.11.1/go.mod h1:KQYhQvlriSBt6osqxw737uuoaF7tj9H010GPVyXpulU=
 github.com/pulumi/pulumi/sdk/v3 v3.137.0 h1:bxhYpOY7Z4xt+VmezEpHuhjpOekkaMqOjzxFg/1OhCw=
 github.com/pulumi/pulumi/sdk/v3 v3.137.0/go.mod h1:PvKsX88co8XuwuPdzolMvew5lZV+4JmZfkeSjj7A6dI=
 github.com/rivo/uniseg v0.2.0/go.mod h1:J6wj4VEh+S6ZtnVlnTBMWIodfgj8LQOQFoIToxlJtxc=

@@ -5,6 +5,7 @@ import "time"
 type ENV string
 
 const (
+	EnvLocal ENV = "local"
 	EnvDevelopment ENV = "development"
 	EnvStaging     ENV = "staging"
 	EnvProduction  ENV = "production"
@@ -14,7 +15,7 @@ const (
 type config struct {
 	Application struct {
 		Name        string `env:"APP_NAME" envDefault:"submarine-backend"`
-		Env         ENV    `env:"APP_ENV" envDefault:"development"`
+		Env         ENV    `env:"APP_ENV" envDefault:"local"`
 		AllowOrigin string `env:"APP_ALLOW_ORIGIN" envDefault:"http://localhost:3000"`
 	}
 

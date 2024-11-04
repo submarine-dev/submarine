@@ -5,7 +5,9 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/pulumi/pulumi-gcp/sdk/v8/go/gcp/compute"
 	"github.com/pulumi/pulumi-gcp/sdk/v8/go/gcp/projects"
+	synced "github.com/pulumi/pulumi-synced-folder/sdk/go/synced-folder"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
 	"github.com/submarine-dev/submarine/infra/module/gc"
@@ -124,7 +126,58 @@ func main() {
 			return err
 		}
 
+		bucket ,err := gci.CreateStorage(ctx,"front-storage",project,location)
+		if err != nil {
+			return err
+		}
 
+		if _ , err := synced.NewGoogleCloudFolder(ctx, "synced-front",&synced.GoogleCloudFolderArgs{
+			BucketName: bucket.Name,
+			Path: pulumi.String("./dist"),
+		});err != nil {
+			return err
+		}
+
+		backendBucket, err := compute.NewBackendBucket(ctx, "backend-bucket", &compute.BackendBucketArgs{
+			BucketName: bucket.Name,
+			EnableCdn:  pulumi.Bool(true),
+		})
+		if err != nil {
+			return err
+		}
+
+		// Provision a global IP address for the CDN.
+		ip, err := compute.NewGlobalAddress(ctx, "ip", nil)
+		if err != nil {
+			return err
+		}
+
+		// Create a URLMap to route requests to the storage bucket.
+		urlMap, err := compute.NewURLMap(ctx, "url-map", &compute.URLMapArgs{
+			DefaultService: backendBucket.SelfLink,
+		})
+		if err != nil {
+			return err
+		}
+
+		// Create an HTTP proxy to route requests to the URLMap.
+		httpProxy, err := compute.NewTargetHttpProxy(ctx, "http-proxy", &compute.TargetHttpProxyArgs{
+			UrlMap: urlMap.SelfLink,
+		})
+		if err != nil {
+			return err
+		}
+
+		// Create a GlobalForwardingRule rule to route requests to the HTTP proxy.
+		_, err = compute.NewGlobalForwardingRule(ctx, "http-forwarding-rule", &compute.GlobalForwardingRuleArgs{
+			IpAddress:  ip.Address,
+			IpProtocol: pulumi.String("TCP"),
+			PortRange:  pulumi.String("80"),
+			Target:     httpProxy.SelfLink,
+		})
+		if err != nil {
+			return err
+		}
 		return nil
 	})
 }
