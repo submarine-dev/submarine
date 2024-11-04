@@ -333,6 +333,9 @@ const docTemplate = `{
         "controller.GoogleLoginResponse": {
             "type": "object",
             "properties": {
+                "icon": {
+                    "type": "string"
+                },
                 "userId": {
                     "type": "string"
                 }

@@ -68,6 +68,8 @@ definitions:
     type: object
   controller.GoogleLoginResponse:
     properties:
+      icon:
+        type: string
       userId:
         type: string
     type: object
@@ -191,7 +193,6 @@ paths:
       parameters:
       - description: subscription id
         in: path
-        required: true
         name: subscriptionId
         type: string
       produces:
@@ -218,7 +219,6 @@ paths:
       parameters:
       - description: user id
         in: path
-        required: true
         name: userId
         type: string
       produces:
@@ -246,7 +246,6 @@ paths:
       parameters:
       - description: user id
         in: path
-        required: true
         name: userId
         type: string
       - description: CreateUserSubscriptionRequest
