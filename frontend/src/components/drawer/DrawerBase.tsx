@@ -1,18 +1,13 @@
-import { Avatar, Container, Drawer, Stack, Typography } from '@mui/material';
+import { Container, Drawer, Stack } from '@mui/material';
 import { FC, ReactNode } from 'react';
 
 type Props = {
   open: boolean;
   onClose: () => void;
-  title: string;
-  subscription: {
-    icon: string;
-    name: string;
-  };
   children: ReactNode;
 };
 
-export const ControlDrawer: FC<Props> = ({ open, onClose, title, subscription, children }) => {
+export const DrawerBase: FC<Props> = ({ open, onClose, children }) => {
   return (
     <Drawer
       anchor="bottom"
@@ -41,25 +36,6 @@ export const ControlDrawer: FC<Props> = ({ open, onClose, title, subscription, c
             pointerEvents: 'auto',
           }}
         >
-          <Stack
-            spacing={2}
-            sx={{
-              pb: 2,
-              borderBottom: '1px solid #f0f0f0',
-            }}
-          >
-            <Typography variant="body2" color="gray">
-              {title}
-            </Typography>
-            <Stack direction="row" alignItems="center" spacing={2}>
-              <Avatar
-                src={subscription.icon}
-                alt={subscription.name}
-                sx={{ width: 30, height: 30 }}
-              />
-              <Typography>{subscription.name}</Typography>
-            </Stack>
-          </Stack>
           {children}
         </Stack>
       </Container>
