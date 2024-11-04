@@ -30,7 +30,7 @@ export const DrawerBase: FC<Props> = ({ open, onClose, children }) => {
           sx={{
             boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.05)',
             bgcolor: 'white',
-            borderRadius: 1,
+            borderRadius: '16px 16px 0 0',
             p: { xs: 3, sm: 4 },
             /* イベント復活 */
             pointerEvents: 'auto',
