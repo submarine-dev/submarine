@@ -2,13 +2,22 @@ package gc
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/pulumi/pulumi-gcp/sdk/v8/go/gcp/secretmanager"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"golang.org/x/sync/errgroup"
 )
 
-func (m *GoogleCloud) StoreSecrets(ctx *pulumi.Context, projectID string, secrets map[string]string, opts ...OptionFunc) error {
+
+
+type StoreSecretsParam struct {
+	Project string
+	Members pulumi.StringArrayInput
+	Secrets map[string]pulumi.StringInput
+}
+
+func (m *GoogleCloud) StoreSecrets(ctx *pulumi.Context, param StoreSecretsParam, opts ...OptionFunc) ([]string, error) {
 	errGroup := new(errgroup.Group)
 	option := new(Option)
 
@@ -16,11 +25,13 @@ func (m *GoogleCloud) StoreSecrets(ctx *pulumi.Context, projectID string, secret
 		opt(option)
 	}
 
-	for name, secret := range secrets {
+	var secretOutput []string
+
+	for name, secret := range param.Secrets {
 		errGroup.Go(func() error {
 
 			args := &secretmanager.SecretArgs{
-				Project: pulumi.String(projectID),
+				Project: pulumi.String(param.Project),
 				Replication: secretmanager.SecretReplicationArgs{
 					Auto: secretmanager.SecretReplicationAutoArgs{},
 				},
@@ -28,10 +39,10 @@ func (m *GoogleCloud) StoreSecrets(ctx *pulumi.Context, projectID string, secret
 			}
 
 			if option.Label != nil {
-				args.Labels = pulumi.ToStringMap(option.Label)
+				args.Labels = pulumi.StringMap(option.Label)
 			}
 			if option.Annotation != nil {
-				args.Annotations = pulumi.ToStringMap(option.Annotation)
+				args.Annotations = pulumi.StringMap(option.Annotation)
 			}
 
 			s, err := secretmanager.NewSecret(ctx, name, args)
@@ -39,21 +50,30 @@ func (m *GoogleCloud) StoreSecrets(ctx *pulumi.Context, projectID string, secret
 				return fmt.Errorf("new secret error. %+v", err)
 			}
 
-			_, err = secretmanager.NewSecretVersion(ctx, name, &secretmanager.SecretVersionArgs{
+			if _, err := secretmanager.NewSecretVersion(ctx, name, &secretmanager.SecretVersionArgs{
 				Secret:     s.ID(),
-				SecretData: pulumi.String(secret),
+				SecretData: secret,
 				Enabled:    pulumi.BoolPtr(true),
-			})
-			if err != nil {
+			});err != nil {
 				return err
 			}
 
+			if _, err := secretmanager.NewSecretIamBinding(ctx, fmt.Sprintf("%s-binding", strings.ToLower(name)), &secretmanager.SecretIamBindingArgs{
+				Project:  args.Project,
+				SecretId: s.ID(),
+				Role:     pulumi.String("roles/secretmanager.secretAccessor"),
+				Members:  param.Members,
+			}); err != nil {
+				return err
+			}
+
+			secretOutput = append(secretOutput,name)
 			return nil
 		})
 	}
 
 	if err := errGroup.Wait(); err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	return secretOutput, nil
 }

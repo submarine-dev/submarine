@@ -5,15 +5,18 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
-func (m *GoogleCloud) CreateDockerRegistry(ctx *pulumi.Context, name string, location string) error {
-	_, err := artifactregistry.NewRepository(ctx, "repository", &artifactregistry.RepositoryArgs{
+type CreateDockerRegistryParam struct {
+	Project  string
+	Name     string
+	Location string
+}
+
+func (m *GoogleCloud) CreateDockerRegistry(ctx *pulumi.Context, param CreateDockerRegistryParam) (*artifactregistry.Repository, error) {
+	return artifactregistry.NewRepository(ctx, "repository", &artifactregistry.RepositoryArgs{
+		Project:      pulumi.String(param.Project),
 		Description:  pulumi.String("Repository for container image"),
 		Format:       pulumi.String("DOCKER"),
-		Location:     pulumi.String(location),
-		RepositoryId: pulumi.String(name),
+		Location:     pulumi.String(param.Location),
+		RepositoryId: pulumi.String(param.Name),
 	})
-	if err != nil {
-		return err
-	}
-	return nil
 }

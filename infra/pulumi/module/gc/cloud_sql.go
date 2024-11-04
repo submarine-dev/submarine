@@ -9,21 +9,18 @@ type CraeteCloudSQLParam struct {
 	Name               string
 	Project            string
 	Location           string
-	DeletionProtection bool
 	RootPassword       string
 }
 
-func (m *GoogleCloud) CreateCloudSQL(ctx *pulumi.Context, param CraeteCloudSQLParam) error {
-	_, err := sql.NewDatabaseInstance(ctx, param.Name, &sql.DatabaseInstanceArgs{
+func (m *GoogleCloud) CreateCloudSQL(ctx *pulumi.Context, param CraeteCloudSQLParam) (*sql.DatabaseInstance, error) {
+	return sql.NewDatabaseInstance(ctx, param.Name, &sql.DatabaseInstanceArgs{
 		Project:            pulumi.String(param.Project),
 		DatabaseVersion:    pulumi.String("POSTGRES_15"),
-		DeletionProtection: pulumi.Bool(param.DeletionProtection),
+		DeletionProtection: pulumi.Bool(false),
 		Region:             pulumi.String(param.Location),
 		RootPassword:       pulumi.String(param.RootPassword),
 		Settings: sql.DatabaseInstanceSettingsArgs{
 			Tier: pulumi.String("db-f1-micro"),
 		},
 	})
-
-	return err
 }
