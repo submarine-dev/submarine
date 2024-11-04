@@ -5,6 +5,7 @@ go 1.23.2
 require (
 	github.com/pulumi/pulumi-docker-build/sdk/go/dockerbuild v0.0.7
 	github.com/pulumi/pulumi-gcp/sdk/v8 v8.7.0
+	github.com/pulumi/pulumi-synced-folder/sdk v0.11.1
 	github.com/pulumi/pulumi/sdk/v3 v3.137.0
 	golang.org/x/sync v0.8.0
 )
@@ -61,7 +62,6 @@ require (
 	github.com/pkg/term v1.1.0 // indirect
 	github.com/pulumi/appdash v0.0.0-20231130102222-75f619a67231 // indirect
 	github.com/pulumi/esc v0.11.0 // indirect
-	github.com/pulumi/pulumi-synced-folder/sdk v0.11.1 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/rogpeppe/go-internal v1.13.1 // indirect
 	github.com/sabhiram/go-gitignore v0.0.0-20210923224102-525f6e181f06 // indirect
