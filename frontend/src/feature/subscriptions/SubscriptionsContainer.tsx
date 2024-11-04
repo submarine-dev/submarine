@@ -1,10 +1,8 @@
 import useDiscloser from '@/hooks/common/useDiscloser';
 import { useSubscription } from '@/hooks/useSubscription';
-import { subscriptionService } from '@/service/subscriptionService';
-import { useProductMode } from '@/store/useProductMode';
 import { SubscriptionType } from '@/types/domain/SubscriptionType';
 import { Alert, Snackbar } from '@mui/material';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AddSubscriptionDrawer } from './drawer/AddSubscriptionDrawer';
 import { SubscriptionsList } from './list/SubscriptionsList';
@@ -16,23 +14,16 @@ type Props = {
 
 export const SubscriptionsContainer: FC<Props> = ({ subscriptionId, planId }) => {
   const router = useNavigate();
-  const { productMode } = useProductMode();
-  const { subscriptionSummaries } = useSubscription();
+  const { subscriptionSummaries, targetSubscription, setSubscriptionId } = useSubscription();
 
   const [isOpenControlDrawer, controlDrawerOpen, controlDrawerClose] = useDiscloser();
-  const [targetSubscription, setTargetSubscription] = useState<SubscriptionType | null>(null);
   const [isOpenSnackBar, onOpenSnackBar, onCloseSnackBar] = useDiscloser();
 
   /**
    * サブスクが選択された時にサブスクをセットしてdrawerを開く
    */
   const onSubscriptionClick = (subscriptionId: string) => {
-    (async () => {
-      const res = await subscriptionService.get({ productMode, subscriptionId });
-      if (!res) return;
-
-      setTargetSubscription(res);
-    })();
+    setSubscriptionId(subscriptionId);
     controlDrawerOpen();
   };
 

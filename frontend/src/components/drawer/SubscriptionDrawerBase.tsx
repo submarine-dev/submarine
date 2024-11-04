@@ -15,6 +15,8 @@ type Props = {
   onClickPlan: (planId: string) => void;
   onCancel: () => void;
   onSubmit: () => void;
+  submitText?: string;
+  cancelText?: string;
 };
 
 export const SubscriptionDrawerBase: FC<Props> = ({
@@ -26,6 +28,8 @@ export const SubscriptionDrawerBase: FC<Props> = ({
   onClickPlan,
   onCancel,
   onSubmit,
+  submitText = '追加する',
+  cancelText = 'キャンセル',
 }) => {
   return (
     <DrawerBase open={open} onClose={onCancel}>
@@ -81,7 +85,7 @@ export const SubscriptionDrawerBase: FC<Props> = ({
         </Stack>
         <Stack direction="row" justifyContent="center" spacing={2} sx={{ width: '100%' }}>
           <Button onClick={onCancel} variant="outlined" sx={{ width: '120px' }}>
-            キャンセル
+            {cancelText}
           </Button>
           <Button
             onClick={onSubmit}
@@ -89,7 +93,7 @@ export const SubscriptionDrawerBase: FC<Props> = ({
             variant="contained"
             sx={{ width: '120px' }}
           >
-            追加する
+            {submitText}
           </Button>
         </Stack>
       </Stack>
