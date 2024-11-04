@@ -1,34 +1,56 @@
 import { userSubscriptionService } from '@/service/userSubscriptionService';
 import { useAuth } from '@/store/useAuth';
-import { useQuery } from '@tanstack/react-query';
-import { UserSubscriptionsType, UserSubscriptionType } from '@/types/domain/UserSubscriptionType';
 import { useProductMode } from '@/store/useProductMode';
+import { AutoManagementSuggestSubscriptionType } from '@/types/domain/AutoManagementSuggestSubscriptionType';
+import { UserSubscriptionType, UserSubscriptionsType } from '@/types/domain/UserSubscriptionType';
+import { useQuery } from '@tanstack/react-query';
 
 export const useUserData = (): {
   userSubscription: UserSubscriptionType | null | undefined;
+  autoManagementSuggestSubscriptions: AutoManagementSuggestSubscriptionType[] | null | undefined;
   isPending: boolean;
   isError: boolean;
   getUserSubscription: (subscriptionId: string) => UserSubscriptionsType | null;
 } => {
   const { user } = useAuth();
-  const { productMode } = useProductMode();
+  const { productMode, forAuthGetProductMode } = useProductMode();
 
   const {
     data: userSubscription,
     isPending: isPendingUserSubscription,
     isError: isErrorUserSubscription,
   } = useQuery({
-    queryKey: ['userSubscription', user.userId],
+    queryKey: ['userSubscription', user.userId, productMode],
     queryFn: async () => {
       if (!user.userId) return null;
-      const data = await userSubscriptionService.get({ userId: user.userId, productMode });
+      const data = await userSubscriptionService.get({
+        userId: user.userId,
+        productMode: forAuthGetProductMode(),
+      });
       if (!data) return null;
       return data;
     },
   });
 
-  const isPending = isPendingUserSubscription;
-  const isError = isErrorUserSubscription;
+  const {
+    data: autoManagementSuggestSubscriptions,
+    isPending: isPendingAutoManagementSuggests,
+    isError: isErrorAutoManagementSuggests,
+  } = useQuery({
+    queryKey: ['autoManagementSuggests', user.userId, productMode],
+    queryFn: async () => {
+      if (!user.userId) return null;
+      const data = await userSubscriptionService.getAutoManagementSuggests({
+        userId: user.userId,
+        productMode: forAuthGetProductMode(),
+      });
+      if (!data) return [];
+      return data;
+    },
+  });
+
+  const isPending = isPendingUserSubscription || isPendingAutoManagementSuggests;
+  const isError = isErrorUserSubscription || isErrorAutoManagementSuggests;
 
   /**
    * userSubscriptionの中から特定のsubscriptionを取得する
@@ -47,6 +69,7 @@ export const useUserData = (): {
 
   return {
     userSubscription,
+    autoManagementSuggestSubscriptions,
     isPending,
     isError,
     getUserSubscription,

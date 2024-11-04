@@ -1,17 +1,32 @@
 import { ControlDrawer } from '@/components/drawer/ControlDrawer';
 import { SubscriptionType } from '@/types/domain/SubscriptionType';
 import { Button, Stack, Typography } from '@mui/material';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 type Props = {
   open: boolean;
   onClose: () => void;
   subscription: SubscriptionType;
-  onAddSubscription: (planId: string) => void;
+  paramPlanId: string | null;
+  onAddSubscription: (planId: string) => Promise<void>;
 };
 
-export const AddSubscriptionDrawer: FC<Props> = ({ open, onClose, subscription }) => {
+export const AddSubscriptionDrawer: FC<Props> = ({
+  open,
+  onClose,
+  subscription,
+  paramPlanId,
+  onAddSubscription,
+}) => {
   const [selectedPlanId, setSelectedPlanId] = useState<string | null>(null);
+
+  /**
+   * クエリパラメータにplanIdがある場合には、選択されたプランをセットする
+   */
+  useEffect(() => {
+    if (!paramPlanId) return;
+    setSelectedPlanId(paramPlanId);
+  }, [paramPlanId]);
 
   if (!subscription.plan) return null;
   const planItems = subscription.plan.map((plan) => {
@@ -39,6 +54,16 @@ export const AddSubscriptionDrawer: FC<Props> = ({ open, onClose, subscription }
     onClose();
   };
 
+  /**
+   * 選択のsubmit
+   */
+  const handleSubmit = async (): Promise<void> => {
+    /**
+     * TODO: サブスクリプションの追加処理
+     */
+    await onAddSubscription(selectedPlanId ?? '');
+  };
+
   return (
     <ControlDrawer
       open={open}
@@ -47,7 +72,14 @@ export const AddSubscriptionDrawer: FC<Props> = ({ open, onClose, subscription }
       subscription={{ icon: subscription.icon ?? '', name: subscription.name ?? '' }}
     >
       <Stack spacing={3}>
-        <Stack spacing={1} sx={{ pt: 1 }}>
+        <Stack
+          spacing={1}
+          sx={{
+            pt: 1,
+            overflowY: 'auto',
+            height: '300px',
+          }}
+        >
           {planItems.map((plan) => {
             const selected = selectedPlanId === plan.id;
             return (
@@ -55,6 +87,7 @@ export const AddSubscriptionDrawer: FC<Props> = ({ open, onClose, subscription }
                 key={plan.id}
                 variant={selected ? 'contained' : 'outlined'}
                 onClick={plan.onCLick}
+                sx={{ minHeight: '70px' }}
               >
                 <Stack
                   direction="row"
@@ -77,7 +110,12 @@ export const AddSubscriptionDrawer: FC<Props> = ({ open, onClose, subscription }
           <Button onClick={handleCancel} variant="outlined" sx={{ width: '120px' }}>
             キャンセル
           </Button>
-          <Button variant="contained" sx={{ width: '120px' }}>
+          <Button
+            onClick={handleSubmit}
+            disabled={selectedPlanId === null}
+            variant="contained"
+            sx={{ width: '120px' }}
+          >
             追加する
           </Button>
         </Stack>

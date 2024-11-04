@@ -2,8 +2,8 @@ import { CardLayout } from '@/components/card/CardLayout';
 import { useUserData } from '@/hooks/useUserData';
 import { Stack } from '@mui/material';
 import { FC } from 'react';
-import { DetailHeader } from './header/DetailHeader';
 import { useLocation } from 'react-router-dom';
+import { DetailHeader } from './header/DetailHeader';
 import { DetailHistory } from './history/DetailHistory';
 
 export const DetailPageContainer: FC = () => {

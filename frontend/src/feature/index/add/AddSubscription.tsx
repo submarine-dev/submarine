@@ -1,8 +1,8 @@
-import { FC } from 'react';
-import { SubscriptionSummaryType } from '@/types/domain/SubscriptionType';
 import { SquareCard } from '@/components/card/SquareCard';
-import { Box, Stack } from '@mui/material';
+import { SubscriptionSummaryType } from '@/types/domain/SubscriptionType';
 import SearchIcon from '@mui/icons-material/Search';
+import { Box, Stack } from '@mui/material';
+import { FC } from 'react';
 
 type Props = {
   subscriptionSummaries: SubscriptionSummaryType[];
@@ -23,7 +23,6 @@ export const AddSubscription: FC<Props> = ({
       /**
        * TODO: 色があった方がオシャレだと思ったこともありました
        */
-      bgcolor: '#FFFFFF',
       // bgcolor: subscription.color ?? '#FFFFFF',
     };
   });
@@ -35,12 +34,13 @@ export const AddSubscription: FC<Props> = ({
         spacing={1}
         alignItems="center"
         sx={{
-          position: 'fixed',
+          position: 'absolute',
           overflowX: 'auto',
           zIndex: 2,
           pointerEvents: 'auto',
           width: '100%',
           height: 100,
+          maxWidth: 'sm',
         }}
       >
         <SquareCard
@@ -49,12 +49,11 @@ export const AddSubscription: FC<Props> = ({
           bgcolor="#FFFFFF"
           onClick={onFindSubscriptionClick}
         />
-        {[...subscriptionItems].map((item) => (
+        {subscriptionItems.map((item) => (
           <SquareCard
             key={item.id}
             title={item.title}
             icon={item.icon}
-            bgcolor={item.bgcolor}
             onClick={() => onSubscriptionClick(item.id ?? '')}
           />
         ))}

@@ -1,11 +1,14 @@
 import { PrimaryLayout } from '@/components/layout/PrimaryLayout';
 import type { FC } from 'react';
 import { IndexContainer } from './IndexContainer';
+import { TutorialProvider } from './TutorialProvider';
 
 export const IndexPage: FC = () => {
   return (
-    <PrimaryLayout>
-      <IndexContainer />
-    </PrimaryLayout>
+    <TutorialProvider>
+      <PrimaryLayout>
+        <IndexContainer />
+      </PrimaryLayout>
+    </TutorialProvider>
   );
 };

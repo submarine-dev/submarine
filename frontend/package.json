@@ -29,6 +29,7 @@
     "@emotion/styled": "^11.11.5",
     "@mui/icons-material": "^5.15.20",
     "@mui/material": "^5.15.20",
+    "@sjmc11/tourguidejs": "^0.0.18",
     "@tanstack/react-query": "^5.45.0",
     "@vitejs/plugin-react-swc": "^3.7.1",
     "aspida": "^1.14.0",

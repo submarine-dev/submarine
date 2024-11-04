@@ -1,6 +1,6 @@
 import { CardLayout } from '@/components/card/CardLayout';
-import { PaymentType } from '@/types/domain/PaymentEnum';
 import { ConvertPaymentEnumToChip } from '@/components/chip/ConvertPaymentEnumToChip';
+import { PaymentType } from '@/types/domain/PaymentEnum';
 import { Avatar, Button, Grid, Stack, Typography } from '@mui/material';
 import { FC } from 'react';
 

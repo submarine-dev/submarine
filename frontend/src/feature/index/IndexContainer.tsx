@@ -1,17 +1,31 @@
-import { useUserData } from '@/hooks/useUserData';
-import { Stack } from '@mui/material';
-import type { FC } from 'react';
-import { UserSubscriptionSummary } from './summary/UserSubscriptionSummary';
-import { useNavigate } from 'react-router-dom';
 import { SectionLayout } from '@/components/section/SectionLayout';
-import { AddSubscription } from './add/AddSubscription';
+import { sessionStorageKeys } from '@/const/localStorageKeys';
+import useDiscloser from '@/hooks/common/useDiscloser';
 import { useSubscription } from '@/hooks/useSubscription';
-import { AutoRegister } from './autoRegister/AutRegister';
+import { useUserData } from '@/hooks/useUserData';
+import { useProductMode } from '@/store/useProductMode';
+import { ProductModeEnum } from '@/types/domain/ProductModeEnum';
+import { type FC, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { TutorialDescriptionModal } from './TutorialDescriptionModal';
+import { AddSubscription } from './add/AddSubscription';
+import { AutoManagement } from './autoManagement/AutoManagement';
+import { UserSubscriptionSummary } from './summary/UserSubscriptionSummary';
+import { AddSubscriptionRecommend } from './add/AddSubscriptionRecommend';
 
 export const IndexContainer: FC = () => {
   const router = useNavigate();
-  const { userSubscription } = useUserData();
+  const { userSubscription, autoManagementSuggestSubscriptions } = useUserData();
   const { subscriptionSummaries } = useSubscription();
+  const { productMode } = useProductMode();
+
+  const [
+    isOpenTutorialDescriptionModal,
+    onOpenTutorialDescriptionModal,
+    onCloseTutorialDescriptionModal,
+  ] = useDiscloser();
+  const [tutorialDescriptionModalAnchorEl, setTutorialDescriptionModalAnchorEl] =
+    useState<HTMLElement | null>(null);
 
   const handleClickColumn = (subscriptionId: string): void => {
     router(`/subscription/${subscriptionId}`);
@@ -22,23 +36,44 @@ export const IndexContainer: FC = () => {
   };
 
   const handleSubscriptionClick = (subscriptionId: string): void => {
-    router(`/subscriptions/${subscriptionId}`);
+    router(`/subscriptions?subscriptionId=${subscriptionId}`);
   };
 
+  const handleCloseTutorialDescriptionModal = (): void => {
+    onCloseTutorialDescriptionModal();
+    sessionStorage.setItem(sessionStorageKeys.IS_DEMO_TUTORIAL_COMPLETED_KEY, 'true');
+  };
+
+  useEffect(() => {
+    if (
+      productMode !== ProductModeEnum.DEMO ||
+      sessionStorage.getItem(sessionStorageKeys.IS_DEMO_TUTORIAL_COMPLETED_KEY)
+    ) {
+      return;
+    }
+
+    setTimeout(() => {
+      setTutorialDescriptionModalAnchorEl(document.getElementById('profile-menu-icon'));
+      onOpenTutorialDescriptionModal();
+    }, 1000);
+  }, [productMode]);
+
   return (
-    <Stack>
+    <>
       {userSubscription?.userSubscriptions ? (
-        <UserSubscriptionSummary
-          currentMonthPayment={userSubscription.totalAmountPerMonth ?? 0}
-          userSubscriptions={userSubscription.userSubscriptions}
-          onClickColumn={handleClickColumn}
-        />
+        <SectionLayout sectionTitle="" titleColor="white">
+          <UserSubscriptionSummary
+            currentMonthPayment={userSubscription.totalAmountPerMonth ?? 0}
+            userSubscriptions={userSubscription.userSubscriptions}
+            onClickColumn={handleClickColumn}
+          />
+        </SectionLayout>
       ) : null}
       <SectionLayout
-        sectionTitle="自動で登録"
-        helpText="メール情報から、AIによってサブスクリプションの登録をサジェストします"
+        sectionTitle="自動で管理"
+        helpText="メール情報から、AIによってサブスクリプションの管理をサジェストします"
       >
-        <AutoRegister />
+        <AutoManagement autoManagementSuggestSubscriptions={autoManagementSuggestSubscriptions} />
       </SectionLayout>
       {subscriptionSummaries ? (
         <SectionLayout sectionTitle="手動で登録">
@@ -49,6 +84,22 @@ export const IndexContainer: FC = () => {
           />
         </SectionLayout>
       ) : null}
-    </Stack>
+      {subscriptionSummaries ? (
+        <SectionLayout
+          sectionTitle="レコメンド"
+          helpText="あなたと似たユーザーが登録しているサブスクリプションをレコメンドします"
+        >
+          <AddSubscriptionRecommend
+            subscriptionSummaries={subscriptionSummaries}
+            onSubscriptionClick={handleSubscriptionClick}
+          />
+        </SectionLayout>
+      ) : null}
+      <TutorialDescriptionModal
+        open={isOpenTutorialDescriptionModal}
+        onClose={handleCloseTutorialDescriptionModal}
+        anchorEl={tutorialDescriptionModalAnchorEl}
+      />
+    </>
   );
 };

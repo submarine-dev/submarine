@@ -1,5 +1,5 @@
 import { apiClient } from '@/lib/apiClient';
-import { trailMock } from '@/mock/traial';
+import { demoMock } from '@/mock/demoMock';
 import { ProductModeEnum } from '@/types/domain/ProductModeEnum';
 import { UserType } from '@/types/domain/UserType';
 
@@ -11,7 +11,7 @@ export const authService = {
     }: { authCode: string; productMode: ProductModeEnum }): Promise<UserType | null> => {
       try {
         const res = (async () => {
-          if (productMode === ProductModeEnum.TRIAL) return trailMock.user;
+          if (productMode === ProductModeEnum.DEMO) return demoMock.user;
           return await apiClient.login.google.$post({
             body: {
               code: authCode,

@@ -1,4 +1,4 @@
-import { Avatar, Drawer, Stack, Typography } from '@mui/material';
+import { Avatar, Container, Drawer, Stack, Typography } from '@mui/material';
 import { FC, ReactNode } from 'react';
 
 type Props = {
@@ -18,7 +18,6 @@ export const ControlDrawer: FC<Props> = ({ open, onClose, title, subscription, c
       anchor="bottom"
       open={open}
       onClose={onClose}
-      hideBackdrop
       sx={{
         /* 背景のブラックアウトを削除 */
         boxShadow: '0px -4px 4px rgba(0, 0, 0, 0.05)',
@@ -30,37 +29,40 @@ export const ControlDrawer: FC<Props> = ({ open, onClose, title, subscription, c
         pointerEvents: 'none',
       }}
     >
-      <Stack
-        spacing={1}
-        sx={{
-          bgcolor: 'white',
-          borderRadius: 2,
-          p: 3,
-          /* イベント復活 */
-          pointerEvents: 'auto',
-        }}
-      >
+      <Container disableGutters maxWidth="sm">
         <Stack
-          spacing={2}
+          spacing={1}
           sx={{
-            pb: 2,
-            borderBottom: '1px solid #f0f0f0',
+            boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.05)',
+            bgcolor: 'white',
+            borderRadius: 1,
+            p: { xs: 3, sm: 4 },
+            /* イベント復活 */
+            pointerEvents: 'auto',
           }}
         >
-          <Typography variant="body2" color="gray">
-            {title}
-          </Typography>
-          <Stack direction="row" alignItems="center" spacing={2}>
-            <Avatar
-              src={subscription.icon}
-              alt={subscription.name}
-              sx={{ width: 30, height: 30 }}
-            />
-            <Typography>{subscription.name}</Typography>
+          <Stack
+            spacing={2}
+            sx={{
+              pb: 2,
+              borderBottom: '1px solid #f0f0f0',
+            }}
+          >
+            <Typography variant="body2" color="gray">
+              {title}
+            </Typography>
+            <Stack direction="row" alignItems="center" spacing={2}>
+              <Avatar
+                src={subscription.icon}
+                alt={subscription.name}
+                sx={{ width: 30, height: 30 }}
+              />
+              <Typography>{subscription.name}</Typography>
+            </Stack>
           </Stack>
+          {children}
         </Stack>
-        {children}
-      </Stack>
+      </Container>
     </Drawer>
   );
 };
