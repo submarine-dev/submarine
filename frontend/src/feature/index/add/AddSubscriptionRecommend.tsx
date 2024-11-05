@@ -20,7 +20,8 @@ export const AddSubscriptionRecommend: FC<Props> = ({
         icon: subscription.icon ?? '',
       };
     })
-    .sort(() => Math.random() - 0.5);
+    .sort(() => Math.random() - 0.5)
+    .slice(0, 10);
 
   return (
     <>

@@ -15,17 +15,19 @@ export const AddSubscription: FC<Props> = ({
   onFindSubscriptionClick,
   onSubscriptionClick,
 }) => {
-  const subscriptionItems = subscriptionSummaries.map((subscription) => {
-    return {
-      id: subscription.id,
-      title: subscription.name ?? '',
-      icon: subscription.icon ?? '',
-      /**
-       * TODO: 色があった方がオシャレだと思ったこともありました
-       */
-      // bgcolor: subscription.color ?? '#FFFFFF',
-    };
-  });
+  const subscriptionItems = subscriptionSummaries
+    .map((subscription) => {
+      return {
+        id: subscription.id,
+        title: subscription.name ?? '',
+        icon: subscription.icon ?? '',
+        /**
+         * TODO: 色があった方がオシャレだと思ったこともありました
+         */
+        // bgcolor: subscription.color ?? '#FFFFFF',
+      };
+    })
+    .slice(0, 10);
 
   return (
     <>
