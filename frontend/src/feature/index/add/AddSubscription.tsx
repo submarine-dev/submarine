@@ -40,7 +40,7 @@ export const AddSubscription: FC<Props> = ({
           overflowX: 'auto',
           zIndex: 2,
           pointerEvents: 'auto',
-          width: '100%',
+          width: 'calc(100% - 16px)',
           height: 100,
           maxWidth: 'sm',
         }}
