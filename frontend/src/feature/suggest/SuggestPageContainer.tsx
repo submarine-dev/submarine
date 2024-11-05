@@ -64,7 +64,7 @@ export const SuggestPageContainer: FC = () => {
               autoManagementSuggestSubscriptions={autoManagementSuggestSubscriptions}
             />
           ) : null}
-          <Stack alignItems="flex-end">
+          <Stack alignItems={{ sm: 'flex-end' }}>
             <Button onClick={handleSubmit} variant="contained">
               選択した項目を反映
             </Button>

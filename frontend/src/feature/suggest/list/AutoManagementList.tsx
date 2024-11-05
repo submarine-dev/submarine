@@ -1,9 +1,10 @@
 import { ConvertMailDomainEnumToChip } from '@/components/chip/ConvertMailDomainEnumToChip';
 import { ConvertPaymentEnumToChip } from '@/components/chip/ConvertPaymentEnumToChip';
 import { ConvertSuggestEnumToChip } from '@/components/chip/ConvertSuggestEnumToChip';
+import { theme } from '@/theme/theme';
 import { AutoManagementSuggestSubscriptionType } from '@/types/domain/AutoManagementSuggestSubscriptionType';
 import { CheckBox } from '@mui/icons-material';
-import { Avatar, Grid, Stack, Typography } from '@mui/material';
+import { Avatar, Grid, Stack, Typography, useMediaQuery } from '@mui/material';
 import { FC } from 'react';
 
 type Props = {
@@ -11,6 +12,8 @@ type Props = {
 };
 
 export const AutoManagementList: FC<Props> = ({ autoManagementSuggestSubscriptions }) => {
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
     <Stack spacing={0.5}>
       <Grid container columns={1}>
@@ -48,19 +51,26 @@ export const AutoManagementList: FC<Props> = ({ autoManagementSuggestSubscriptio
                   <Avatar src={icon} alt={name} sx={{ width: 40, height: 40 }} />
                 </Grid>
                 <Grid item xs={8}>
-                  <Stack alignItems="flex-start" spacing={1}>
-                    <Typography color="black">{name}</Typography>
-                    <Stack direction="row" alignItems="center" spacing={1}>
-                      <Typography variant="body2" color="gray">
-                        {plan.name}
-                      </Typography>
+                  <Typography color="black">{name}</Typography>
+                  <Typography variant="body2" color="gray">
+                    {plan.name}
+                  </Typography>
+                  <Grid container columns={12} spacing={1}>
+                    <Grid item>
                       {plan.paymentType ? (
                         <ConvertPaymentEnumToChip payment={plan.paymentType} />
                       ) : null}
-                      <ConvertMailDomainEnumToChip mailDomain={mailDomain} connectText="から取得" />
+                    </Grid>
+                    <Grid item>
+                      <ConvertMailDomainEnumToChip
+                        mailDomain={mailDomain}
+                        connectText={isSmallScreen ? '' : 'から取得'}
+                      />
+                    </Grid>
+                    <Grid item>
                       <ConvertSuggestEnumToChip suggestType={suggestType} color="primary" />
-                    </Stack>
-                  </Stack>
+                    </Grid>
+                  </Grid>
                 </Grid>
               </Grid>
             </Stack>

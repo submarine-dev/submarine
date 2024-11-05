@@ -13,7 +13,7 @@ export const SubscriptionsList: FC<Props> = ({ subscriptions, onSubscriptionClic
     <Stack sx={{ alignItems: 'center' }}>
       <Grid container columns={12} rowSpacing={1} columnSpacing={1}>
         {subscriptions.map((subscription) => (
-          <Grid item key={subscription.id} xs={2}>
+          <Grid item key={subscription.id} xs={3} sm={2}>
             <SquareCard
               key={subscription.id}
               title={subscription.name ?? ''}
