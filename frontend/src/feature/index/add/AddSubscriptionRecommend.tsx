@@ -34,9 +34,10 @@ export const AddSubscriptionRecommend: FC<Props> = ({
           overflowX: 'auto',
           zIndex: 2,
           pointerEvents: 'auto',
-          width: 'calc(100% - 16px)',
+          width: 'calc(100% - 20px)',
           height: 100,
           maxWidth: 'sm',
+          px: 0.3,
         }}
       >
         {subscriptionItems.map((item) => (

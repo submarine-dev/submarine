@@ -28,7 +28,14 @@ export const AutoManagement: FC<Props> = ({ autoManagementSuggestSubscriptions }
             {`未確認：${unconfirmedCount}件`}
           </Typography>
           {isUnconfirmed ? (
-            <Stack direction="row" justifyContent="space-between" spacing={1}>
+            <Stack
+              direction={{
+                xs: 'column',
+                sm: 'row',
+              }}
+              justifyContent="space-between"
+              spacing={{ xs: 2, sm: 0 }}
+            >
               <Stack direction="row" alignItems="center" spacing={1}>
                 <CheckCircleIcon color="warning" />
                 <Typography>新規登録・変更・解約の候補があります</Typography>
