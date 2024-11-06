@@ -217,6 +217,46 @@
                     }
                 }
             }
+        },
+        "/users/{userId}/subscriptions/{:userSubscriptionId}": {
+            "delete": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "UserSubscription"
+                ],
+                "summary": "Get Subscription",
+                "operationId": "GetUserSubscriptions",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "userId",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller.DeleteUserSubscriptionResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -250,6 +290,14 @@
             "type": "object",
             "properties": {
                 "userSubscrionId": {
+                    "type": "string"
+                }
+            }
+        },
+        "controller.DeleteUserSubscriptionResponse": {
+            "type": "object",
+            "properties": {
+                "userSubscriptionId": {
                     "type": "string"
                 }
             }

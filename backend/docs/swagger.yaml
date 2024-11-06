@@ -22,6 +22,11 @@ definitions:
       userSubscrionId:
         type: string
     type: object
+  controller.DeleteUserSubscriptionResponse:
+    properties:
+      userSubscriptionId:
+        type: string
+    type: object
   controller.GetSubscriptionResponse:
     properties:
       icon:
@@ -270,6 +275,32 @@ paths:
           schema:
             $ref: '#/definitions/echo.HTTPError'
       summary: User Subscription
+      tags:
+      - UserSubscription
+  /users/{userId}/subscriptions/{:userSubscriptionId}:
+    delete:
+      operationId: GetUserSubscriptions
+      parameters:
+      - description: user id
+        in: path
+        name: userId
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.DeleteUserSubscriptionResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+      summary: Get Subscription
       tags:
       - UserSubscription
 swagger: "2.0"

@@ -200,6 +200,16 @@ type DeleteUserSubscriptionResponse struct {
 	UserSubscriptionID string `json:"userSubscriptionId"`
 }
 
+// subscription godoc
+// @Summary  Get Subscription
+// @ID       GetUserSubscriptions
+// @Tags     UserSubscription
+// @Produce  json
+// @Param 	 userId		 	path 				string									false 	"user id"
+// @Success  200  {object}  DeleteUserSubscriptionResponse
+// @Failure  400  {object}  echo.HTTPError
+// @Failure  500  {object}  echo.HTTPError
+// @Router   /users/{userId}/subscriptions/{:userSubscriptionId} [delete]
 func DeleteUserSubscription(us *interactor.UserSubscription) MustLogin {
 	return func(c echo.Context) error {
 		var reqQuery DeleteUserSubscriptionRequest
