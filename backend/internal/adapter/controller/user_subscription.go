@@ -202,10 +202,11 @@ type DeleteUserSubscriptionResponse struct {
 
 // subscription godoc
 // @Summary  Get Subscription
-// @ID       GetUserSubscriptions
+// @ID       DeleteUserSubscriptions
 // @Tags     UserSubscription
 // @Produce  json
 // @Param 	 userId		 	path 				string									false 	"user id"
+// @Param 	 userSubscriptionId		 	path 				string									false 	"userSubscriptionId"
 // @Success  200  {object}  DeleteUserSubscriptionResponse
 // @Failure  400  {object}  echo.HTTPError
 // @Failure  500  {object}  echo.HTTPError

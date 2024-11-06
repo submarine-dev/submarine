@@ -235,12 +235,18 @@ const docTemplate = `{
                     "UserSubscription"
                 ],
                 "summary": "Get Subscription",
-                "operationId": "GetUserSubscriptions",
+                "operationId": "DeleteUserSubscriptions",
                 "parameters": [
                     {
                         "type": "string",
                         "description": "user id",
                         "name": "userId",
+                        "in": "path"
+                    },
+                    {
+                        "type": "string",
+                        "description": "userSubscriptionId",
+                        "name": "userSubscriptionId",
                         "in": "path"
                     }
                 ],

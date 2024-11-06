@@ -279,11 +279,15 @@ paths:
       - UserSubscription
   /users/{userId}/subscriptions/{:userSubscriptionId}:
     delete:
-      operationId: GetUserSubscriptions
+      operationId: DeleteUserSubscriptions
       parameters:
       - description: user id
         in: path
         name: userId
+        type: string
+      - description: userSubscriptionId
+        in: path
+        name: userSubscriptionId
         type: string
       produces:
       - application/json
