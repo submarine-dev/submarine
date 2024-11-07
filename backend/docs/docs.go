@@ -152,7 +152,8 @@ const docTemplate = `{
                         "type": "string",
                         "description": "user id",
                         "name": "userId",
-                        "in": "path"
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -193,7 +194,8 @@ const docTemplate = `{
                         "type": "string",
                         "description": "user id",
                         "name": "userId",
-                        "in": "path"
+                        "in": "path",
+                        "required": true
                     },
                     {
                         "description": "CreateUserSubscriptionRequest",

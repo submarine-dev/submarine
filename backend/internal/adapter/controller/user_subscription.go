@@ -43,7 +43,7 @@ type GetUserSubscriptionsResponse struct {
 // @ID       GetUserSubscriptions
 // @Tags     UserSubscription
 // @Produce  json
-// @Param 	 userId		 	path 				string									false 	"user id"
+// @Param 	 userId		 	path 				string									true 	"user id"
 // @Success  200  {object}  GetUserSubscriptionsResponse
 // @Failure  400  {object}  echo.HTTPError
 // @Failure  500  {object}  echo.HTTPError
@@ -118,7 +118,7 @@ type CreateUserSubscriptionResponse struct {
 // @Tags     UserSubscription
 // @Accept   json
 // @Produce  json
-// @Param 	 userId		 	path 				string									false 	"user id"
+// @Param 	 userId		 	path 				string									true 	"user id"
 // @Param 	 q			 	body 		 	CreateUserSubscriptionRequest  	true 		"CreateUserSubscriptionRequest"
 // @Success  200  	 	{object}  CreateUserSubscriptionResponse
 // @Failure  400  {object}  echo.HTTPError

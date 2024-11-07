@@ -262,6 +262,7 @@ paths:
       - description: user id
         in: path
         name: userId
+        required: true
         type: string
       produces:
       - application/json
@@ -289,6 +290,7 @@ paths:
       - description: user id
         in: path
         name: userId
+        required: true
         type: string
       - description: CreateUserSubscriptionRequest
         in: body
