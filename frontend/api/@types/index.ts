@@ -1,5 +1,6 @@
 /* eslint-disable */
 export type Controller_CreateUserSubscriptionRequest = {
+  currency?: string | undefined;
   name?: string | undefined;
   planId?: string | undefined;
   planName?: string | undefined;
@@ -11,6 +12,10 @@ export type Controller_CreateUserSubscriptionRequest = {
 
 export type Controller_CreateUserSubscriptionResponse = {
   userSubscrionId?: string | undefined;
+};
+
+export type Controller_DeleteUserSubscriptionResponse = {
+  userSubscriptionId?: string | undefined;
 };
 
 export type Controller_GetSubscriptionResponse = {
@@ -40,8 +45,27 @@ export type Controller_GoogleLoginRequest = {
 };
 
 export type Controller_GoogleLoginResponse = {
+  icon?: string | undefined;
   userId?: string | undefined;
-  icon: string;
+};
+
+export type Controller_UpdateUserSubscriptionRequest = {
+  currency?: string | undefined;
+  name?: string | undefined;
+  planId?: string | undefined;
+  planName?: string | undefined;
+  planPaymentType?: Entity_PaymentType | undefined;
+  planPrice?: number | undefined;
+  unsubscribeLink?: string | undefined;
+  userID?: string | undefined;
+  userSubscriptionID?: string | undefined;
+};
+
+export type Controller_UpdateUserSubscriptionResponse = {
+  totalAmountPerDay?: number | undefined;
+  totalAmountPerMonth?: number | undefined;
+  totalAmountPerYear?: number | undefined;
+  userSubscriptions?: Entity_UserSubscription[] | undefined;
 };
 
 export type Echo_HTTPError = {};

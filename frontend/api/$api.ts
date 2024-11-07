@@ -3,6 +3,7 @@ import type { Methods as Methods_17j1g8v } from './login/google';
 import type { Methods as Methods_u5gjfz } from './subscription';
 import type { Methods as Methods_1x83wiu } from './subscription/_subscriptionId@string';
 import type { Methods as Methods_ofkqqi } from './users/_userId@string/subscriptions';
+import type { Methods as Methods_1q6s3gs } from './users/_userId@string/subscriptions/_userSubscriptionId@string';
 
 const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
   const prefix = (baseURL === undefined ? '/v1' : baseURL).replace(/\/$/, '');
@@ -12,6 +13,8 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
   const PATH3 = '/subscriptions';
   const GET = 'GET';
   const POST = 'POST';
+  const PUT = 'PUT';
+  const DELETE = 'DELETE';
 
   return {
     login: {
@@ -99,6 +102,61 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
 
         return {
           subscriptions: {
+            _userSubscriptionId: (val3: string) => {
+              const prefix3 = `${prefix1}${PATH3}/${val3}`;
+
+              return {
+                /**
+                 * @returns OK
+                 */
+                delete: (option?: { config?: T | undefined } | undefined) =>
+                  fetch<
+                    Methods_1q6s3gs['delete']['resBody'],
+                    BasicHeaders,
+                    Methods_1q6s3gs['delete']['status']
+                  >(prefix, prefix3, DELETE, option).json(),
+                /**
+                 * @returns OK
+                 */
+                $delete: (option?: { config?: T | undefined } | undefined) =>
+                  fetch<
+                    Methods_1q6s3gs['delete']['resBody'],
+                    BasicHeaders,
+                    Methods_1q6s3gs['delete']['status']
+                  >(prefix, prefix3, DELETE, option)
+                    .json()
+                    .then((r) => r.body),
+                /**
+                 * @param option.body - UpdateUserSubscriptionRequest
+                 * @returns OK
+                 */
+                put: (option: {
+                  body: Methods_1q6s3gs['put']['reqBody'];
+                  config?: T | undefined;
+                }) =>
+                  fetch<
+                    Methods_1q6s3gs['put']['resBody'],
+                    BasicHeaders,
+                    Methods_1q6s3gs['put']['status']
+                  >(prefix, prefix3, PUT, option).json(),
+                /**
+                 * @param option.body - UpdateUserSubscriptionRequest
+                 * @returns OK
+                 */
+                $put: (option: {
+                  body: Methods_1q6s3gs['put']['reqBody'];
+                  config?: T | undefined;
+                }) =>
+                  fetch<
+                    Methods_1q6s3gs['put']['resBody'],
+                    BasicHeaders,
+                    Methods_1q6s3gs['put']['status']
+                  >(prefix, prefix3, PUT, option)
+                    .json()
+                    .then((r) => r.body),
+                $path: () => `${prefix}${prefix3}`,
+              };
+            },
             /**
              * @returns OK
              */
