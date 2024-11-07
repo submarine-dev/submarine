@@ -84,7 +84,7 @@ type GetSubscriptionResponse struct {
 // @ID       GetSubscription
 // @Tags     Subscription
 // @Produce  json
-// @Param 	 subscriptionId 	path 				string									false 	"subscription id"
+// @Param 	 subscriptionId 	path 				string									true 	"subscription id"
 // @Success  200  {object}  GetSubscriptionResponse
 // @Failure  400  {object}  echo.HTTPError
 // @Failure  500  {object}  echo.HTTPError

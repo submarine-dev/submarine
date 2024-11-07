@@ -235,6 +235,7 @@ paths:
       - description: subscription id
         in: path
         name: subscriptionId
+        required: true
         type: string
       produces:
       - application/json

@@ -124,6 +124,10 @@ func main() {
 			return err
 		}
 
+		if _, err := gci.CreateFrontBacket(ctx,"front-storage",project,location,"./dist");err != nil {
+			return err 
+		}
+
 		return nil
 	})
 }

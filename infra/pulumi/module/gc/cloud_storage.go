@@ -13,7 +13,7 @@ func (m *GoogleCloud) CreateFrontBacket(ctx *pulumi.Context, name, project, loca
 		Project:  pulumi.String(project),
 		Website: storage.BucketWebsiteArgs{
 			MainPageSuffix: pulumi.String("index.html"),
-			// NotFoundPage:   pulumi.String("error.html"),
+			NotFoundPage:   pulumi.String("index.html"),
 		},
 	})
 	if err != nil {

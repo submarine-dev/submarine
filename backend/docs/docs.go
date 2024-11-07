@@ -111,7 +111,8 @@ const docTemplate = `{
                         "type": "string",
                         "description": "subscription id",
                         "name": "subscriptionId",
-                        "in": "path"
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
