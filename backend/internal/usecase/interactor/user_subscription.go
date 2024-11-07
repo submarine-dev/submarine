@@ -108,6 +108,52 @@ func (us *UserSubscription) CreateUserSubscription(ctx context.Context, param Cr
 	return userSubscription.ID, nil
 }
 
+type UpdateUserSubscriptionParam struct {
+	UserID             string
+	UserSubscriptionID string
+
+	TemplPlanID string
+
+	Name            string
+	UnsubscribeLink string
+	PlanName        string
+	Price           int
+	PaymentType     entity.PaymentType
+}
+
+func (us *UserSubscription) UpdateUserSubscription(ctx context.Context, param UpdateUserSubscriptionParam) error {
+	userSubscription, found, err := us._us.GetUserSubscription(ctx, param.UserID, param.UserSubscriptionID)
+	if !found {
+		return serror.ErrResourceNotFound
+	}
+
+	if err != nil {
+		return err
+	}
+
+	if userSubscription.IsUseTemplate() {
+		templSubscription, err := us._ts.GetTemplSubscription(ctx, userSubscription.TemplID)
+		if err != nil {
+			return err
+		}
+
+		plan, found := templSubscription.FindPlan(param.TemplPlanID)
+		if !found {
+			return serror.ErrResourceNotFound
+		}
+
+		userSubscription.PlanID = plan.ID
+	} else {
+		// TODO user original subscription update
+	}
+
+	if err := us._us.UpdateUserSubscription(ctx, userSubscription); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func (us *UserSubscription) DeleteUserSubscription(ctx context.Context, userSubscriptionID string) error {
 	return us._us.DeleteUserSubscription(ctx, userSubscriptionID)
 }

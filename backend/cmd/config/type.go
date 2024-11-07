@@ -5,7 +5,7 @@ import "time"
 type ENV string
 
 const (
-	EnvLocal ENV = "local"
+	EnvLocal       ENV = "local"
 	EnvDevelopment ENV = "development"
 	EnvStaging     ENV = "staging"
 	EnvProduction  ENV = "production"

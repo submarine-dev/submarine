@@ -86,6 +86,7 @@ type CreateUserSubscriptionRequest struct {
 	UnsubscribeLink string             `json:"unsubscribeLink"`
 	PlanName        string             `json:"planName"`
 	PlanPrice       int                `json:"planPrice"`
+	Currency        string             `json:"currency"`
 	PlanPaymentType entity.PaymentType `json:"planPaymentType"`
 }
 
@@ -98,6 +99,10 @@ func (r CreateUserSubscriptionRequest) Validate(ctx context.Context, userID stri
 		if r.Name == "" || r.PlanPaymentType == "" {
 			return errors.New("invalid argment")
 		}
+	}
+
+	if r.PlanID != "" && r.Name != "" || r.UnsubscribeLink != "" || r.PlanName != "" || r.Currency != "" || r.PlanPaymentType != "" {
+		return errors.New("too much request body. If you set the planID, do not set other args")
 	}
 
 	return nil
@@ -167,14 +172,99 @@ func CreateUserSubscription(us *interactor.UserSubscription) MustLogin {
 
 // MARK: UpdateUserSubscription
 type UpdateUserSubscriptionRequest struct {
+	UserID             string `param:"userId"`
+	UserSubscriptionID string `param:"userSubscriptionId"`
+	PlanID             string `json:"planId"`
+
+	Name            string             `json:"name"`
+	UnsubscribeLink string             `json:"unsubscribeLink"`
+	PlanName        string             `json:"planName"`
+	PlanPrice       int                `json:"planPrice"`
+	Currency        string             `json:"currency"`
+	PlanPaymentType entity.PaymentType `json:"planPaymentType"`
+}
+
+func (r *UpdateUserSubscriptionRequest) Validate(ctx context.Context) error {
+	if r.UserID != scontext.GetUserID(ctx) {
+		return serror.ErrUserIDDontMatch
+	}
+
+	if r.UserSubscriptionID == "" {
+		return errors.New("user subscription required")
+	}
+
+	if r.PlanID == "" {
+		if r.Name == "" &&
+			r.UnsubscribeLink == "" &&
+			r.PlanName == "" &&
+			r.Currency == "" &&
+			r.PlanPaymentType == "" {
+			return errors.New("invalid argment")
+		}
+	}
+
+	if r.PlanID != "" && r.Name != "" || r.UnsubscribeLink != "" || r.PlanName != "" || r.Currency != "" || r.PlanPaymentType != "" {
+		return errors.New("too much request body. If you set the planID, do not set other Args")
+	}
+
+	return nil
 }
 
 type UpdateUserSubscriptionResponse struct {
+	UserSubscriptions   []entity.UserSubscription
+	TotalAmountPerDay   int `json:"totalAmountPerDay"`
+	TotalAmountPerMonth int `json:"totalAmountPerMonth"`
+	TotalAmountPerYear  int `json:"totalAmountPerYear"`
 }
 
-func UpdateUserSubscription() MustLogin {
-	return func(ctx echo.Context) error {
-		panic("impl me")
+// usersubscription godoc
+// @Summary  User Subscription
+// @ID       UpdateUserSubscription
+// @Tags     UserSubscription
+// @Accept   json
+// @Produce  json
+// @Param 	 userId		 							path 				string									false 	"user id"
+// @Param 	 userSubscriptionId		 	path 				string									false 	"userSubscriptionId"
+// @Param 	 q			 	body 		 	UpdateUserSubscriptionRequest  	true 		"UpdateUserSubscriptionRequest"
+// @Success  200  	 	{object}  UpdateUserSubscriptionResponse
+// @Failure  400  {object}  echo.HTTPError
+// @Failure  500  {object}  echo.HTTPError
+// @Router   /users/{userId}/subscriptions/{:userSubscriptionId} [put]
+func UpdateUserSubscription(us *interactor.UserSubscription) MustLogin {
+	return func(c echo.Context) error {
+		var reqQuery UpdateUserSubscriptionRequest
+		if err := c.Bind(&reqQuery); err != nil {
+			slog.Warn("failed to bind.", "error", err)
+			return echo.ErrBadRequest
+		}
+
+		ctx := scontext.ConvertContext(c)
+
+		if err := reqQuery.Validate(ctx); err != nil {
+			slog.Warn("failed to validate.", "error", err, "userID", reqQuery.UserID, "sUserID", scontext.GetUserID(ctx))
+			return echo.ErrBadRequest
+		}
+
+		if err := us.DeleteUserSubscription(ctx, reqQuery.UserSubscriptionID); err != nil {
+			switch {
+			case errors.Is(err, serror.ErrResourceNotFound):
+				return echo.ErrBadRequest
+
+			default:
+				return echo.ErrInternalServerError
+			}
+		}
+
+		result, err := us.GetUserSubscriptions(ctx, reqQuery.UserID)
+		if err != nil {
+			switch {
+			default:
+				slog.Warn("failed to request.", "error", err)
+				return echo.ErrInternalServerError
+			}
+		}
+
+		return c.JSON(http.StatusOK, UpdateUserSubscriptionResponse(result))
 	}
 }
 

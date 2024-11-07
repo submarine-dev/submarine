@@ -14,7 +14,7 @@ type GoogleLoginRequest struct {
 }
 
 type GoogleLoginResponse struct {
-	ID string `json:"userId"`
+	ID   string `json:"userId"`
 	Icon string `json:"icon"`
 }
 
@@ -54,7 +54,7 @@ func LoginGoogle(
 		cookieSetter.CreateCookieSetter(c).SetCookieValue(string(cookie.SessionID), result.SessionID)
 
 		c.JSON(http.StatusOK, GoogleLoginResponse{
-			ID: result.UserID,
+			ID:   result.UserID,
 			Icon: result.Icon,
 		})
 		return nil

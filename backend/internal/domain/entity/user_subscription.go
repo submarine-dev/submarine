@@ -24,3 +24,7 @@ type UserSubscription struct {
 	UpdatedAt       time.Time   `bun:",nullzero,notnull,default:current_timestamp"`
 	DeletedAt       *time.Time  `bun:"deleted_at,soft_delete" json:"-"`
 }
+
+func (p UserSubscription) IsUseTemplate() bool {
+	return p.TemplID != "" || p.PlanID != ""
+}

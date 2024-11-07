@@ -2,6 +2,8 @@ basePath: /v1
 definitions:
   controller.CreateUserSubscriptionRequest:
     properties:
+      currency:
+        type: string
       name:
         type: string
       planId:
@@ -77,6 +79,40 @@ definitions:
         type: string
       userId:
         type: string
+    type: object
+  controller.UpdateUserSubscriptionRequest:
+    properties:
+      currency:
+        type: string
+      name:
+        type: string
+      planId:
+        type: string
+      planName:
+        type: string
+      planPaymentType:
+        $ref: '#/definitions/entity.PaymentType'
+      planPrice:
+        type: integer
+      unsubscribeLink:
+        type: string
+      userID:
+        type: string
+      userSubscriptionID:
+        type: string
+    type: object
+  controller.UpdateUserSubscriptionResponse:
+    properties:
+      totalAmountPerDay:
+        type: integer
+      totalAmountPerMonth:
+        type: integer
+      totalAmountPerYear:
+        type: integer
+      userSubscriptions:
+        items:
+          $ref: '#/definitions/entity.UserSubscription'
+        type: array
     type: object
   echo.HTTPError:
     properties:
@@ -305,6 +341,43 @@ paths:
           schema:
             $ref: '#/definitions/echo.HTTPError'
       summary: Get Subscription
+      tags:
+      - UserSubscription
+    put:
+      consumes:
+      - application/json
+      operationId: UpdateUserSubscription
+      parameters:
+      - description: user id
+        in: path
+        name: userId
+        type: string
+      - description: userSubscriptionId
+        in: path
+        name: userSubscriptionId
+        type: string
+      - description: UpdateUserSubscriptionRequest
+        in: body
+        name: q
+        required: true
+        schema:
+          $ref: '#/definitions/controller.UpdateUserSubscriptionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.UpdateUserSubscriptionResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+      summary: User Subscription
       tags:
       - UserSubscription
 swagger: "2.0"

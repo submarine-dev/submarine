@@ -22,60 +22,59 @@ func NewDB() *sql.DB {
 	var sqlDB *sql.DB
 	if config.Config.Application.Env == config.EnvLocal {
 		dsn := fmt.Sprintf("postgres://%s:%s@%s:%d/%s?sslmode=%s",
-		config.Config.DB.User,
-		config.Config.DB.Password,
-		config.Config.DB.Host,
-		config.Config.DB.Port,
-		config.Config.DB.DBName,
-		config.Config.DB.SSLMode,
-	)
-	slog.Debug("connecting database.", "dsn", dsn)
+			config.Config.DB.User,
+			config.Config.DB.Password,
+			config.Config.DB.Host,
+			config.Config.DB.Port,
+			config.Config.DB.DBName,
+			config.Config.DB.SSLMode,
+		)
+		slog.Debug("connecting database.", "dsn", dsn)
 
-	pgxConfig, err := pgx.ParseConfig(dsn)
-	if err != nil {
-		slog.Error("failed to parse config.", "error", err)
-		panic(err)
-	}
+		pgxConfig, err := pgx.ParseConfig(dsn)
+		if err != nil {
+			slog.Error("failed to parse config.", "error", err)
+			panic(err)
+		}
 
-	sqlDB = stdlib.OpenDB(*pgxConfig)
-	}else {
-		db, err  := connectWithConnector()
+		sqlDB = stdlib.OpenDB(*pgxConfig)
+	} else {
+		db, err := connectWithConnector()
 		if err != nil {
 			slog.Error("failed to connection.", "error", err)
 			panic(err)
 		}
 		sqlDB = db
 	}
-	
 
 	return sqlDB
 }
 
 func connectWithConnector() (*sql.DB, error) {
 
-	usePrivate             := os.Getenv("PRIVATE_IP")
+	usePrivate := os.Getenv("PRIVATE_IP")
 	dsn := fmt.Sprintf("user=%s password=%s database=%s", config.Config.DB.User, config.Config.DB.Password, config.Config.DB.DBName)
 	pgxConfig, err := pgx.ParseConfig(dsn)
 	if err != nil {
-					return nil, err
+		return nil, err
 	}
 	var opts []cloudsqlconn.Option
 	if usePrivate != "" {
-					opts = append(opts, cloudsqlconn.WithDefaultDialOptions(cloudsqlconn.WithPrivateIP()))
+		opts = append(opts, cloudsqlconn.WithDefaultDialOptions(cloudsqlconn.WithPrivateIP()))
 	}
 	d, err := cloudsqlconn.NewDialer(context.Background(), opts...)
 	if err != nil {
-					return nil, err
+		return nil, err
 	}
 	// Use the Cloud SQL connector to handle connecting to the instance.
 	// This approach does *NOT* require the Cloud SQL proxy.
 	pgxConfig.DialFunc = func(ctx context.Context, network, instance string) (net.Conn, error) {
-					return d.Dial(ctx, config.Config.DB.Host)
+		return d.Dial(ctx, config.Config.DB.Host)
 	}
 	dbURI := stdlib.RegisterConnConfig(pgxConfig)
 	dbPool, err := sql.Open("pgx", dbURI)
 	if err != nil {
-					return nil, fmt.Errorf("sql.Open: %w", err)
+		return nil, fmt.Errorf("sql.Open: %w", err)
 	}
 	return dbPool, nil
 }

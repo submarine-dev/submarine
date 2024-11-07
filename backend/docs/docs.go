@@ -227,6 +227,62 @@ const docTemplate = `{
             }
         },
         "/users/{userId}/subscriptions/{:userSubscriptionId}": {
+            "put": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "UserSubscription"
+                ],
+                "summary": "User Subscription",
+                "operationId": "UpdateUserSubscription",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "userId",
+                        "in": "path"
+                    },
+                    {
+                        "type": "string",
+                        "description": "userSubscriptionId",
+                        "name": "userSubscriptionId",
+                        "in": "path"
+                    },
+                    {
+                        "description": "UpdateUserSubscriptionRequest",
+                        "name": "q",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.UpdateUserSubscriptionRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller.UpdateUserSubscriptionResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
+                        }
+                    }
+                }
+            },
             "delete": {
                 "produces": [
                     "application/json"
@@ -277,6 +333,9 @@ const docTemplate = `{
         "controller.CreateUserSubscriptionRequest": {
             "type": "object",
             "properties": {
+                "currency": {
+                    "type": "string"
+                },
                 "name": {
                     "type": "string"
                 },
@@ -392,6 +451,58 @@ const docTemplate = `{
                 },
                 "userId": {
                     "type": "string"
+                }
+            }
+        },
+        "controller.UpdateUserSubscriptionRequest": {
+            "type": "object",
+            "properties": {
+                "currency": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "planId": {
+                    "type": "string"
+                },
+                "planName": {
+                    "type": "string"
+                },
+                "planPaymentType": {
+                    "$ref": "#/definitions/entity.PaymentType"
+                },
+                "planPrice": {
+                    "type": "integer"
+                },
+                "unsubscribeLink": {
+                    "type": "string"
+                },
+                "userID": {
+                    "type": "string"
+                },
+                "userSubscriptionID": {
+                    "type": "string"
+                }
+            }
+        },
+        "controller.UpdateUserSubscriptionResponse": {
+            "type": "object",
+            "properties": {
+                "totalAmountPerDay": {
+                    "type": "integer"
+                },
+                "totalAmountPerMonth": {
+                    "type": "integer"
+                },
+                "totalAmountPerYear": {
+                    "type": "integer"
+                },
+                "userSubscriptions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/entity.UserSubscription"
+                    }
                 }
             }
         },

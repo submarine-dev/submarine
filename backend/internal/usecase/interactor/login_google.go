@@ -11,7 +11,7 @@ type GoogleLoginParam struct {
 type GoogleLoginResult struct {
 	UserID    string
 	SessionID string
-	Icon string
+	Icon      string
 }
 
 func (l *Login) Google(ctx context.Context, param GoogleLoginParam) (*GoogleLoginResult, error) {
@@ -27,6 +27,6 @@ func (l *Login) Google(ctx context.Context, param GoogleLoginParam) (*GoogleLogi
 	return &GoogleLoginResult{
 		UserID:    user.UserID,
 		SessionID: sessionID,
-		Icon: user.ProfileIcon,
+		Icon:      user.ProfileIcon,
 	}, nil
 }
