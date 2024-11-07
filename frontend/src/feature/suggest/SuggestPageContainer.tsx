@@ -40,7 +40,7 @@ export const SuggestPageContainer: FC = () => {
               <Stack alignItems="start" spacing={1}>
                 <Stack direction="row" alignItems="center" spacing={1}>
                   <CheckCircleIcon color="warning" />
-                  <Typography>新規登録・変更・解約の候補があります</Typography>
+                  <Typography>登録・変更・解約の候補があります</Typography>
                 </Stack>
               </Stack>
             ) : (
