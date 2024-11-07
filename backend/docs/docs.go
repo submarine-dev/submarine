@@ -245,13 +245,15 @@ const docTemplate = `{
                         "type": "string",
                         "description": "user id",
                         "name": "userId",
-                        "in": "path"
+                        "in": "path",
+                        "required": true
                     },
                     {
                         "type": "string",
-                        "description": "userSubscriptionId",
+                        "description": "user subscription id",
                         "name": "userSubscriptionId",
-                        "in": "path"
+                        "in": "path",
+                        "required": true
                     },
                     {
                         "description": "UpdateUserSubscriptionRequest",
@@ -298,13 +300,15 @@ const docTemplate = `{
                         "type": "string",
                         "description": "user id",
                         "name": "userId",
-                        "in": "path"
+                        "in": "path",
+                        "required": true
                     },
                     {
                         "type": "string",
-                        "description": "userSubscriptionId",
+                        "description": "user subscription id",
                         "name": "userSubscriptionId",
-                        "in": "path"
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {

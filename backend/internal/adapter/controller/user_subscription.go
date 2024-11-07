@@ -223,8 +223,8 @@ type UpdateUserSubscriptionResponse struct {
 // @Tags     UserSubscription
 // @Accept   json
 // @Produce  json
-// @Param 	 userId		 							path 				string									false 	"user id"
-// @Param 	 userSubscriptionId		 	path 				string									false 	"userSubscriptionId"
+// @Param 	 userId		 							path 				string									true 	"user id"
+// @Param 	 userSubscriptionId		 	path 				string									true 	"user subscription id"
 // @Param 	 q			 	body 		 	UpdateUserSubscriptionRequest  	true 		"UpdateUserSubscriptionRequest"
 // @Success  200  	 	{object}  UpdateUserSubscriptionResponse
 // @Failure  400  {object}  echo.HTTPError
@@ -295,8 +295,8 @@ type DeleteUserSubscriptionResponse struct {
 // @ID       DeleteUserSubscriptions
 // @Tags     UserSubscription
 // @Produce  json
-// @Param 	 userId		 	path 				string									false 	"user id"
-// @Param 	 userSubscriptionId		 	path 				string									false 	"userSubscriptionId"
+// @Param 	 userId		 	path 				string									true 	"user id"
+// @Param 	 userSubscriptionId		 	path 				string									true 	"user subscription id"
 // @Success  200  {object}  DeleteUserSubscriptionResponse
 // @Failure  400  {object}  echo.HTTPError
 // @Failure  500  {object}  echo.HTTPError
