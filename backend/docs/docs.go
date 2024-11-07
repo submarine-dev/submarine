@@ -227,7 +227,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/users/{userId}/subscriptions/{:userSubscriptionId}": {
+        "/users/{userId}/subscriptions/{userSubscriptionId}": {
             "put": {
                 "consumes": [
                     "application/json"

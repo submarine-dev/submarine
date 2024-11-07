@@ -229,7 +229,7 @@ type UpdateUserSubscriptionResponse struct {
 // @Success  200  	 	{object}  UpdateUserSubscriptionResponse
 // @Failure  400  {object}  echo.HTTPError
 // @Failure  500  {object}  echo.HTTPError
-// @Router   /users/{userId}/subscriptions/{:userSubscriptionId} [put]
+// @Router   /users/{userId}/subscriptions/{userSubscriptionId} [put]
 func UpdateUserSubscription(us *interactor.UserSubscription) MustLogin {
 	return func(c echo.Context) error {
 		var reqQuery UpdateUserSubscriptionRequest
@@ -295,12 +295,12 @@ type DeleteUserSubscriptionResponse struct {
 // @ID       DeleteUserSubscriptions
 // @Tags     UserSubscription
 // @Produce  json
-// @Param 	 userId		 	path 				string									true 	"user id"
+// @Param 	 userId		 							path 				string									true 	"user id"
 // @Param 	 userSubscriptionId		 	path 				string									true 	"user subscription id"
 // @Success  200  {object}  DeleteUserSubscriptionResponse
 // @Failure  400  {object}  echo.HTTPError
 // @Failure  500  {object}  echo.HTTPError
-// @Router   /users/{userId}/subscriptions/{:userSubscriptionId} [delete]
+// @Router   /users/{userId}/subscriptions/{userSubscriptionId} [delete]
 func DeleteUserSubscription(us *interactor.UserSubscription) MustLogin {
 	return func(c echo.Context) error {
 		var reqQuery DeleteUserSubscriptionRequest
