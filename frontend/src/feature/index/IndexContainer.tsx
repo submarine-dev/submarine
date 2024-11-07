@@ -70,7 +70,7 @@ export const IndexContainer: FC = () => {
         </SectionLayout>
       ) : null}
       <SectionLayout
-        sectionTitle="自動で管理"
+        sectionTitle="SonarAI（自動で管理）"
         helpText="メール情報から、AIによってサブスクリプションの管理をサジェストします"
       >
         <AutoManagement autoManagementSuggestSubscriptions={autoManagementSuggestSubscriptions} />
