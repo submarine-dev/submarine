@@ -9,7 +9,6 @@ const config: AxiosRequestConfig = {
   headers: {
     'Content-Type': 'application/json',
   },
-  ],
   transformResponse: [
     function transformResponse(data) {
       return JSON.parse(data);
