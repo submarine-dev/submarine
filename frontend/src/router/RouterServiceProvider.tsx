@@ -22,7 +22,7 @@ export const RouterServiceProvider: FC<Props> = ({ children }) => {
       !authCode &&
       pathname !== '/auth' &&
       pathname !== '/google/callback' &&
-      productMode === ProductModeEnum.PRODUCTION
+      (productMode === ProductModeEnum.PRODUCTION || productMode === ProductModeEnum.NONE_SELECTED)
     ) {
       router('/auth');
     }
