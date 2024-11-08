@@ -17,7 +17,7 @@ export const userSubscriptionService = {
     try {
       const res = (async () => {
         if (productMode === ProductModeEnum.DEMO) return demoMock.userSubscriptions;
-        return await apiClient.users._userId(userId).subscriptions.$get();
+        return await apiClient.v1.users._userId(userId).subscriptions.$get();
       })();
       return res;
     } catch (e) {
@@ -68,7 +68,7 @@ export const userSubscriptionService = {
             return demoMock.userSubscriptions.userSubscriptions[0].id;
           return null;
         }
-        return await apiClient.users._userId(params.userId).subscriptions.$post({
+        return await apiClient.v1.users._userId(params.userId).subscriptions.$post({
           body: params,
         });
       })();
@@ -95,7 +95,7 @@ export const userSubscriptionService = {
     try {
       const res = await (async () => {
         if (productMode === ProductModeEnum.DEMO) return true;
-        return await apiClient.users
+        return await apiClient.v1.users
           ._userId(userId)
           .subscriptions._userSubscriptionId(subscriptionId)
           .$delete();
