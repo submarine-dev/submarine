@@ -6,6 +6,8 @@ import { useEffect } from 'react';
 import { authCodeAtom } from './atom/authAtom';
 import { initialUserData, userAtom } from './atom/userAtom';
 import { useProductMode } from './useProductMode';
+import { ProductModeEnum } from '@/types/domain/ProductModeEnum';
+import { demoMock } from '@/mock/demoMock';
 
 export const useAuth = (): {
   authCode: string;
@@ -32,22 +34,36 @@ export const useAuth = (): {
   };
 
   useEffect(() => {
-    const localStorageAuthCode = localStorage.getItem(localStorageKeys.AUTH_CODE_KEY);
-    if (!authCode && localStorageAuthCode) {
-      setAuthCode(localStorageAuthCode);
+    /**
+     * デモモードの時はチェックせずにデフォルトユーザを設定してあげる
+     */
+    if (forAuthGetProductMode() === ProductModeEnum.DEMO) {
+      setUser(demoMock.user);
+      return;
     }
+    if (forAuthGetProductMode() === ProductModeEnum.PRODUCTION) {
+      const localStorageAuthCode = localStorage.getItem(localStorageKeys.AUTH_CODE_KEY);
+      if (!authCode && localStorageAuthCode) {
+        setAuthCode(localStorageAuthCode);
+      }
 
-    const currentAuthCode = authCode ?? localStorageAuthCode ?? '';
-    if (!currentAuthCode) return;
+      const currentAuthCode = authCode ?? localStorageAuthCode ?? '';
+      if (!currentAuthCode) return;
 
-    (async () => {
-      const userData = await authService.google.login({
-        authCode: currentAuthCode,
-        productMode: forAuthGetProductMode(),
-      });
-      if (!userData) return;
-      setUser(userData);
-    })();
+      /**
+       * ユーザデータが既に存在する場合はfetchしない
+       */
+      if (user.userId) return;
+      (async () => {
+        const userData = await authService.google.login({
+          authCode: currentAuthCode,
+          productMode: forAuthGetProductMode(),
+        });
+        if (!userData) return;
+        setUser(userData);
+      })();
+      return;
+    }
   }, [authCode]);
 
   return {
