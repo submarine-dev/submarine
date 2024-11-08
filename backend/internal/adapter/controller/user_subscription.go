@@ -47,7 +47,7 @@ type GetUserSubscriptionsResponse struct {
 // @Success  200  {object}  GetUserSubscriptionsResponse
 // @Failure  400  {object}  echo.HTTPError
 // @Failure  500  {object}  echo.HTTPError
-// @Router   /users/{userId}/subscriptions [get]
+// @Router   /v1/users/{userId}/subscriptions [get]
 func GetUserSubscriptions(us *interactor.UserSubscription) MustLogin {
 	return func(c echo.Context) error {
 		var reqQuery GetUserSubscriptionsRequest
@@ -123,7 +123,7 @@ type CreateUserSubscriptionResponse struct {
 // @Success  200  	 	{object}  CreateUserSubscriptionResponse
 // @Failure  400  {object}  echo.HTTPError
 // @Failure  500  {object}  echo.HTTPError
-// @Router   /users/{userId}/subscriptions [post]
+// @Router   /v1/users/{userId}/subscriptions [post]
 func CreateUserSubscription(us *interactor.UserSubscription) MustLogin {
 	return func(c echo.Context) error {
 		var reqBody CreateUserSubscriptionRequest
@@ -229,7 +229,7 @@ type UpdateUserSubscriptionResponse struct {
 // @Success  200  	 	{object}  UpdateUserSubscriptionResponse
 // @Failure  400  {object}  echo.HTTPError
 // @Failure  500  {object}  echo.HTTPError
-// @Router   /users/{userId}/subscriptions/{userSubscriptionId} [put]
+// @Router   /v1/users/{userId}/subscriptions/{userSubscriptionId} [put]
 func UpdateUserSubscription(us *interactor.UserSubscription) MustLogin {
 	return func(c echo.Context) error {
 		var reqQuery UpdateUserSubscriptionRequest
@@ -300,7 +300,7 @@ type DeleteUserSubscriptionResponse struct {
 // @Success  200  {object}  DeleteUserSubscriptionResponse
 // @Failure  400  {object}  echo.HTTPError
 // @Failure  500  {object}  echo.HTTPError
-// @Router   /users/{userId}/subscriptions/{userSubscriptionId} [delete]
+// @Router   /v1/users/{userId}/subscriptions/{userSubscriptionId} [delete]
 func DeleteUserSubscription(us *interactor.UserSubscription) MustLogin {
 	return func(c echo.Context) error {
 		var reqQuery DeleteUserSubscriptionRequest

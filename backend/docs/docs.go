@@ -61,7 +61,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/subscription": {
+        "/v1/subscription": {
             "get": {
                 "produces": [
                     "application/json"
@@ -96,7 +96,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/subscription/{subscriptionId}": {
+        "/v1/subscription/{subscriptionId}": {
             "get": {
                 "produces": [
                     "application/json"
@@ -137,7 +137,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/users/{userId}/subscriptions": {
+        "/v1/users/{userId}/subscriptions": {
             "get": {
                 "produces": [
                     "application/json"
@@ -229,7 +229,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/users/{userId}/subscriptions/{userSubscriptionId}": {
+        "/v1/users/{userId}/subscriptions/{userSubscriptionId}": {
             "put": {
                 "consumes": [
                     "application/json"

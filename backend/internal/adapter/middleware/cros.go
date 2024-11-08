@@ -6,6 +6,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/submarine/submarine/backend/cmd/config"
+	"github.com/submarine/submarine/backend/internal/framework/scontext"
 )
 
 func SetupCORS() echo.MiddlewareFunc {
@@ -35,11 +36,14 @@ func AllowAllOrigins() echo.MiddlewareFunc {
 				return next(c)
 			}
 			slog.Info("origin", "origin", requestAddr)
+			ctx := scontext.ConvertContext(c)
+
 			c.Response().Header().Set("Access-Control-Allow-Origin", requestAddr)
 			c.Response().Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS")
 			c.Response().Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
 			c.Response().Header().Set("Access-Control-Max-Age", "3600")
 			c.Response().Header().Set("Access-Control-Allow-Credentials", "true")
+			c.Response().Header().Set("X-Request-ID", scontext.GetRequestID(ctx))
 
 			return next(c)
 		}

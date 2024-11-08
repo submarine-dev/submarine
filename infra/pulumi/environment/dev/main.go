@@ -104,9 +104,9 @@ func main() {
 		if err := gci.CreateService(ctx,"backend-api",gc.CreateServiceParam{
 			Location: location,
 			Project: project,
-			Image: apiImage.Tags.ApplyT(func(v []string)string{
+			Image: pulumi.Sprintf("%s@%s",apiImage.Tags.ApplyT(func(v []string)string{
 				return v[0]
-			}).(pulumi.StringOutput),
+			}).(pulumi.StringOutput),apiImage.Digest),
 			ServiceAccount: cloudrunSA.AccountId,
 			CloudSQLInstance: cloudsql.ConnectionName,
 			CPULimit: "1",

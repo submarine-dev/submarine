@@ -32,7 +32,7 @@ type GetSubscriptionsResponse struct {
 // @Success  200  {array}		GetSubscriptionsResponse
 // @Failure  400  {object}  echo.HTTPError
 // @Failure  500  {object}  echo.HTTPError
-// @Router   /subscription [get]
+// @Router   /v1/subscription [get]
 func GetSubscriptions(ts *interactor.TemplSubscription) MustLogin {
 	return func(ctx echo.Context) error {
 		var reqQuery GetSubscriptionsRequest
@@ -88,7 +88,7 @@ type GetSubscriptionResponse struct {
 // @Success  200  {object}  GetSubscriptionResponse
 // @Failure  400  {object}  echo.HTTPError
 // @Failure  500  {object}  echo.HTTPError
-// @Router   /subscription/{subscriptionId} [get]
+// @Router   /v1/subscription/{subscriptionId} [get]
 func GetSubscription(ts *interactor.TemplSubscription) MustLogin {
 	return func(ctx echo.Context) error {
 		var reqQuery GetSubscriptionRequest

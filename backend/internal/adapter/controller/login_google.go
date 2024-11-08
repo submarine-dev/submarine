@@ -1,11 +1,14 @@
 package controller
 
 import (
+	"encoding/json"
+	"io"
 	"log/slog"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
 	"github.com/submarine/submarine/backend/internal/framework/cookie"
+	"github.com/submarine/submarine/backend/internal/framework/scontext"
 	"github.com/submarine/submarine/backend/internal/usecase/interactor"
 )
 
@@ -35,18 +38,30 @@ func LoginGoogle(
 ) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		var reqBody GoogleLoginRequest
-		if err := c.Bind(&reqBody); err != nil {
-			return echo.ErrBadRequest
-		}
-		ctx := c.Request().Context()
+		ctx := scontext.ConvertContext(c)		
+		// if err := c.Bind(&reqBody); err != nil {
+		// 	slog.Warn("failed to bind request body", "error",err,"requestID", scontext.GetRequestID(ctx))
+		// 	return echo.ErrBadRequest
+		// }
 
+	body ,err := io.ReadAll(c.Request().Body)
+	if err != nil {
+		slog.Warn("failed to read request body", "error",err,"requestID", scontext.GetRequestID(ctx))
+		return echo.ErrBadRequest
+	}
+
+	if err := json.Unmarshal(body,&reqBody);err != nil {
+		slog.Warn("failed to bind request body", "error",err,"requestID", scontext.GetRequestID(ctx))
+		return echo.ErrBadRequest
+	}
+		
 		result, err := login.Google(ctx, interactor.GoogleLoginParam{
 			Code: reqBody.Code,
 		})
 		if err != nil {
 			switch err.(type) {
 			default:
-				slog.Error("failed to login google", "error", err)
+				slog.Error("failed to login google", "error", err,"requestID", scontext.GetRequestID(ctx))
 				return echo.ErrInternalServerError
 			}
 		}

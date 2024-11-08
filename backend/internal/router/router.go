@@ -20,6 +20,7 @@ func NewEcho(app *newrelic.Application, i *di) http.Handler {
 
 	engine.Use(
 		nrecho.Middleware(app),
+		middleware.RequestID(),
 		middleware.SetupCORS(),
 		middleware.GetUserAgent(),
 	)
