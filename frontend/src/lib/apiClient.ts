@@ -9,10 +9,6 @@ const config: AxiosRequestConfig = {
   headers: {
     'Content-Type': 'application/json',
   },
-  transformRequest: [
-    function transformRequest(data) {
-      return JSON.stringify(data);
-    },
   ],
   transformResponse: [
     function transformResponse(data) {
