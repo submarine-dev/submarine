@@ -66,6 +66,7 @@ export const AddSubscriptionDrawer: FC<Props> = ({
     <SubscriptionDrawerBase
       open={open}
       title="新しいサブスクリプションを追加"
+      submitText="追加する"
       subscription={{
         icon: subscription.icon ?? '',
         name: subscription.name ?? '',

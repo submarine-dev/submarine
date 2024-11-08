@@ -15,7 +15,7 @@ type Props = {
   onClickPlan: (planId: string) => void;
   onCancel: () => void;
   onSubmit: () => void;
-  submitText?: string;
+  submitText: string;
   cancelText?: string;
 };
 
@@ -28,7 +28,7 @@ export const SubscriptionDrawerBase: FC<Props> = ({
   onClickPlan,
   onCancel,
   onSubmit,
-  submitText = '追加する',
+  submitText,
   cancelText = 'キャンセル',
 }) => {
   return (

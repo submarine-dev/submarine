@@ -27,6 +27,7 @@ export const Header: FC = () => {
   };
 
   const handleBackHome = (): void => {
+    if (pathname === '/') return;
     router('/');
   };
 
