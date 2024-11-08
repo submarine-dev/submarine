@@ -6,6 +6,9 @@ import { FC, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AddSubscriptionDrawer } from './drawer/AddSubscriptionDrawer';
 import { SubscriptionsList } from './list/SubscriptionsList';
+import { useUserData } from '@/hooks/useUserData';
+import { CurrencyEnum } from '@/types/common/CurrencyEnum';
+import { PaymentEnum } from '@/types/domain/PaymentEnum';
 
 type Props = {
   subscriptionId: string | null;
@@ -15,6 +18,7 @@ type Props = {
 export const SubscriptionsContainer: FC<Props> = ({ subscriptionId, planId }) => {
   const router = useNavigate();
   const { subscriptionSummaries, targetSubscription, setSubscriptionId } = useSubscription();
+  const { registerUserSubscription } = useUserData();
 
   const [isOpenControlDrawer, controlDrawerOpen, controlDrawerClose] = useDiscloser();
   const [isOpenSnackBar, onOpenSnackBar, onCloseSnackBar] = useDiscloser();
@@ -33,19 +37,40 @@ export const SubscriptionsContainer: FC<Props> = ({ subscriptionId, planId }) =>
    * @param targetSubscriptionParam
    * @param planId
    */
-  const handleAddSubscription = (
-    _targetSubscriptionParam: SubscriptionType,
-    _planId: string
+  const handleAddSubscription = async (
+    targetSubscriptionParam: SubscriptionType,
+    planId: string
   ): Promise<void> => {
-    /**
-     * TODO: CRUD生え次第変更
-     */
     controlDrawerClose();
+    if (!targetSubscriptionParam.plan) return;
+    const targetPlan = targetSubscriptionParam.plan.find((plan) => plan.id === planId);
+    if (!targetPlan) return;
+
+    const subscriptionId = await registerUserSubscription({
+      currency: CurrencyEnum.JPY,
+      name: targetSubscriptionParam.name ?? '',
+      planId: targetPlan.id ?? '',
+      planName: targetPlan.name ?? '',
+      planPaymentType: targetPlan.paymentType ?? PaymentEnum.monthly,
+      planPrice: targetPlan.price ?? 0,
+      subscriptionId: targetSubscriptionParam.id ?? '',
+      /**
+       * TODO: unsubscribeLinkどうすんだろこれ
+       */
+      unsubscribeLink: '',
+    });
+
+    if (!subscriptionId) {
+      /**
+       * TODO:登録失敗の処理
+       */
+      return;
+    }
+
     onOpenSnackBar();
     setTimeout(() => {
-      router('/');
+      router(`/subscription/${subscriptionId}`);
     }, 3000);
-    return new Promise((resolve) => resolve());
   };
 
   /**
@@ -53,7 +78,13 @@ export const SubscriptionsContainer: FC<Props> = ({ subscriptionId, planId }) =>
    */
   useEffect(() => {
     if (!subscriptionId) return;
-    onSubscriptionClick(subscriptionId);
+    setSubscriptionId(subscriptionId);
+    /**
+     * ページ遷移後少し遅れて開く
+     */
+    setTimeout(() => {
+      controlDrawerOpen();
+    }, 300);
   }, [subscriptionId]);
 
   return (

@@ -4,6 +4,7 @@ import { useProductMode } from '@/store/useProductMode';
 import { AutoManagementSuggestSubscriptionType } from '@/types/domain/AutoManagementSuggestSubscriptionType';
 import { UserSubscriptionType, UserSubscriptionsType } from '@/types/domain/UserSubscriptionType';
 import { useQuery } from '@tanstack/react-query';
+import { Controller_CreateUserSubscriptionRequest } from '../../api/@types';
 
 export const useUserData = (): {
   userSubscription: UserSubscriptionType | null | undefined;
@@ -11,6 +12,10 @@ export const useUserData = (): {
   isPending: boolean;
   isError: boolean;
   getUserSubscription: (subscriptionId: string) => UserSubscriptionsType | null;
+  registerUserSubscription: (
+    params: Required<Controller_CreateUserSubscriptionRequest>
+  ) => Promise<string | null>;
+  deleteUserSubscription: (subscriptionId: string) => Promise<boolean>;
 } => {
   const { user } = useAuth();
   const { productMode, forAuthGetProductMode } = useProductMode();
@@ -67,11 +72,49 @@ export const useUserData = (): {
     return targetSubscription;
   };
 
+  /**
+   * 新しいサブスクリプションをユーザに登録する
+   *
+   * @param userSubscription
+   * @returns subscriptionId
+   */
+  const registerUserSubscription = async (
+    params: Required<Controller_CreateUserSubscriptionRequest>
+  ): Promise<string | null> => {
+    if (!user.userId) return null;
+    const res = await userSubscriptionService.registerUserSubscription({
+      ...params,
+      userId: user.userId,
+      productMode,
+    });
+    if (!res) return null;
+    return res;
+  };
+
+  /**
+   * サブスクを削除する
+   *
+   * @param subscriptionId
+   * @returns isSuccessful
+   */
+  const deleteUserSubscription = async (subscriptionId: string): Promise<boolean> => {
+    if (!user.userId) return false;
+    const res = await userSubscriptionService.deleteUserSubscription({
+      userId: user.userId,
+      subscriptionId,
+      productMode,
+    });
+    if (!res) return false;
+    return true;
+  };
+
   return {
     userSubscription,
     autoManagementSuggestSubscriptions,
     isPending,
     isError,
     getUserSubscription,
+    registerUserSubscription,
+    deleteUserSubscription,
   };
 };
