@@ -16,7 +16,7 @@ export const DetailPageContainer: FC = () => {
   const { pathname } = useLocation();
   const router = useNavigate();
 
-  const { getUserSubscription, deleteUserSubscription } = useUserData();
+  const { getUserSubscription, deleteUserSubscription, updateUserSubscription } = useUserData();
   const { targetSubscription, setSubscriptionId } = useSubscription();
 
   const [selectedPlanId, setSelectedPlanId] = useState<string | null>(null);
@@ -58,16 +58,25 @@ export const DetailPageContainer: FC = () => {
   /**
    * プランの更新のハンドリング
    */
-  const handleUpdateSubscription = (): Promise<void> => {
-    /**
-     * TODO: CRUD生え次第変更
-     */
+  const handleUpdateSubscription = async (): Promise<void> => {
     onCloseEditSubscription();
+
+    const isSuccess = await updateUserSubscription({
+      subscriptionId,
+      planId: selectedPlanId ?? '',
+    });
+
+    if (!isSuccess) {
+      /**
+       * TODO: エラーハンドリング
+       */
+      return;
+    }
+
     onOpenSnackBar();
     setTimeout(() => {
       router('/');
     }, 3000);
-    return new Promise((resolve) => resolve());
   };
 
   /**
