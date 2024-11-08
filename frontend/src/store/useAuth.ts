@@ -38,7 +38,7 @@ export const useAuth = (): {
     }
 
     const currentAuthCode = authCode ?? localStorageAuthCode ?? '';
-    if (!currentAuthCode || user.userId) return;
+    if (!currentAuthCode) return;
 
     (async () => {
       const userData = await authService.google.login({
