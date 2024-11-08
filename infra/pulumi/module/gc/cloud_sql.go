@@ -6,10 +6,10 @@ import (
 )
 
 type CraeteCloudSQLParam struct {
-	Name               string
-	Project            string
-	Location           string
-	RootPassword       string
+	Name         string
+	Project      string
+	Location     string
+	RootPassword string
 }
 
 func (m *GoogleCloud) CreateCloudSQL(ctx *pulumi.Context, param CraeteCloudSQLParam) (*sql.DatabaseInstance, error) {

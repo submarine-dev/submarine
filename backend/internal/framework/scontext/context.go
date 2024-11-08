@@ -51,7 +51,6 @@ func GetRequestID(ctx context.Context) string {
 	return requestID
 }
 
-
 func ConvertContext(c echo.Context) context.Context {
 	ctx := context.Background()
 	for _, key := range keys {

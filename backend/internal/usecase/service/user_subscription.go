@@ -23,7 +23,7 @@ func (us *UserSubscription) GetUserSubscriptions(ctx context.Context, userID str
 	return us.repo.GetUserSubscriptions(ctx, userID)
 }
 
-func (us *UserSubscription) GetUserSubscription(ctx context.Context, userID, planID string) (*entity.UserSubscription,bool, error) {
+func (us *UserSubscription) GetUserSubscription(ctx context.Context, userID, planID string) (*entity.UserSubscription, bool, error) {
 	return us.repo.GetUserSubscription(ctx, userID, planID)
 }
 

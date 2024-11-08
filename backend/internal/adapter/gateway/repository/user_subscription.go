@@ -32,7 +32,7 @@ func (r *UserSubscriptionRepo) GetUserSubscriptions(ctx context.Context, userID 
 	return userSubscriptions, nil
 }
 
-func (r *UserSubscriptionRepo) GetUserSubscription(ctx context.Context, userID, usersubscriptionID string) (*entity.UserSubscription,bool, error) {
+func (r *UserSubscriptionRepo) GetUserSubscription(ctx context.Context, userID, usersubscriptionID string) (*entity.UserSubscription, bool, error) {
 	var userSubscriptions *entity.UserSubscription
 	query := r.db.NewSelect().Model(&userSubscriptions).
 		Where("user_id = ?", userID).
@@ -40,14 +40,13 @@ func (r *UserSubscriptionRepo) GetUserSubscription(ctx context.Context, userID, 
 
 	if err := query.Scan(ctx, &userSubscriptions); err != nil {
 		if !errors.Is(err, sql.ErrNoRows) {
-			return nil ,false,  err
+			return nil, false, err
 		}
-		return nil, false , nil
+		return nil, false, nil
 	}
 
-	return userSubscriptions, true , nil
+	return userSubscriptions, true, nil
 }
-
 
 func (r *UserSubscriptionRepo) CreateUserSubscription(ctx context.Context, userSubscription entity.UserSubscription) error {
 	if _, err := r.db.NewInsert().Model(&userSubscription).Exec(ctx); err != nil {
@@ -62,7 +61,6 @@ func (r *UserSubscriptionRepo) UpdateUserSubscription(ctx context.Context, userS
 	}
 	return nil
 }
-
 
 func (r *UserSubscriptionRepo) DeleteUserSubscription(ctx context.Context, userSubscriptionID string) error {
 	if _, err := r.db.NewDelete().Model(&entity.UserSubscription{}).

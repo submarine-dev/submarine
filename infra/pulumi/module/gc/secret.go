@@ -9,8 +9,6 @@ import (
 	"golang.org/x/sync/errgroup"
 )
 
-
-
 type StoreSecretsParam struct {
 	Project string
 	Members pulumi.StringArrayInput
@@ -54,7 +52,7 @@ func (m *GoogleCloud) StoreSecrets(ctx *pulumi.Context, param StoreSecretsParam,
 				Secret:     s.ID(),
 				SecretData: secret,
 				Enabled:    pulumi.BoolPtr(true),
-			});err != nil {
+			}); err != nil {
 				return err
 			}
 
@@ -67,7 +65,7 @@ func (m *GoogleCloud) StoreSecrets(ctx *pulumi.Context, param StoreSecretsParam,
 				return err
 			}
 
-			secretOutput = append(secretOutput,name)
+			secretOutput = append(secretOutput, name)
 			return nil
 		})
 	}

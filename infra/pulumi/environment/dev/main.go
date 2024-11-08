@@ -11,12 +11,12 @@ import (
 	"github.com/submarine-dev/submarine/infra/module/gc"
 )
 
-func mustGet(env string) (string,error){
+func mustGet(env string) (string, error) {
 	v := os.Getenv(env)
 	if v == "" {
-		return "", fmt.Errorf("plz set env: %s",env)
+		return "", fmt.Errorf("plz set env: %s", env)
 	}
-	return v,nil
+	return v, nil
 }
 
 func main() {
@@ -37,7 +37,7 @@ func main() {
 	}
 
 	pulumi.Run(func(ctx *pulumi.Context) error {
-		dbPassword,err := mustGet("DB_PASSWORD")
+		dbPassword, err := mustGet("DB_PASSWORD")
 		if err != nil {
 			return err
 		}
@@ -78,13 +78,12 @@ func main() {
 		env["DB_HOST"] = cloudsql.ConnectionName
 		env["DB_PASSWORD"] = pulumi.String(dbPassword)
 
-		cloudrunSA ,err := gci.CreateServiceAccount(ctx,"api-sa","submarine api service account",pulumi.String("submarineapi"))
+		cloudrunSA, err := gci.CreateServiceAccount(ctx, "api-sa", "submarine api service account", pulumi.String("submarineapi"))
 		if err != nil {
 			return err
 		}
 
-
-		secrets, err := gci.StoreSecrets(ctx,gc.StoreSecretsParam{
+		secrets, err := gci.StoreSecrets(ctx, gc.StoreSecretsParam{
 			Project: project,
 			Members: pulumi.StringArray{cloudrunSA.Member},
 			Secrets: env,
@@ -92,40 +91,40 @@ func main() {
 		if err != nil {
 			return err
 		}
-		
-		if _ ,err := projects.NewIAMMember(ctx,"cloudrun-conn",&projects.IAMMemberArgs{
-			Member: cloudrunSA.Member,
-			Role: pulumi.String("roles/cloudsql.client"),
+
+		if _, err := projects.NewIAMMember(ctx, "cloudrun-conn", &projects.IAMMemberArgs{
+			Member:  cloudrunSA.Member,
+			Role:    pulumi.String("roles/cloudsql.client"),
 			Project: pulumi.String(project),
 		}); err != nil {
 			return err
 		}
 
-		if err := gci.CreateService(ctx,"backend-api",gc.CreateServiceParam{
+		if err := gci.CreateService(ctx, "backend-api", gc.CreateServiceParam{
 			Location: location,
-			Project: project,
-			Image: pulumi.Sprintf("%s@%s",apiImage.Tags.ApplyT(func(v []string)string{
+			Project:  project,
+			Image: pulumi.Sprintf("%s@%s", apiImage.Tags.ApplyT(func(v []string) string {
 				return v[0]
-			}).(pulumi.StringOutput),apiImage.Digest),
-			ServiceAccount: cloudrunSA.AccountId,
+			}).(pulumi.StringOutput), apiImage.Digest),
+			ServiceAccount:   cloudrunSA.AccountId,
 			CloudSQLInstance: cloudsql.ConnectionName,
-			CPULimit: "1",
-			MEMLimit: "1Gi",
-			Secrets: secrets,
+			CPULimit:         "1",
+			MEMLimit:         "1Gi",
+			Secrets:          secrets,
 			Configs: map[string]string{
-				"APP_ENV":"development",
-				"HOST":"0.0.0.0",
-				"DB_PORT":"5432",
-				"DB_USER":"postgres",
-				"DB_NAME":"submarine",
-				"DB_SSLMODE":"disable",
+				"APP_ENV":    "development",
+				"HOST":       "0.0.0.0",
+				"DB_PORT":    "5432",
+				"DB_USER":    "postgres",
+				"DB_NAME":    "submarine",
+				"DB_SSLMODE": "disable",
 			},
-		});err != nil {
+		}); err != nil {
 			return err
 		}
 
-		if _, err := gci.CreateFrontBacket(ctx,"front-storage",project,location,"./dist");err != nil {
-			return err 
+		if _, err := gci.CreateFrontBacket(ctx, "front-storage", project, location, "./dist"); err != nil {
+			return err
 		}
 
 		return nil

@@ -6,36 +6,36 @@ import (
 )
 
 type CreateServiceParam struct {
-	Project string
-	Location string
-	Image pulumi.StringInput
-	ServiceAccount pulumi.StringInput
+	Project          string
+	Location         string
+	Image            pulumi.StringInput
+	ServiceAccount   pulumi.StringInput
 	CloudSQLInstance pulumi.StringInput
-	CPULimit string
-	MEMLimit string
+	CPULimit         string
+	MEMLimit         string
 
 	Secrets []string
 	Configs map[string]string
 }
 
-func (p CreateServiceParam) Envs()cloudrunv2.ServiceTemplateContainerEnvArray {
+func (p CreateServiceParam) Envs() cloudrunv2.ServiceTemplateContainerEnvArray {
 	var envs cloudrunv2.ServiceTemplateContainerEnvArray
 
-	for _ ,secret := range p.Secrets {
+	for _, secret := range p.Secrets {
 		envs = append(envs, cloudrunv2.ServiceTemplateContainerEnvArgs{
 			Name: pulumi.String(secret),
 			ValueSource: cloudrunv2.ServiceTemplateContainerEnvValueSourceArgs{
 				SecretKeyRef: cloudrunv2.ServiceTemplateContainerEnvValueSourceSecretKeyRefArgs{
-					Secret: pulumi.String(secret),
+					Secret:  pulumi.String(secret),
 					Version: pulumi.String("latest"),
 				},
 			},
 		})
 	}
 
-	for k , v := range p.Configs {
+	for k, v := range p.Configs {
 		envs = append(envs, cloudrunv2.ServiceTemplateContainerEnvArgs{
-			Name: pulumi.String(k),
+			Name:  pulumi.String(k),
 			Value: pulumi.String(v),
 		})
 	}
@@ -43,7 +43,7 @@ func (p CreateServiceParam) Envs()cloudrunv2.ServiceTemplateContainerEnvArray {
 	return envs
 }
 
-func (p CreateServiceParam) resources()cloudrunv2.ServiceTemplateContainerResourcesPtrInput {
+func (p CreateServiceParam) resources() cloudrunv2.ServiceTemplateContainerResourcesPtrInput {
 	cpuLimit := p.CPULimit
 	memLimit := p.MEMLimit
 
@@ -57,25 +57,25 @@ func (p CreateServiceParam) resources()cloudrunv2.ServiceTemplateContainerResour
 
 	return cloudrunv2.ServiceTemplateContainerResourcesArgs{
 		Limits: pulumi.ToStringMap(map[string]string{
-			"cpu": cpuLimit,
+			"cpu":    cpuLimit,
 			"memory": memLimit,
 		}),
 	}
 }
-func (m *GoogleCloud) CreateService(ctx *pulumi.Context,name string, param CreateServiceParam) error {
-	_ , err := cloudrunv2.NewService(ctx,name,&cloudrunv2.ServiceArgs{
-		Project: pulumi.String(param.Project),
-		Name: pulumi.String(name),
+func (m *GoogleCloud) CreateService(ctx *pulumi.Context, name string, param CreateServiceParam) error {
+	_, err := cloudrunv2.NewService(ctx, name, &cloudrunv2.ServiceArgs{
+		Project:  pulumi.String(param.Project),
+		Name:     pulumi.String(name),
 		Location: pulumi.String(param.Location),
 		Template: cloudrunv2.ServiceTemplateArgs{
 			ServiceAccount: param.ServiceAccount,
 			Containers: cloudrunv2.ServiceTemplateContainerArray{
 				cloudrunv2.ServiceTemplateContainerArgs{
 					Resources: param.resources(),
-					Image: param.Image,
+					Image:     param.Image,
 					VolumeMounts: cloudrunv2.ServiceTemplateContainerVolumeMountArray{
 						cloudrunv2.ServiceTemplateContainerVolumeMountArgs{
-							Name: pulumi.String("cloudsql"),
+							Name:      pulumi.String("cloudsql"),
 							MountPath: pulumi.String("/cloudsql"),
 						},
 					},

@@ -27,7 +27,6 @@ func (m *GoogleCloud) BuildAPI(ctx *pulumi.Context, param BuildSubmarineAPIParam
 	})
 }
 
-
 func (m *GoogleCloud) BuildMigrate(ctx *pulumi.Context, param BuildSubmarineAPIParam) (*dockerbuild.Image, error) {
 	return dockerbuild.NewImage(ctx, "image", &dockerbuild.ImageArgs{
 		Tags: pulumi.StringArray{pulumi.Sprintf("%s-docker.pkg.dev/%s/%s/%s", param.Location, param.Project, param.RepositoryID, "api")},
