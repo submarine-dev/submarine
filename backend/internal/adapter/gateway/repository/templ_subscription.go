@@ -52,3 +52,18 @@ func (r *TemplSubscriptionRepo) GetTemplSubscription(ctx context.Context, subscr
 
 	return templSubscriptions, true, nil
 }
+
+func (r *TemplSubscriptionRepo)	CreateTemplSubscription(ctx context.Context,subscription []entity.TemplSubscription) error{
+	if _ ,err := r.db.NewInsert().Model(&subscription).Exec(ctx);err != nil {
+		return err
+	}
+	var plans []*entity.TemplPlan
+	for _ , subs := range subscription {
+		plans = append(plans, subs.TemplPlan...)
+	}
+
+	if _ ,err := r.db.NewInsert().Model(&plans).Exec(ctx);err != nil {
+		return err
+	}
+	return nil
+}

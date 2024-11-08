@@ -1,6 +1,8 @@
 package gc
 
 import (
+	"fmt"
+
 	"github.com/pulumi/pulumi-gcp/sdk/v8/go/gcp/compute"
 	"github.com/pulumi/pulumi-gcp/sdk/v8/go/gcp/storage"
 	synced "github.com/pulumi/pulumi-synced-folder/sdk/go/synced-folder"
@@ -20,8 +22,29 @@ func (m *GoogleCloud) CreateFrontBacket(ctx *pulumi.Context, name, project, loca
 		return nil, err
 	}
 
+	imgbucket, err := storage.NewBucket(ctx, fmt.Sprintf("%s-store",name), &storage.BucketArgs{
+		Location: pulumi.String(location),
+		Project:  pulumi.String(project),
+	})
+	if err != nil {
+		return nil, err
+	}
+
+
 	_, err = storage.NewBucketIAMBinding(ctx, "site-bucket-iam-binding", &storage.BucketIAMBindingArgs{
 		Bucket: bucket.Name,
+		Role:   pulumi.String("roles/storage.objectViewer"),
+		Members: pulumi.StringArray{
+			pulumi.String("allUsers"),
+		},
+	})
+	if err != nil {
+		return nil, err
+	}
+
+
+	_, err = storage.NewBucketIAMBinding(ctx, "site-bucket-store-iam-binding", &storage.BucketIAMBindingArgs{
+		Bucket: imgbucket.Name,
 		Role:   pulumi.String("roles/storage.objectViewer"),
 		Members: pulumi.StringArray{
 			pulumi.String("allUsers"),
@@ -80,5 +103,5 @@ func (m *GoogleCloud) CreateFrontBacket(ctx *pulumi.Context, name, project, loca
 			return nil, err
 		}
 
-	return bucket, nil
+	return imgbucket, nil
 }
