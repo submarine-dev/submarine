@@ -1,7 +1,7 @@
-import { useAuth } from '@/store/useAuth';
 import { useProductMode } from '@/store/useProductMode';
 import { ProductModeEnum } from '@/types/domain/ProductModeEnum';
 import { type FC, type ReactNode, useEffect } from 'react';
+import { useCookies } from 'react-cookie';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 type Props = {
@@ -11,15 +11,17 @@ type Props = {
 export const RouterServiceProvider: FC<Props> = ({ children }) => {
   const { pathname } = useLocation();
   const router = useNavigate();
-  const { authCode } = useAuth();
   const { productMode } = useProductMode();
+  const [cookies] = useCookies();
+
+  const sessionId = cookies.session_id ?? '';
 
   useEffect(() => {
     /**
      * 未認証（デモの時は弾かない）
      */
     if (
-      !authCode &&
+      !sessionId &&
       pathname !== '/auth' &&
       pathname !== '/google/callback' &&
       (productMode === ProductModeEnum.PRODUCTION || productMode === ProductModeEnum.NONE_SELECTED)
@@ -30,10 +32,10 @@ export const RouterServiceProvider: FC<Props> = ({ children }) => {
     /**
      * 認証済
      */
-    if (authCode && pathname === '/auth') {
+    if (sessionId && pathname === '/auth') {
       router('/');
     }
-  }, [authCode, pathname]);
+  }, [pathname]);
 
   return <>{children}</>;
 };

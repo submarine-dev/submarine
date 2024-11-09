@@ -7,6 +7,7 @@ import { initialUserData, userAtom } from './atom/userAtom';
 import { useProductMode } from './useProductMode';
 import { ProductModeEnum } from '@/types/domain/ProductModeEnum';
 import { demoMock } from '@/mock/demoMock';
+import { useCookies } from 'react-cookie';
 
 export const useAuth = (): {
   authCode: string;
@@ -18,15 +19,13 @@ export const useAuth = (): {
   const [authCode, setAuthCode] = useAtom(authCodeAtom);
   const [user, setUser] = useAtom(userAtom);
   const { productMode, forAuthGetProductMode } = useProductMode();
+  const [_, __, removeCookies] = useCookies();
 
   /**
    * ログアウトの処理
    */
   const logout = (): void => {
-    /**
-     * TODO: 実装
-     */
-    // authService.google.logout();
+    removeCookies('session_id');
     localStorage.removeItem(localStorageKeys.AUTH_CODE_KEY);
     setAuthCode('');
     setUser(initialUserData);
