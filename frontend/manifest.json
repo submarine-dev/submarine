@@ -1,0 +1,17 @@
+{
+  "name": "Submarine",
+  "short_name": "Submarine",
+  "icons": [
+    {
+      "src": "/images/icon/favicon.svg",
+      "sizes": "480x480",
+      "type": "image/svg+xml"
+    }
+  ],
+  "screenshots": [],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#2850BF",
+  "background_color": "#ffffff",
+  "orientation": "any"
+}
