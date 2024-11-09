@@ -2,8 +2,8 @@ import { UserType } from '@/types/domain/UserType';
 import { atom } from 'jotai';
 
 export const initialUserData = {
-  userId: 'initialize_user',
-  icon: 'https://picsum.photos/300',
+  userId: '',
+  icon: '',
 };
 
 /**

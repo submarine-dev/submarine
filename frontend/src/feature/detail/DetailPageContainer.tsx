@@ -16,7 +16,7 @@ export const DetailPageContainer: FC = () => {
   const { pathname } = useLocation();
   const router = useNavigate();
 
-  const { getUserSubscription } = useUserData();
+  const { getUserSubscription, deleteUserSubscription, updateUserSubscription } = useUserData();
   const { targetSubscription, setSubscriptionId } = useSubscription();
 
   const [selectedPlanId, setSelectedPlanId] = useState<string | null>(null);
@@ -58,31 +58,45 @@ export const DetailPageContainer: FC = () => {
   /**
    * プランの更新のハンドリング
    */
-  const handleUpdateSubscription = (): Promise<void> => {
-    /**
-     * TODO: CRUD生え次第変更
-     */
+  const handleUpdateSubscription = async (): Promise<void> => {
     onCloseEditSubscription();
+
+    const isSuccess = await updateUserSubscription({
+      subscriptionId,
+      planId: selectedPlanId ?? '',
+    });
+
+    if (!isSuccess) {
+      /**
+       * TODO: エラーハンドリング
+       */
+      return;
+    }
+
     onOpenSnackBar();
     setTimeout(() => {
       router('/');
     }, 3000);
-    return new Promise((resolve) => resolve());
   };
 
   /**
    * サブスク解約のハンドリング
    */
-  const handleCancelSubscription = (): Promise<void> => {
-    /**
-     * TODO: CRUD生え次第変更
-     */
+  const handleCancelSubscription = async (): Promise<void> => {
     onCloseCancelSubscription();
+    const isSuccess = await deleteUserSubscription(subscriptionId);
+
+    if (!isSuccess) {
+      /**
+       * TODO: エラーハンドリング
+       */
+      return;
+    }
+
     onOpenCancelSnackBar();
     setTimeout(() => {
       router('/');
     }, 3000);
-    return new Promise((resolve) => resolve());
   };
 
   return (

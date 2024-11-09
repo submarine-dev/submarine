@@ -16,6 +16,10 @@ export const useUserData = (): {
     params: Required<Controller_CreateUserSubscriptionRequest>
   ) => Promise<string | null>;
   deleteUserSubscription: (subscriptionId: string) => Promise<boolean>;
+  updateUserSubscription: (params: {
+    subscriptionId: string;
+    planId: string;
+  }) => Promise<boolean>;
 } => {
   const { user } = useAuth();
   const { productMode, forAuthGetProductMode } = useProductMode();
@@ -108,6 +112,32 @@ export const useUserData = (): {
     return true;
   };
 
+  /**
+   * サブスクを更新する
+   *
+   * @param subscriptionId
+   * @param params
+   *
+   * @returns isSuccessful
+   */
+  const updateUserSubscription = async ({
+    subscriptionId,
+    planId,
+  }: {
+    subscriptionId: string;
+    planId: string;
+  }): Promise<boolean> => {
+    if (!user.userId) return false;
+    const res = await userSubscriptionService.updateSubscription({
+      userId: user.userId,
+      subscriptionId,
+      planId,
+      productMode,
+    });
+    if (!res) return false;
+    return true;
+  };
+
   return {
     userSubscription,
     autoManagementSuggestSubscriptions,
@@ -116,5 +146,6 @@ export const useUserData = (): {
     getUserSubscription,
     registerUserSubscription,
     deleteUserSubscription,
+    updateUserSubscription,
   };
 };

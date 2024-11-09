@@ -107,4 +107,32 @@ export const userSubscriptionService = {
       return false;
     }
   },
+
+  updateSubscription: async ({
+    userId,
+    subscriptionId,
+    productMode,
+    planId,
+  }: {
+    userId: string;
+    subscriptionId: string;
+    productMode: ProductModeEnum;
+    planId: string;
+  }): Promise<boolean> => {
+    if (!userId || !subscriptionId) return false;
+    try {
+      const res = await (async () => {
+        if (productMode === ProductModeEnum.DEMO) return true;
+        return await apiClient.v1.users
+          ._userId(userId)
+          .subscriptions._userSubscriptionId(subscriptionId)
+          .$put({ body: { planId } });
+      })();
+      return !!res;
+    } catch (e) {
+      // biome-ignore lint/suspicious/noConsole: <explanation>
+      console.error(e);
+      return false;
+    }
+  },
 };
