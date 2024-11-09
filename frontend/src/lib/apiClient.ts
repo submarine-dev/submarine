@@ -6,6 +6,7 @@ import api from '../../api/$api';
 const config: AxiosRequestConfig = {
   baseURL: API_END_POINT,
   responseType: 'json',
+  withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
   },

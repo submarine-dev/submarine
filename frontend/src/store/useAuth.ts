@@ -1,5 +1,4 @@
 import { localStorageKeys } from '@/const/localStorageKeys';
-import { authService } from '@/service/authService';
 import { UserType } from '@/types/domain/UserType';
 import { useAtom } from 'jotai';
 import { useEffect } from 'react';
@@ -18,7 +17,7 @@ export const useAuth = (): {
 } => {
   const [authCode, setAuthCode] = useAtom(authCodeAtom);
   const [user, setUser] = useAtom(userAtom);
-  const { forAuthGetProductMode } = useProductMode();
+  const { productMode, forAuthGetProductMode } = useProductMode();
 
   /**
    * ログアウトの処理
@@ -41,30 +40,7 @@ export const useAuth = (): {
       setUser(demoMock.user);
       return;
     }
-    if (forAuthGetProductMode() === ProductModeEnum.PRODUCTION) {
-      const localStorageAuthCode = localStorage.getItem(localStorageKeys.AUTH_CODE_KEY);
-      if (!authCode && localStorageAuthCode) {
-        setAuthCode(localStorageAuthCode);
-      }
-
-      const currentAuthCode = authCode ?? localStorageAuthCode ?? '';
-      if (!currentAuthCode) return;
-
-      /**
-       * ユーザデータが既に存在する場合はfetchしない
-       */
-      if (user.userId) return;
-      (async () => {
-        const userData = await authService.google.login({
-          authCode: currentAuthCode,
-          productMode: forAuthGetProductMode(),
-        });
-        if (!userData) return;
-        setUser(userData);
-      })();
-      return;
-    }
-  }, [authCode]);
+  }, [productMode]);
 
   return {
     authCode,

@@ -1,5 +1,6 @@
 import { GCP_CLIENT_ID, GCP_REDIRECT_URI } from '@/const/env';
 import { localStorageKeys } from '@/const/localStorageKeys';
+import { authService } from '@/service/authService';
 import { useAuth } from '@/store/useAuth';
 import { useProductMode } from '@/store/useProductMode';
 
@@ -24,16 +25,17 @@ export const useHandleAuth = (): {
   authUrl: string;
   handleCatchAuthCode: (authCode: string) => void;
 } => {
-  const { setAuthCode } = useAuth();
+  const { setAuthCode, setUser } = useAuth();
   const { changeToProduction } = useProductMode();
 
-  const handleCatchAuthCode = (authCode: string): void => {
+  const handleCatchAuthCode = async (authCode: string): Promise<void> => {
     setAuthCode(authCode);
     localStorage.setItem(localStorageKeys.AUTH_CODE_KEY, authCode);
 
-    /**
-     * Googleログインされたら本番モードに変更する
-     */
+    const userData = await authService.google.login({ authCode });
+    if (!userData) return;
+    setUser(userData);
+
     changeToProduction();
   };
 
