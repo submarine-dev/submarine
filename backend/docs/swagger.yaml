@@ -205,7 +205,7 @@ paths:
       summary: Google Login
       tags:
       - LoginRequest
-  /v1/subscription:
+  /v1/subscriptions:
     get:
       operationId: GetSubscriptions
       produces:
@@ -228,7 +228,7 @@ paths:
       summary: Get Subscriptions
       tags:
       - Subscription
-  /v1/subscription/{subscriptionId}:
+  /v1/subscriptions/{subscriptionId}:
     get:
       operationId: GetSubscription
       parameters:

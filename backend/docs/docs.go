@@ -61,7 +61,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/subscription": {
+        "/v1/subscriptions": {
             "get": {
                 "produces": [
                     "application/json"
@@ -96,7 +96,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/subscription/{subscriptionId}": {
+        "/v1/subscriptions/{subscriptionId}": {
             "get": {
                 "produces": [
                     "application/json"
