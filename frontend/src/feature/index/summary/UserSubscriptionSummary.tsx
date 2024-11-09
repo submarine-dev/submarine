@@ -37,7 +37,7 @@ export const UserSubscriptionSummary: FC<Props> = ({
             variant={nonPayment ? 'h6' : 'h4'}
             sx={{ fontWeight: nonPayment ? 'bold' : 'normal' }}
           >
-            {nonPayment ? '支払いはありません' : currentMonthPayment.toLocaleString()}
+            {nonPayment ? '支払いはありません' : `${currentMonthPayment.toLocaleString()} 円`}
           </Typography>
         </Stack>
         <Stack spacing={0}>
