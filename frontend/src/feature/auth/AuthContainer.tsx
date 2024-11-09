@@ -42,6 +42,7 @@ export const AuthContainer: FC = () => {
         height: '100dvh',
         width: '100%',
         background: 'linear-gradient(0deg, #0B1C31 0%, #2850BF 100%)',
+        overflow: 'hidden',
       }}
     >
       <Stack
