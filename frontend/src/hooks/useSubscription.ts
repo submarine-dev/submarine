@@ -21,10 +21,12 @@ export const useSubscription = (): {
     isPending: isPendingSubscriptionSummaries,
     isError: isErrorSubscriptionSummaries,
   } = useQuery({
-    queryKey: ['subscriptions', user, productMode],
+    queryKey: ['subscriptions', (() => user?.userId ?? 'non_user')(), productMode],
     queryFn: async () => {
       if (!user) return null;
-      await subscriptionService.getAll({ productMode: forAuthGetProductMode() });
+      const data = await subscriptionService.getAll({ productMode: forAuthGetProductMode() });
+      if (!data) return null;
+      return data;
     },
   });
 
@@ -33,7 +35,7 @@ export const useSubscription = (): {
     isPending: isPendingSubscription,
     isError: isErrorSubscription,
   } = useQuery({
-    queryKey: ['subscription', subscriptionId, productMode],
+    queryKey: ['subscription', subscriptionId, productMode, (() => user?.userId ?? 'non_user')()],
     queryFn: async () => {
       if (!subscriptionId) return null;
       return await subscriptionService.get({ productMode, subscriptionId });

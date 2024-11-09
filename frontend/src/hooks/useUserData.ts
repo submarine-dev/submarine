@@ -29,7 +29,7 @@ export const useUserData = (): {
     isPending: isPendingUserSubscription,
     isError: isErrorUserSubscription,
   } = useQuery({
-    queryKey: ['userSubscription', user.userId, productMode],
+    queryKey: ['userSubscription', (() => user?.userId ?? 'non_user')(), productMode],
     queryFn: async () => {
       if (!user.userId) return null;
       const data = await userSubscriptionService.get({
@@ -46,7 +46,7 @@ export const useUserData = (): {
     isPending: isPendingAutoManagementSuggests,
     isError: isErrorAutoManagementSuggests,
   } = useQuery({
-    queryKey: ['autoManagementSuggests', user.userId, productMode],
+    queryKey: ['autoManagementSuggests', (() => user?.userId ?? 'non_user')(), productMode],
     queryFn: async () => {
       if (!user.userId) return null;
       const data = await userSubscriptionService.getAutoManagementSuggests({

@@ -60,7 +60,7 @@ export const IndexContainer: FC = () => {
 
   return (
     <>
-      {userSubscription?.userSubscriptions ? (
+      {userSubscription ? (
         <SectionLayout sectionTitle="" titleColor="white">
           <UserSubscriptionSummary
             currentMonthPayment={userSubscription.totalAmountPerMonth ?? 0}
