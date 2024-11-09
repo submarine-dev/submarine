@@ -7,6 +7,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/submarine/submarine/backend/internal/domain/entity"
+	"github.com/submarine/submarine/backend/internal/framework/scontext"
 	"github.com/submarine/submarine/backend/internal/framework/serror"
 	"github.com/submarine/submarine/backend/internal/usecase/interactor"
 )
@@ -34,13 +35,15 @@ type GetSubscriptionsResponse struct {
 // @Failure  500  {object}  echo.HTTPError
 // @Router   /v1/subscriptions [get]
 func GetSubscriptions(ts *interactor.TemplSubscription) MustLogin {
-	return func(ctx echo.Context) error {
+	return func(c echo.Context) error {
 		var reqQuery GetSubscriptionsRequest
-		if err := ctx.Bind(&reqQuery); err != nil {
+		if err := c.Bind(&reqQuery); err != nil {
 			return echo.ErrBadRequest
 		}
 
-		result, err := ts.GetTemplSubscriptions(ctx.Request().Context(), interactor.GetTemplSubscriptionParam{
+		ctx := scontext.ConvertContext(c)
+
+		result, err := ts.GetTemplSubscriptions(ctx, interactor.GetTemplSubscriptionParam{
 			Limit:  reqQuery.limit,
 			Offset: (reqQuery.offset - 1) * reqQuery.limit,
 		})
@@ -62,8 +65,8 @@ func GetSubscriptions(ts *interactor.TemplSubscription) MustLogin {
 			})
 		}
 
-		ctx.JSON(http.StatusOK, responses)
-		return nil
+	
+		return c.JSON(http.StatusOK, responses)
 	}
 }
 
@@ -90,13 +93,15 @@ type GetSubscriptionResponse struct {
 // @Failure  500  {object}  echo.HTTPError
 // @Router   /v1/subscriptions/{subscriptionId} [get]
 func GetSubscription(ts *interactor.TemplSubscription) MustLogin {
-	return func(ctx echo.Context) error {
+	return func(c echo.Context) error {
 		var reqQuery GetSubscriptionRequest
-		if err := ctx.Bind(&reqQuery); err != nil {
+		if err := c.Bind(&reqQuery); err != nil {
 			return echo.ErrBadRequest
 		}
 
-		result, err := ts.GetTemplSubscription(ctx.Request().Context(), reqQuery.SubscriptionID)
+		ctx := scontext.ConvertContext(c)
+
+		result, err := ts.GetTemplSubscription(ctx, reqQuery.SubscriptionID)
 		if err != nil {
 			switch {
 			case errors.Is(err, serror.ErrResourceNotFound):
@@ -107,13 +112,12 @@ func GetSubscription(ts *interactor.TemplSubscription) MustLogin {
 			}
 		}
 
-		ctx.JSON(http.StatusOK, GetSubscriptionResponse{
+		return c.JSON(http.StatusOK, GetSubscriptionResponse{
 			SubscriptionID:   result.ID,
 			SubscriptionName: result.Name,
 			SubscriptionIcon: result.Icon,
 			IsSubscribed:     result.IsSubscribed,
 			Plans:            result.TemplPlan,
 		})
-		return nil
 	}
 }

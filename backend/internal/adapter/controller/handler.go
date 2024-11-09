@@ -12,11 +12,11 @@ import (
 	"github.com/submarine/submarine/backend/internal/usecase/interactor"
 )
 
-type MustLogin func(ctx echo.Context) error
+type MustLogin func(c echo.Context) error
 
 func (h MustLogin) MustLogin(login *interactor.Login) echo.HandlerFunc {
-	return func(ctx echo.Context) error {
-		sessionID, err := ctx.Cookie(string(cookie.SessionID))
+	return func(c echo.Context) error {
+		sessionID, err := c.Cookie(string(cookie.SessionID))
 		if err != nil {
 			if err == http.ErrNoCookie {
 				slog.Info("session cookie not found")
@@ -31,7 +31,9 @@ func (h MustLogin) MustLogin(login *interactor.Login) echo.HandlerFunc {
 			return echo.ErrUnauthorized
 		}
 
-		userID, err := login.CheckSession(ctx.Request().Context(), sessionID.Value)
+		ctx := scontext.ConvertContext(c)
+
+		userID, err := login.CheckSession(ctx, sessionID.Value)
 
 		if err != nil {
 			slog.Info(fmt.Sprintf("failed to get user by session id: %v", err))
@@ -44,8 +46,8 @@ func (h MustLogin) MustLogin(login *interactor.Login) echo.HandlerFunc {
 			}
 		}
 
-		ctx.Set(scontext.UserID.String(), userID)
+		c.Set(scontext.UserID.String(), userID)
 
-		return h(ctx)
+		return h(c)
 	}
 }
