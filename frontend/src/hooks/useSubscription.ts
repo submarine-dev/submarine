@@ -1,4 +1,5 @@
 import { subscriptionService } from '@/service/subscriptionService';
+import { useAuth } from '@/store/useAuth';
 import { useProductMode } from '@/store/useProductMode';
 import { SubscriptionSummaryType, SubscriptionType } from '@/types/domain/SubscriptionType';
 import { useQuery } from '@tanstack/react-query';
@@ -13,14 +14,18 @@ export const useSubscription = (): {
 } => {
   const { productMode, forAuthGetProductMode } = useProductMode();
   const [subscriptionId, setSubscriptionId] = useState<string | null>(null);
+  const { user } = useAuth();
 
   const {
     data: subscriptionSummaries,
     isPending: isPendingSubscriptionSummaries,
     isError: isErrorSubscriptionSummaries,
   } = useQuery({
-    queryKey: ['subscriptions'],
-    queryFn: async () => await subscriptionService.getAll({ productMode: forAuthGetProductMode() }),
+    queryKey: ['subscriptions', user, productMode],
+    queryFn: async () => {
+      if (!user) return null;
+      await subscriptionService.getAll({ productMode: forAuthGetProductMode() });
+    },
   });
 
   const {
@@ -28,7 +33,7 @@ export const useSubscription = (): {
     isPending: isPendingSubscription,
     isError: isErrorSubscription,
   } = useQuery({
-    queryKey: ['subscription', subscriptionId],
+    queryKey: ['subscription', subscriptionId, productMode],
     queryFn: async () => {
       if (!subscriptionId) return null;
       return await subscriptionService.get({ productMode, subscriptionId });
