@@ -1,14 +1,14 @@
 import type { AspidaClient, BasicHeaders } from 'aspida';
 import type { Methods as Methods_17j1g8v } from './login/google';
-import type { Methods as Methods_1er0sp5 } from './v1/subscription';
-import type { Methods as Methods_11adnuw } from './v1/subscription/_subscriptionId@string';
+import type { Methods as Methods_bots26 } from './v1/subscriptions';
+import type { Methods as Methods_ias1f5 } from './v1/subscriptions/_subscriptionId@string';
 import type { Methods as Methods_15i0cf4 } from './v1/users/_userId@string/subscriptions';
 import type { Methods as Methods_1wti2re } from './v1/users/_userId@string/subscriptions/_userSubscriptionId@string';
 
 const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
   const prefix = (baseURL === undefined ? '/v1' : baseURL).replace(/\/$/, '');
   const PATH0 = '/login/google';
-  const PATH1 = '/v1/subscription';
+  const PATH1 = '/v1/subscriptions';
   const PATH2 = '/v1/users';
   const PATH3 = '/subscriptions';
   const GET = 'GET';
@@ -45,7 +45,7 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
       },
     },
     v1: {
-      subscription: {
+      subscriptions: {
         _subscriptionId: (val2: string) => {
           const prefix2 = `${PATH1}/${val2}`;
 
@@ -55,18 +55,18 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
              */
             get: (option?: { config?: T | undefined } | undefined) =>
               fetch<
-                Methods_11adnuw['get']['resBody'],
+                Methods_ias1f5['get']['resBody'],
                 BasicHeaders,
-                Methods_11adnuw['get']['status']
+                Methods_ias1f5['get']['status']
               >(prefix, prefix2, GET, option).json(),
             /**
              * @returns OK
              */
             $get: (option?: { config?: T | undefined } | undefined) =>
               fetch<
-                Methods_11adnuw['get']['resBody'],
+                Methods_ias1f5['get']['resBody'],
                 BasicHeaders,
-                Methods_11adnuw['get']['status']
+                Methods_ias1f5['get']['status']
               >(prefix, prefix2, GET, option)
                 .json()
                 .then((r) => r.body),
@@ -77,7 +77,7 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
          * @returns OK
          */
         get: (option?: { config?: T | undefined } | undefined) =>
-          fetch<Methods_1er0sp5['get']['resBody'], BasicHeaders, Methods_1er0sp5['get']['status']>(
+          fetch<Methods_bots26['get']['resBody'], BasicHeaders, Methods_bots26['get']['status']>(
             prefix,
             PATH1,
             GET,
@@ -87,7 +87,7 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
          * @returns OK
          */
         $get: (option?: { config?: T | undefined } | undefined) =>
-          fetch<Methods_1er0sp5['get']['resBody'], BasicHeaders, Methods_1er0sp5['get']['status']>(
+          fetch<Methods_bots26['get']['resBody'], BasicHeaders, Methods_bots26['get']['status']>(
             prefix,
             PATH1,
             GET,

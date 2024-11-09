@@ -18,7 +18,7 @@ export const subscriptionService = {
           return demoMock.subscriptionsDetails.find(
             (subscription) => subscription.id === subscriptionId
           );
-        return await apiClient.v1.subscription._subscriptionId(subscriptionId).$get();
+        return await apiClient.v1.subscriptions._subscriptionId(subscriptionId).$get();
       })();
       if (!res) return null;
       // @ts-ignore
@@ -38,7 +38,7 @@ export const subscriptionService = {
     try {
       const res = (async () => {
         if (productMode === ProductModeEnum.DEMO) return demoMock.subscriptions;
-        await apiClient.v1.subscription.$get();
+        await apiClient.v1.subscriptions.$get();
       })();
       if (!res) return null;
       // @ts-ignore
