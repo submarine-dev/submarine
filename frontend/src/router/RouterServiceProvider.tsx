@@ -21,7 +21,7 @@ export const RouterServiceProvider: FC<Props> = ({ children }) => {
      * 未認証（デモの時は弾かない）
      */
     if (
-      !sessionId &&
+      // !sessionId &&
       pathname !== '/auth' &&
       pathname !== '/google/callback' &&
       (productMode === ProductModeEnum.PRODUCTION || productMode === ProductModeEnum.NONE_SELECTED)
