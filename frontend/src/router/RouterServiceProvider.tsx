@@ -1,8 +1,10 @@
 import { useProductMode } from '@/store/useProductMode';
 import { ProductModeEnum } from '@/types/domain/ProductModeEnum';
-import { type FC, type ReactNode, useEffect } from 'react';
+import { type FC, type ReactNode, useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useLocation, useNavigate } from 'react-router-dom';
+import InstallMobileIcon from '@mui/icons-material/InstallMobile';
+import { IconButton } from '@mui/material';
 
 type Props = {
   children: ReactNode;
@@ -13,6 +15,8 @@ export const RouterServiceProvider: FC<Props> = ({ children }) => {
   const router = useNavigate();
   const { productMode } = useProductMode();
   const [cookies] = useCookies();
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
 
   const sessionId = cookies.session_id ?? '';
 
@@ -37,5 +41,46 @@ export const RouterServiceProvider: FC<Props> = ({ children }) => {
     }
   }, [pathname]);
 
-  return <>{children}</>;
+  useEffect(() => {
+    // @ts-ignore
+    const handleBeforeInstallPrompt = (e) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    };
+  }, []);
+
+  const handleInstallClick = async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
+      setDeferredPrompt(null);
+    }
+  };
+
+  return (
+    <>
+      {children}
+      <IconButton
+        onClick={handleInstallClick}
+        sx={{
+          position: 'fixed',
+          bottom: 16,
+          right: 16,
+          bgcolor: 'white',
+          boxShadow: 3,
+          zIndex: 1000,
+          '&:hover': {
+            bgcolor: 'white',
+            opacity: 0.9,
+          },
+        }}
+      >
+        <InstallMobileIcon color="primary" />
+      </IconButton>
+    </>
+  );
 };
