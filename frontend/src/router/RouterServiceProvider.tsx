@@ -3,8 +3,6 @@ import { ProductModeEnum } from '@/types/domain/ProductModeEnum';
 import { type FC, type ReactNode, useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useLocation, useNavigate } from 'react-router-dom';
-import InstallMobileIcon from '@mui/icons-material/InstallMobile';
-import { IconButton } from '@mui/material';
 
 type Props = {
   children: ReactNode;
@@ -17,7 +15,7 @@ export const RouterServiceProvider: FC<Props> = ({ children }) => {
   const [cookies] = useCookies();
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
-  const [isPWA, setIsPWA] = useState(false);
+  const [, setIsPWA] = useState(false);
 
   const sessionId = cookies.session_id ?? '';
 
@@ -59,13 +57,13 @@ export const RouterServiceProvider: FC<Props> = ({ children }) => {
     setIsPWA(isStandalone);
   }, []);
 
-  const handleInstallClick = async () => {
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      await deferredPrompt.userChoice;
-      setDeferredPrompt(null);
-    }
-  };
+  //const handleInstallClick = async () => {
+  //  if (deferredPrompt) {
+   //   deferredPrompt.prompt();
+   //   await deferredPrompt.userChoice;
+   //   setDeferredPrompt(null);
+   // }
+ // };
 
   return (
     <>
