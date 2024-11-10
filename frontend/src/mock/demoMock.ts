@@ -468,7 +468,7 @@ const subscriptionsDetails: SubscriptionType[] = [
         id: 'plus_plan',
         name: 'Plus',
         paymentType: 'monthly',
-        price: 3059,
+        price: 20,
         subscriptionId: 'chat_gpt',
       },
     ],

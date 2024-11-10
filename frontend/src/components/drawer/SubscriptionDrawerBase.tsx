@@ -59,6 +59,7 @@ export const SubscriptionDrawerBase: FC<Props> = ({
         >
           {plans.map((plan) => {
             const selected = selectedPlanId === plan.id;
+            const currency = (plan.price ?? 0 < 100) ? '$' : '円';
             return (
               <Button
                 key={plan.id}
@@ -77,7 +78,9 @@ export const SubscriptionDrawerBase: FC<Props> = ({
                   }}
                 >
                   <Typography>{plan.name}</Typography>
-                  <Typography>{plan.price?.toLocaleString()} 円</Typography>
+                  <Typography>
+                    {plan.price?.toLocaleString()} {currency}
+                  </Typography>
                 </Stack>
               </Button>
             );
