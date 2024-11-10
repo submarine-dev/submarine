@@ -3,13 +3,13 @@ import { useProductMode } from '@/store/useProductMode';
 import { ProductModeEnum } from '@/types/domain/ProductModeEnum';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
-import GoogleIcon from '@mui/icons-material/Google';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Avatar, Button, IconButton, Stack, Typography } from '@mui/material';
 import { type FC, MouseEvent, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { GoogleLoginButtonBase } from '../button/GoogleLoginButtonBase';
 import { ProfileMenu } from './ProfileMenu';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 export const Header: FC = () => {
   const { productMode } = useProductMode();
@@ -48,15 +48,16 @@ export const Header: FC = () => {
       if (productMode !== ProductModeEnum.DEMO) return null;
       return {
         label: 'Submarineに登録する',
-        icon: <GoogleIcon />,
+        icon: <SettingsIcon />,
         onClick: () => {
           if (!googleLoginButtonRef.current) return;
           googleLoginButtonRef.current.click();
         },
+        isDisabled: true,
       };
     })(),
     {
-      label: 'プロフィール（開発中）',
+      label: '設定',
       icon: <AccountCircleIcon />,
       onClick: () => {
         /**

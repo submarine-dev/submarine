@@ -76,6 +76,7 @@ export const AuthContainer: FC = () => {
               }
               sx={{
                 bgcolor: 'white',
+                fontWeight: 'bold',
                 '&:hover': { bgcolor: 'white', opacity: 0.8 },
               }}
             >
@@ -88,6 +89,9 @@ export const AuthContainer: FC = () => {
             onSubmit={handleDemoModeSubmit}
           />
         </Stack>
+        <Typography variant="caption" color="white" sx={{ textAlign: 'center' }}>
+          技育展で皆さんに触れて頂くためにデモモードをご用意しております
+        </Typography>
       </Stack>
     </Stack>
   );
