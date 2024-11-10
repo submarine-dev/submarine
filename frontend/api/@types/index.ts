@@ -77,6 +77,7 @@ export type Entity_TemplPlan = {
   name?: string | undefined;
   paymentType?: Entity_PaymentType | undefined;
   price?: number | undefined;
+  currency?: string | undefined;
   subscriptionId?: string | undefined;
 };
 
