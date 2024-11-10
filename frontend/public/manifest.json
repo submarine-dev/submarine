@@ -1,6 +1,7 @@
 {
   "name": "Submarine",
   "short_name": "Submarine",
+  "description": "自分に任せないサブスク管理「Submarine」",
   "icons": [
     {
       "src": "/images/icon/favicon.svg",
@@ -9,7 +10,7 @@
     }
   ],
   "screenshots": [],
-  "start_url": ".",
+  "start_url": "./",
   "display": "standalone",
   "theme_color": "#2850BF",
   "background_color": "#ffffff",
