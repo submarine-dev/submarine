@@ -17,6 +17,7 @@ export const RouterServiceProvider: FC<Props> = ({ children }) => {
   const [cookies] = useCookies();
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [isPWA, setIsPWA] = useState(false);
 
   const sessionId = cookies.session_id ?? '';
 
@@ -51,6 +52,11 @@ export const RouterServiceProvider: FC<Props> = ({ children }) => {
     return () => {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
     };
+  }, [deferredPrompt]);
+
+  useEffect(() => {
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+    setIsPWA(isStandalone);
   }, []);
 
   const handleInstallClick = async () => {
@@ -64,23 +70,25 @@ export const RouterServiceProvider: FC<Props> = ({ children }) => {
   return (
     <>
       {children}
-      <IconButton
-        onClick={handleInstallClick}
-        sx={{
-          position: 'fixed',
-          bottom: 16,
-          right: 16,
-          bgcolor: 'white',
-          boxShadow: 3,
-          zIndex: 1000,
-          '&:hover': {
+      {!isPWA && (
+        <IconButton
+          onClick={handleInstallClick}
+          sx={{
+            position: 'fixed',
+            bottom: 16,
+            right: 16,
             bgcolor: 'white',
-            opacity: 0.9,
-          },
-        }}
-      >
-        <InstallMobileIcon color="primary" />
-      </IconButton>
+            boxShadow: 3,
+            zIndex: 1000,
+            '&:hover': {
+              bgcolor: 'white',
+              opacity: 0.9,
+            },
+          }}
+        >
+          <InstallMobileIcon color="primary" />
+        </IconButton>
+      )}
     </>
   );
 };
