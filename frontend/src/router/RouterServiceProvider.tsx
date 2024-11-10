@@ -70,7 +70,7 @@ export const RouterServiceProvider: FC<Props> = ({ children }) => {
   return (
     <>
       {children}
-      {!isPWA && (
+      {/* {!isPWA && false ? (
         <IconButton
           onClick={handleInstallClick}
           sx={{
@@ -88,7 +88,7 @@ export const RouterServiceProvider: FC<Props> = ({ children }) => {
         >
           <InstallMobileIcon color="primary" />
         </IconButton>
-      )}
+      ) : null} */}
     </>
   );
 };
