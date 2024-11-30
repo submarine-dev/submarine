@@ -1,6 +1,6 @@
 import { CardLayout } from '@/components/card/CardLayout';
 import { useUserData } from '@/hooks/useUserData';
-import { Stack } from '@mui/material';
+import { Alert, Snackbar, Stack } from '@mui/material';
 import { FC, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { DetailHeader } from './header/DetailHeader';
@@ -33,6 +33,8 @@ export const DetailPageContainer: FC = () => {
   const [isOpenCancelSubscription, onOpenCancelSubscription, onCloseCancelSubscription] =
     useDiscloser();
   const [isOpenCancelSnackBar, onOpenCancelSnackBar, onCloseCancelSnackBar] = useDiscloser();
+
+  const [isOpenErrorSnackBar, onOpenErrorSnackBar, onCloseErrorSnackBar] = useDiscloser();
 
   const subscriptionId = pathname.split('/').pop();
   if (!subscriptionId) return null;
@@ -67,9 +69,7 @@ export const DetailPageContainer: FC = () => {
     });
 
     if (!isSuccess) {
-      /**
-       * TODO: エラーハンドリング
-       */
+      onOpenErrorSnackBar();
       return;
     }
 
@@ -87,9 +87,7 @@ export const DetailPageContainer: FC = () => {
     const isSuccess = await deleteUserSubscription(subscriptionId);
 
     if (!isSuccess) {
-      /**
-       * TODO: エラーハンドリング
-       */
+      onOpenErrorSnackBar();
       return;
     }
 
@@ -152,6 +150,16 @@ export const DetailPageContainer: FC = () => {
         onCancelSubmit={handleCancelSubscription}
         onCloseSnackBar={onCloseCancelSnackBar}
       />
+      <Snackbar open={isOpenErrorSnackBar} onClose={onCloseErrorSnackBar} autoHideDuration={3000}>
+        <Alert
+          onClose={onCloseErrorSnackBar}
+          severity="success"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          エラーが発生しました。
+        </Alert>
+      </Snackbar>
     </>
   );
 };
