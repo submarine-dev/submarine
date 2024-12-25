@@ -1,9 +1,0 @@
-config:
-  gcp:project: submarine-dev-439208
-  gcp:region: asia-northeast1
-  pulumi:template: container-gcp-go
-  submarine-dev:appPath: app
-  submarine-dev:concurrency: "1"
-  submarine-dev:containerPort: "8080"
-  submarine-dev:cpu: "1"
-  submarine-dev:memory: 1Gi

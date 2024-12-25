@@ -65,7 +65,6 @@ func GetSubscriptions(ts *interactor.TemplSubscription) MustLogin {
 			})
 		}
 
-	
 		return c.JSON(http.StatusOK, responses)
 	}
 }

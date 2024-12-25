@@ -19,15 +19,17 @@ type CookieOptions struct {
 	SameSite http.SameSite
 	Secure   bool
 	Httponly bool
+	Domain string
 }
 
 func DefaultCookieOptions() CookieOptions {
 	return CookieOptions{
 		MaxAge:   int(time.Now().Unix()) + 10*365*24*3600,
 		Path:     "/",
-		SameSite: http.SameSiteNoneMode,
+		SameSite: http.SameSiteLaxMode,
 		Secure:   true,
 		Httponly: true,
+		Domain: "submarine.help",
 	}
 }
 
@@ -60,13 +62,12 @@ func NewEchoCookieSetter(c echo.Context, defaultOptions CookieOptions) *EchoCook
 }
 
 func (ecs *EchoCookieSetter) SetCookie(name, value string, maxAge int, path string, secure, httponly bool) {
-	domain := ""
 	ecs.ctx.SetCookie(&http.Cookie{
 		Name:     name,
 		Value:    value,
 		MaxAge:   maxAge,
 		Path:     path,
-		Domain:   domain,
+		Domain:   ecs.defaultOptions.Domain,
 		SameSite: ecs.defaultOptions.SameSite,
 		Secure:   secure,
 		HttpOnly: httponly,
